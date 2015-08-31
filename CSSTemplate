@@ -1,5 +1,5 @@
  .dom-heading.dom-heading-1 {
-   width: 188px;
+   width: 200px;
    height: 36px;
    font-family:'helvetica neue';
    font-weight: 200;
@@ -10,7 +10,7 @@
    left: 52.5px;
  }
  .dom-heading.dom-heading-2 {
-   width: 188px;
+   width: 200px;
    height: 36px;
    font-family:'helvetica neue';
    font-weight: 200;
@@ -21,7 +21,7 @@
    left: 52.5px;
  }
  .dom-heading.dom-heading-3 {
-   width: 188px;
+   width: 200px;
    height: 36px;
    font-family:'helvetica neue';
    font-weight: 200;
@@ -32,7 +32,7 @@
    left: 53.49000000000001px;
  }
  .dom-heading.dom-heading-4 {
-   width: 188px;
+   width: 200px;
    height: 36px;
    font-family:'helvetica neue';
    font-weight: 200;
@@ -43,7 +43,7 @@
    left: 52.5px;
  }
  .dom-heading.dom-heading-5 {
-   width: 188px;
+   width: 200px;
    height: 36px;
    font-family:'helvetica neue';
    font-weight: 200;
