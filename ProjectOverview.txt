@@ -1,0 +1,13 @@
+Cycle Progress:
+
+
+System Metaphor:
+AIDB has a pick-up service for their loca community, but their reservation system is still
+all done in pencil.  Our goal is to modernize, optimize, and automate their reservation
+process with an online database system and a webpage and ipad app frontend.
+
+Process Discussion:
+
+Lessons Learned:
+
+Future Plans:
