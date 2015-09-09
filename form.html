@@ -2,6 +2,7 @@
 <html>
 
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="form.css">
 </head>
 
@@ -9,7 +10,6 @@
 <h2 class="title">Pick Up Registration Form</h2>
 
 <form action="action_page.php">
-<div id="formWrapper">
 	<label for="clientname">Client Name:&nbsp  </label>	
 	<input type="text" name="clientname" id="username">
 	&nbsp&nbsp&nbsp&nbsp
@@ -48,7 +48,7 @@
 	<label for="pickupNumber">Phone Number:&nbsp&nbsp&nbsp</label>	
 	<input type="text" name="pickupNumber" id="pickupNumber">
 	<p>
-	<label for="pickupTime">Pickup Time:&nbsp&nbsp&nbsp</label>	
+	<label for="pickupTime">Pickup Time:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>	
 	<select name="pickupTime" id="pickupTime">
     	<option value="NULL"></option>
     	<option value="06:00AM">06:00AM</option>
@@ -71,28 +71,6 @@
 	</select>
 
   	<p>APPOINTMENT INFORMATION:</p>
-	<label for="appointmentTime">Appointment Time:&nbsp&nbsp&nbsp</label>	
-	<select name="appointmentTime">
-    	<option value="pickupTime"></option>
-    	<option value="06:00AM">06:00AM</option>
-    	<option value="07:00AM">07:00AM</option>
-    	<option value="08:00AM">08:00AM</option>
-    	<option value="09:00AM">09:00AM</option>
-    	<option value="10:00AM">10:00AM</option>
-    	<option value="11:00AM">11:00AM</option>
-    	<option value="12:00AM">12:00AM</option>
-    	<option value="01:00PM">01:00PM</option>
-    	<option value="02:00PM">02:00PM</option>
-    	<option value="03:00PM">03:00PM</option>
-    	<option value="04:00PM">04:00PM</option>
-    	<option value="05:00PM">05:00PM</option>
-    	<option value="06:00PM">06:00PM</option>
-    	<option value="07:00PM">07:00PM</option>
-    	<option value="08:00PM">08:00PM</option>
-    	<option value="09:00PM">09:00PM</option>
-    	<option value="10:00PM">10:00PM</option>
-	</select>
-	<p>
 	<span> Day:</span>
 	<select id="day" class="day">
 		<option value="1">1st</option>
@@ -155,14 +133,41 @@
 		<option value="2012">2012</option>
 		<option value="2011">2011</option>
 	</select>
+	<script>
+		$("#day").val((new Date()).getDate());
+		$("#year").val((new Date()).getYear()+1900);
+		$("#month").val((new Date()).getMonth()+1);
+	</script>
+	<p>
+	<label for="appointmentTime">Appointment Time:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>	
+	<select name="appointmentTime">
+    	<option value="pickupTime"></option>
+    	<option value="06:00AM">06:00AM</option>
+    	<option value="07:00AM">07:00AM</option>
+    	<option value="08:00AM">08:00AM</option>
+    	<option value="09:00AM">09:00AM</option>
+    	<option value="10:00AM">10:00AM</option>
+    	<option value="11:00AM">11:00AM</option>
+    	<option value="12:00AM">12:00AM</option>
+    	<option value="01:00PM">01:00PM</option>
+    	<option value="02:00PM">02:00PM</option>
+    	<option value="03:00PM">03:00PM</option>
+    	<option value="04:00PM">04:00PM</option>
+    	<option value="05:00PM">05:00PM</option>
+    	<option value="06:00PM">06:00PM</option>
+    	<option value="07:00PM">07:00PM</option>
+    	<option value="08:00PM">08:00PM</option>
+    	<option value="09:00PM">09:00PM</option>
+    	<option value="10:00PM">10:00PM</option>
+	</select>
 	<p>
 	<label for="appointmentAddress">Appointment Address:&nbsp&nbsp&nbsp</label>	
 	<input type="text" name="appointmentAddress" id="appointmentAddress">
 	<p>
-	<label for="appointmentPhone">Appointment Phone:&nbsp&nbsp&nbsp</label>	
+	<label for="appointmentPhone">Appointment Phone:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>	
 	<input type="text" name="appointmentPhone" id="appointmentPhone">	
     <p>
-    <label for="appointmentPhone">Returning Client:&nbsp&nbsp&nbsp</label>	
+    <label for="appointmentPhone">Returning Client:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>	
   	<select name="returningPatient">
     	<option value="NULL"></option>
     	<option value="YES">YES</option>
@@ -179,10 +184,9 @@
   </textarea>
 	<br>
 	<br>
-	<input type="submit" value="Save Reservation">
-	<input type="button" value="cancel" onclick="location.href='index.html';">
+	<input type="button" value="Save Reservation" onclick="location.href='saveform.html';">
+	<input type="button" value="Cancel" onclick="location.href='index.html';">
 
-</div>
 </form>
 </body>
 

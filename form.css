@@ -2,9 +2,12 @@ body{
 	background-color: orange;
 }
 
-title{
-	font: 50px;
-	position: fixed;
+.title{
+	font: 100px;
+}
+
+.test{
+	font: 100px
 }
 
 #formWrapper input[name="clientname"{
