@@ -1,0 +1,18 @@
+body{
+	background-color: orange;
+}
+
+test{
+	font: 24px;
+	position: fixed;
+}
+
+.rectangle{
+	border: 1px solid #c2c2c2;
+   	margin: 0px;
+   	width: 500000px;
+  	height: 261.03999999999996px;
+   	position: absolute;
+   	top: 44.960000000000036px;
+   	left: 86px;
+}
