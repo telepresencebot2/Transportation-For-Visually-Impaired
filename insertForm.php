@@ -1,3 +1,43 @@
+<?php
+
+if(isset($_POST['fName'])&&($_POST['fName']!=null)) {
+	
+	define("HOST", "localhost");
+	define("DATABASE", "db1");
+	// magical
+	define("U_R", "aidb_magic");
+	define("P_R", "AGQS2Z3KdrEyQ2EE");
+	$dbMAGIC = new PDO('mysql:host=localhost;dbname=db1', U_R, P_R);
+/*
+	$time = time();
+	$insert = $dbMAGIC=>prepare('INSERT INTO reservations (clientId, location, phone, pickDate, pickTime, pickAddr1, pickAddr2, pickCity, pickZip, destAddr1, destAddr2, destCity, destZip, description, signature, driverId, vehicleId, timestamp) VALUES (:clientId, :location, :phone, :pickDate, :pickTime, :pickAddr1, :pickAddr2, :pickCity, :pickZip, :destAddr1, :destAddr2, :destCity, :destZip, :description, :signature, :driverId, :vehicleId, :timestamp');
+	$insert=>bindParam(':clientID', $_POST['']);
+	$insert=>bindParam(':location', $_POST['']);
+	$insert=>bindParam(':phone', $_POST['']);
+	$insert=>bindParam(':pickDate', $_POST['']);
+	$insert=>bindParam(':pickTime', $_POST['']);
+	$insert=>bindParam(':pickAddr1', $_POST['']);
+	$insert=>bindParam(':pickAddr2', $_POST['']);
+	$insert=>bindParam(':pickCity', $_POST['']);
+	$insert=>bindParam(':pickZip', $_POST['']);
+	$insert=>bindParam(':destAddr1', $_POST['destAddress1']);
+	$insert=>bindParam(':destAddr2', $_POST['destAddress2']);
+	$insert=>bindParam(':destCity', $_POST['destCity']);
+	$insert=>bindParam(':destZip', $_POST['destZip']);
+	$insert=>bindParam(':description', $_POST['message']);
+	$insert=>bindParam(':signature', $_POST['signature']);
+	$insert=>bindParam(':driverId', 0);
+	$insert=>bindParam(':vehicleId', 0);
+	$insert=>bindParam(':timestamp', $time);
+*/
+	//array(24) { ["clientname"]=> string(1) "a" ["disability"]=> string(5) "Blind" ["waiver"]=> string(1) "a" ["tickets"]=> string(1) "1" ["emergencyname"]=> string(1) "a" ["emergencynumber"]=> string(1) "a" ["pickupName"]=> string(1) "a" ["pickupNumber"]=> string(1) "a" ["pickupTime"]=> string(1) "a" ["day"]=> string(2) "13" ["month"]=> string(2) "10" ["year"]=> string(4) "2015" ["appointmentTime"]=> string(1) "a" ["appointmentPhone"]=> string(1) "a" ["newPatient"]=> string(3) "YES" ["paperAssistance"]=> string(3) "YES" ["destAddress1"]=> string(1) "a" ["destAddress2"]=> string(1) "a" ["destCity"]=> string(1) "a" ["destZip"]=> string(1) "a" ["driverName"]=> string(1) "a" ["vehicle"]=> string(1) "a" ["message"]=> string(2) "	a" ["signature"]=> string(3) " a" }
+	
+} else if(isset($_POST['appointmentPhone'])&&($_POST['appointmentPhone']!=null)) {
+	var_dump($_POST);
+} else {
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -235,7 +275,7 @@ img{
 <body>
 
 
-<form action="action_page.php">
+<form action="insertForm.php" method="post">
 	<!-- Initial Client Info -->
 	<div id="intitialInfo">
 		<label for="clientname" id ="firstLabel">Client Name: </label>	
@@ -281,8 +321,8 @@ img{
 		    <p id="Typical">PICKUP INFORMATION:</p>
 		    
 		    <div id="pickupInfo">
-				<label for="locationName" id="firstLabel">Location Name:</label>	
-				<input type="text" name="locationName" id="firstField">
+				<label for="pickupName" id="firstLabel">Location Name:</label>	
+				<input type="text" name="pickupName" id="firstField">
 				<p>
 				<label for="pickupNumber" id="firstLabel">Phone Number:</label>	
 				<input type="text" name="pickupNumber" id="firstField">
@@ -396,19 +436,19 @@ img{
 
 	    </div>
 	    
-	    <!--Miscellanious Block-->
+	    <!--Location Block-->
 		<div id="rightaddressBlock">
-			<label id="addressTitle">Location:</label>
+			<label id="destinationName">Location:</label>
 			<p>
-			<label for="appointmentAddress1">Address:</label>	
-			<input type="text" name="appointmentAddress1" id="street1">
+			<label for="destAddress1">Address:</label>	
+			<input type="text" name="destAddress1" id="street1">
 			<p>
-			<input type="text" name="appointmentAddress2" id="street2">
+			<input type="text" name="destAddress2" id="street2">
 			<p>
-			<label for="appointmentAddress" id="cityLabel">City:</label>
-			<input type="text" name="city" id="city">
-			<label for="postalCode" id="postalLabel">Zip-Code:</label>
-			<input type="text" name="postalCode" id="postalCode">
+			<label for="destCity" id="cityLabel">City:</label>
+			<input type="text" name="destCity" id="city">
+			<label for="destZip" id="destZipLabel">Zip-Code:</label>
+			<input type="text" name="destZip" id="destZip">
 		</div>
 	</div>
 	
@@ -427,11 +467,11 @@ img{
   
 
     <p id="Typical">PLEASE INITAL AND DATE BELOW:</p>
-  <textarea name="message" rows="1" cols="15">
+  <textarea name="signature" rows="1" cols="15">
   </textarea>
 	<br>
 	<br>
-	<input type="button" value="Save Reservation" onclick="location.href='calendarDemo.html';">
+	<input type="submit" value="Save Reservation">
 	<input type="button" value="Cancel" onclick="location.href='calendarDemo.html';">
 
 
@@ -446,3 +486,6 @@ img{
 
 </html>
 
+<?php
+}
+?>
