@@ -22,14 +22,14 @@
 			eventLimit: true, // allow "more" link when too many events
 			events: [
 				{
-					title: 'Meeting',
-					url: 'printOutForm.html',
+					title: 'Meeting', // Location
+					url: 'printOutForm.php?id=1',
 					start: '2015-10-05T10:30:00',
 					end: '2015-02-12T11:10:00'
 				},
 				{
 					title: 'Ludacris Concert Visit',
-					url: 'printOutForm.html',
+					url: 'printOutForm.php?id=2',
 					start: '2015-10-05T11:20:00',
 					end: '2015-10-05T11:50:00'
 				},
@@ -41,7 +41,7 @@
 				},
 				{
 					title: 'Montgmonery Museum Visit',
-					url: 'printOutForm.html',
+					url: 'printOutForm.php?id=4',
 					start: '2015-10-05T15:20:00',
 					end: '2015-10-05T16:50:00'
 				}
@@ -73,7 +73,7 @@
 </style>
 </head>
 <head>
-	<input type="button" value="New Reservation" onclick="location.href='insertForm.html';" id="resevationbutton">
+	<input type="button" value="New Reservation" onclick="location.href='insertForm.php';" id="resevationbutton">
 </head>
 <body>
 	<div id='calendar'></div>

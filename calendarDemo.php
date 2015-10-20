@@ -4,23 +4,24 @@
 define("HOST", "localhost");
 define("DATABASE", "db1");
 // magical
-define("U_R", "aidb_magic");
-define("P_R", "AGQS2Z3KdrEyQ2EE");
+define("U_R", "transMAGIC");
+define("P_R", "bFYRFWc2jupQ9xbK");
 $dbMAGIC = new PDO('mysql:host=localhost;dbname=db1', U_R, P_R);
 
 $haveResult = false;
 if(isset($_GET['id'])) {
 	$resId = $_GET['id'];
-	$test = $dbMAGIC=>prepare("SELECT * FROM reservations WHERE id = :id LIMIT 1");
-	$test=>bindParam(':id', $resId, PDO::PARAM_INT);
-	if(count($test)>0) {
-		$test = $test[0];
+	$reserve = $dbMAGIC->prepare("SELECT * FROM reservations WHERE id = :id LIMIT 1");
+	$reserve->bindParam(':id', $resId, PDO::PARAM_INT);
+	$reserve->execute();
+	$reserve = $reserve->fetchAll();
+	if(count($reserve)>0) {
+		$reserve = $reserve[0];
 		$haveResult = true;
 	}
 }
 
 ?>
-
 
 
 <!DOCTYPE html>
@@ -47,15 +48,15 @@ if(isset($_GET['id'])) {
 			eventLimit: true, // allow "more" link when too many events
 			events: [
 				{
-					title: 'Meeting',
-					url: 'printOutForm.html',
+					title: 'Meeting', // Location
+					url: <?php echo("'printOutForm.php?id=".$reserve['id'].' '"'"); ?>,
 					start: '2015-10-05T10:30:00',
 					end: '2015-02-12T11:10:00'
 				},
 				{
 					title: 'Ludacris Concert Visit',
-					url: 'printOutForm.html',
-					start: '2015-10-05T11:20:00',
+					url: 'printOutForm.php?id=2',
+					start: '2015-10-05T10:30:00',
 					end: '2015-10-05T11:50:00'
 				},
 				{
@@ -66,7 +67,7 @@ if(isset($_GET['id'])) {
 				},
 				{
 					title: 'Montgmonery Museum Visit',
-					url: 'printOutForm.html',
+					url: 'printOutForm.php?id=4',
 					start: '2015-10-05T15:20:00',
 					end: '2015-10-05T16:50:00'
 				}
@@ -98,7 +99,7 @@ if(isset($_GET['id'])) {
 </style>
 </head>
 <head>
-	<input type="button" value="New Reservation" onclick="location.href='insertForm.html';" id="resevationbutton">
+	<input type="button" value="New Reservation" onclick="location.href='insertForm.php';" id="resevationbutton">
 </head>
 <body>
 	<div id='calendar'></div>

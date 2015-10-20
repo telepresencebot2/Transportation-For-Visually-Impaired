@@ -49,7 +49,9 @@ h2{
 	position: relative;
 	top: 10px;
 	font-size: 24px;
+	top: 5px;
 	border-bottom: 1px solid black; 
+	color: blue; 
 }
 #labels{
 	display: inline;
@@ -88,7 +90,9 @@ h2{
 	position: relative;
 	height: 100%;
 	font-size: 24px;
+	top: 5px;
 	border-bottom: 1px solid black; 
+	color: blue; 
 }
 #emerContactLabels{
 	display: inline;
@@ -105,7 +109,9 @@ h2{
 	position: relative;
 	height: 100%;
 	font-size: 24px;
+	top: 5px;
 	border-bottom: 1px solid black; 
+	color: blue; 
 }
 #emerContactPhoneLabels{
 	display: inline;
@@ -122,7 +128,9 @@ h2{
 	position: relative;
 	height: 100%;
 	font-size: 24px;
+	top: 5px;
 	border-bottom: 1px solid black; 
+	color: blue; 
 }
 #pickUpBlock{
 	position: relative;
@@ -144,7 +152,9 @@ h2{
 	position: relative;
 	height: 100%;
 	font-size: 24px;
+	top: 5px;
 	border-bottom: 1px solid black; 
+	color: blue;
 }
 #pickUpNumLabels{
 	display: inline;
@@ -161,7 +171,9 @@ h2{
 	position: relative;
 	height: 100%;
 	font-size: 24px;
+	top: 5px;
 	border-bottom: 1px solid black; 
+	color: blue;
 }
 #pickUpTimeLabels{
 	display: inline;
@@ -195,7 +207,9 @@ h2{
 	position: relative;
 	height: 100%;
 	font-size: 24px;
+	top: 5px;
 	border-bottom: 1px solid black; 
+	color: blue;
 }
 #appAddressBlock{
 	position: relative;
@@ -218,7 +232,9 @@ h2{
 	position: relative;
 	height: 100%;
 	font-size: 24px;
+	top: 5px;
 	border-bottom: 1px solid black; 
+	color: blue;
 }
 #phoneNumLabel{
 	display: inline;
@@ -235,7 +251,9 @@ h2{
 	position: relative;
 	height: 100%;
 	font-size: 24px;
+	top: 5px;
 	border-bottom: 1px solid black; 
+	color: blue;
 }
 #reasonLabel{
 	display: inline;
@@ -252,7 +270,9 @@ h2{
 	position: relative;
 	height: 100%;
 	font-size: 24px;
+	top: 5px;
 	border-bottom: 1px solid black; 
+	color: blue;
 }
 #newPatientLabel{
 	float: left;
@@ -270,7 +290,7 @@ h2{
 }
 #needAssistanceText{
 	float: left;
-	width: 30;
+	width: 30%;
 	position: relative;
 	font-size: 24px;
 	top: 10px;	
@@ -280,7 +300,7 @@ h2{
 	position: absolute;
 	width: 670px;
 	height: 30px;
-	top: 712px;
+	top: 734px;
 }
 #driverLabel{
 	display: inline;
@@ -298,7 +318,9 @@ h2{
 	top: 10px;
 	height: 75%;
 	font-size: 24px;
+	top: 5px;
 	border-bottom: 1px solid black; 
+	color: blue;
 }
 #vehicleText{
 	display: inline;
@@ -308,7 +330,9 @@ h2{
 	top: 10px;
 	height: 75%;
 	font-size: 24px;
+	top: 5px;
 	border-bottom: 1px solid black; 
+	color: blue; 
 }
 #vehicleLabel{
 	display: inline;
@@ -322,7 +346,7 @@ h2{
 	position: absolute;
 	width: 670px;
 	height: 30px;
-	top: 740px;
+	top: 760px;
 }
 #notesLabel{
 	display: inline;
@@ -350,13 +374,15 @@ h2{
 	top: 10px;
 	font-size: 24px;
 	height: 90%;
+	top: 5px;
 	border-bottom: 1px solid black; 
+	color: blue; 
 }
 #verifyBlock{
 	position: absolute;
 	width: 670px;
 	height: 30px;
-	top: 840px;
+	top: 860px;
 }
 #sigLabel{
 	display: inline;
@@ -374,7 +400,9 @@ h2{
 	top: 10px;
 	height: 75%;
 	font-size: 24px;
+	top: 5px;
 	border-bottom: 1px solid black; 
+	color: blue; 
 }
 #dateText{
 	display: inline;
@@ -384,7 +412,9 @@ h2{
 	top: 10px;
 	height: 75%;
 	font-size: 24px;
+	top: 5px;
 	border-bottom: 1px solid black; 
+	color: blue; 
 }
 #dateLabel{
 	display: inline;
@@ -432,7 +462,7 @@ h2{
 
 		<div id = "newField">
 			<label id ="emerContactPhoneLabels">Emergency Contact's Phone #: </label>	
-			<label id="emerContactPhoneText"></label>
+			<label id="emerContactPhoneText"><?php if($haveResult){echo($reserve['phone']);} ?></label>
 		</div>
 		<div id = "pickUpBlock">
 			<div id="newField">
