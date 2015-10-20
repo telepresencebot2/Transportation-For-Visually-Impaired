@@ -436,22 +436,22 @@ h2{
 		<div id = "firstBlock">
 			<div id = "newField">
 				<div id ="firstFourLabels">Client Name: </div>	
-				<div id="firstFourText"></div>
+				<div id="firstFourText"><?php if($haveResult){echo($reserve['name']);} ?></div>
 			</div>
 			
 			<div id = "newField">
 				<label id ="firstFourLabels">Disability: </label>	
-				<label id="firstFourText"></label>
+				<label id="firstFourText"><?php if($haveResult){echo($reserve['disability']);} ?></label>
 			</div>
 			
 			<div id = "newField">
 				<label id ="firstFourLabels">Waiver: </label>	
-				<label id="firstFourText"></label>
+				<label id="firstFourText"><?php if($haveResult){echo($reserve['waiver']);} ?></label>
 			</div>
 			
 			<div id = "newField">
 				<label id ="firstFourLabels">Tickets: </label>	
-				<label id="firstFourText"></label>
+				<label id="firstFourText"><?php if($haveResult){echo($reserve['ticket']);} ?></label>
 			</div>
 		</div>
 		
