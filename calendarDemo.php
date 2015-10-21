@@ -41,30 +41,32 @@ $reserve = $reserve->fetchAll();
 			defaultDate: '<?php echo date("Y-m-d") ?>',
 			editable: true,
 			eventLimit: true, // allow "more" link when too many events
+			// 
+				// foreach ($reserve as $re)
+				// {
+					// $event = new events();
+					// $event->title = $re['location'];
+					// $event->start = '2015-10-10';
+// 					
+				// }
+			// 
 			events: [
-				{
-					title: '<?php echo $reserve[0]['location'] ?>',
-					url: '<?php echo "printOutForm.php?id=" . $reserve[0]['id']; ?>',
-					start: '<?php echo $reserve[0]['pickDate']."T".$reserve[0]['pickTime']; ?>',
-					color: '<?php echo $reserve[0]['vehicleColor'] ?>'
-				},
-				{
-					title: '<?php echo $reserve[1]['location'] ?>',
-					url: '<?php echo "printOutForm.php?id=" . $reserve[1]['id']; ?>',
-					start: '<?php echo $reserve[1]['pickDate']."T".$reserve[1]['pickTime']; ?>',
-					color: '<?php echo $reserve[1]['vehicleColor'] ?>'
-				},
-				{
-					title: 'Birmingham Trip',
-					url: 'printOutForm.php?id=1',
-					start: '2015-10-05T13:20:00',
-					end: '2015-10-05T14:50:00'
-				},
-				{
-					title: 'Montgmonery Museum Visit',
-					url: 'printOutForm.php?id=4',
-					start: '2015-10-05T15:20:00',
-					end: '2015-10-05T16:50:00'
+				<?php
+					$lastreserve = end($reserve);
+					foreach ($reserve as $re)
+					{
+						echo "{";
+						echo "title: '".$re['location']."',";
+						echo "url: 'printOutForm.php?id=" . $re['id']. "',";
+						echo "start: '".$re['pickDate']."T".$re['pickTime']."',";
+						echo "color: '".$re['vehicleColor']."',";
+						if ($re == $lastreserve)
+						{
+							break;
+						}
+						echo "},";
+					}
+				 ?>
 				}
 			]
 		});
