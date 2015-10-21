@@ -8,18 +8,13 @@ define("U_R", "transMAGIC");
 define("P_R", "bFYRFWc2jupQ9xbK");
 $dbMAGIC = new PDO('mysql:host=localhost;dbname=db1', U_R, P_R);
 
-$haveResult = false;
-if(isset($_GET['id'])) {
-	$resId = $_GET['id'];
-	$reserve = $dbMAGIC->prepare("SELECT * FROM reservations WHERE id = :id LIMIT 1");
-	$reserve->bindParam(':id', $resId, PDO::PARAM_INT);
-	$reserve->execute();
-	$reserve = $reserve->fetchAll();
-	if(count($reserve)>0) {
-		$reserve = $reserve[0];
-		$haveResult = true;
-	}
-}
+$reserve = $dbMAGIC->prepare("SELECT * FROM reservations");
+$reserve->execute();
+$reserve = $reserve->fetchAll();
+// if(count($reserve)>0) {
+	// $reserve = $reserve[0];
+	// $haveResult = true;
+// }
 
 ?>
 
@@ -43,25 +38,25 @@ if(isset($_GET['id'])) {
 				center: 'title',
 				right: 'month,basicWeek,basicDay'
 			},
-			defaultDate: '2015-10-04',
+			defaultDate: '<?php echo date("Y-m-d") ?>',
 			editable: true,
 			eventLimit: true, // allow "more" link when too many events
 			events: [
 				{
-					title: 'Meeting', // Location
-					url: <?php echo("'printOutForm.php?id=".$reserve['id'].' '"'"); ?>,
-					start: '2015-10-05T10:30:00',
-					end: '2015-02-12T11:10:00'
+					title: '<?php echo $reserve[0]['location'] ?>',
+					url: '<?php echo "printOutForm.php?id=" . $reserve[0]['id']; ?>',
+					start: '<?php echo $reserve[0]['pickDate']."T".$reserve[0]['pickTime']; ?>',
+					color: '<?php echo $reserve[0]['vehicleColor'] ?>'
 				},
 				{
-					title: 'Ludacris Concert Visit',
-					url: 'printOutForm.php?id=2',
-					start: '2015-10-05T10:30:00',
-					end: '2015-10-05T11:50:00'
+					title: '<?php echo $reserve[1]['location'] ?>',
+					url: '<?php echo "printOutForm.php?id=" . $reserve[1]['id']; ?>',
+					start: '<?php echo $reserve[1]['pickDate']."T".$reserve[1]['pickTime']; ?>',
+					color: '<?php echo $reserve[1]['vehicleColor'] ?>'
 				},
 				{
 					title: 'Birmingham Trip',
-					url: 'printOutForm.html',
+					url: 'printOutForm.php?id=1',
 					start: '2015-10-05T13:20:00',
 					end: '2015-10-05T14:50:00'
 				},
@@ -107,3 +102,4 @@ if(isset($_GET['id'])) {
 
 </body>
 </html>
+

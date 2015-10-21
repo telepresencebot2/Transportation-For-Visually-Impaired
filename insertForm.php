@@ -288,7 +288,7 @@ img{
 	    	<option value="Blind">Blind</option>
 	    	<option value="LV">Low Vision</option>
 	    	<option value="Deaf">Deaf</option>
-	    	<option value="HOF">HOF</option>
+	    	<option value="HOF">HOH</option>
 	    	<option value="DB">Deaf/Blind</option>
 	  	</select>
 		<p>

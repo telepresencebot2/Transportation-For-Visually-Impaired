@@ -51,7 +51,7 @@ h2{
 	font-size: 24px;
 	top: 5px;
 	border-bottom: 1px solid black; 
-	color: blue; 
+	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
 }
 #labels{
 	display: inline;
@@ -92,7 +92,7 @@ h2{
 	font-size: 24px;
 	top: 5px;
 	border-bottom: 1px solid black; 
-	color: blue; 
+	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
 }
 #emerContactLabels{
 	display: inline;
@@ -111,7 +111,7 @@ h2{
 	font-size: 24px;
 	top: 5px;
 	border-bottom: 1px solid black; 
-	color: blue; 
+	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
 }
 #emerContactPhoneLabels{
 	display: inline;
@@ -130,7 +130,7 @@ h2{
 	font-size: 24px;
 	top: 5px;
 	border-bottom: 1px solid black; 
-	color: blue; 
+	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
 }
 #pickUpBlock{
 	position: relative;
@@ -154,7 +154,7 @@ h2{
 	font-size: 24px;
 	top: 5px;
 	border-bottom: 1px solid black; 
-	color: blue;
+	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>;
 }
 #pickUpNumLabels{
 	display: inline;
@@ -173,7 +173,7 @@ h2{
 	font-size: 24px;
 	top: 5px;
 	border-bottom: 1px solid black; 
-	color: blue;
+	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>;
 }
 #pickUpTimeLabels{
 	display: inline;
@@ -190,7 +190,9 @@ h2{
 	position: relative;
 	height: 100%;
 	font-size: 24px;
+	top: 5px;
 	border-bottom: 1px solid black; 
+	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>;
 }
 #appointmentLabels{
 	display: inline;
@@ -209,7 +211,7 @@ h2{
 	font-size: 24px;
 	top: 5px;
 	border-bottom: 1px solid black; 
-	color: blue;
+	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>;
 }
 #appAddressBlock{
 	position: relative;
@@ -234,7 +236,7 @@ h2{
 	font-size: 24px;
 	top: 5px;
 	border-bottom: 1px solid black; 
-	color: blue;
+	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>;
 }
 #phoneNumLabel{
 	display: inline;
@@ -253,7 +255,7 @@ h2{
 	font-size: 24px;
 	top: 5px;
 	border-bottom: 1px solid black; 
-	color: blue;
+	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>;
 }
 #reasonLabel{
 	display: inline;
@@ -272,7 +274,7 @@ h2{
 	font-size: 24px;
 	top: 5px;
 	border-bottom: 1px solid black; 
-	color: blue;
+	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>;
 }
 #newPatientLabel{
 	float: left;
@@ -300,7 +302,7 @@ h2{
 	position: absolute;
 	width: 670px;
 	height: 30px;
-	top: 734px;
+	top: 738px;
 }
 #driverLabel{
 	display: inline;
@@ -316,11 +318,10 @@ h2{
 	width: 30%;
 	position: relative;
 	top: 10px;
-	height: 75%;
+	height: 100%;
 	font-size: 24px;
-	top: 5px;
 	border-bottom: 1px solid black; 
-	color: blue;
+	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>;
 }
 #vehicleText{
 	display: inline;
@@ -328,11 +329,10 @@ h2{
 	float: right;
 	position: relative;
 	top: 10px;
-	height: 75%;
+	height: 100%;
 	font-size: 24px;
-	top: 5px;
 	border-bottom: 1px solid black; 
-	color: blue; 
+	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
 }
 #vehicleLabel{
 	display: inline;
@@ -346,7 +346,7 @@ h2{
 	position: absolute;
 	width: 670px;
 	height: 30px;
-	top: 760px;
+	top: 770px;
 }
 #notesLabel{
 	display: inline;
@@ -364,7 +364,8 @@ h2{
 	top: 10px;
 	font-size: 24px;
 	height: 80%;
-	border-bottom: 1px solid black; 	
+	border-bottom: 1px solid black; 
+	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 	
 }
 #notesbotText{
 	display: inline;
@@ -376,7 +377,7 @@ h2{
 	height: 90%;
 	top: 5px;
 	border-bottom: 1px solid black; 
-	color: blue; 
+	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
 }
 #verifyBlock{
 	position: absolute;
@@ -402,7 +403,7 @@ h2{
 	font-size: 24px;
 	top: 5px;
 	border-bottom: 1px solid black; 
-	color: blue; 
+	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
 }
 #dateText{
 	display: inline;
@@ -414,7 +415,7 @@ h2{
 	font-size: 24px;
 	top: 5px;
 	border-bottom: 1px solid black; 
-	color: blue; 
+	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
 }
 #dateLabel{
 	display: inline;
@@ -481,12 +482,12 @@ h2{
 		
 		<div id = "newField">
 			<label id ="pickUpTimeLabels">Pick-up Time: </label>	
-			<label id="pickUpTimeText"></label>
+			<label id="pickUpTimeText"><?php if($haveResult){echo($reserve['pickTime']);} ?></label>
 		</div>
 		
 		<div id = "newField">
 			<label id ="appointmentLabels">Appointment Date: </label>	
-			<label id="appointmentText"></label>
+			<label id="appointmentText"><?php if($haveResult){echo($reserve['pickDate']);} ?></label>
 		</div>
 		
 		<div id = "newField">
@@ -496,15 +497,15 @@ h2{
 		
 		<div id = "appAddressBlock">
 			<label id ="appAddressLabels">Address of Appointment: </label>	
-			<label id="appAddressText"></label>
+			<label id="appAddressText"><?php if($haveResult){echo($reserve['destAddr1']);} ?></label>
 			<div id = "newField">
-				<label id="appAddressText"></label>
+				<label id="appAddressText"><?php if($haveResult){echo($reserve['destAddr2']);} ?></label>
 			</div>
 			<div id = "newField">
-				<label id="appAddressText"></label>
+				<label id="appAddressText"><?php if($haveResult){echo($reserve['destCity']);} ?></label>
 			</div>
 			<div id = "newField">
-				<label id="appAddressText"></label>
+				<label id="appAddressText"><?php if($haveResult){echo($reserve['destZip']);} ?></label>
 			</div>
 			<div id = "newField">
 				<label id="appAddressText"></label>
@@ -527,19 +528,19 @@ h2{
 
 		<div id = "newField">
 			<label id ="needAssistanceLabel">Needs Assistance with Paperwork: </label>	
-			<label id="needAssistanceText"></label>
+			<label id="needAssistanceText"><?php if($haveResult){echo($reserve['assistance']);} ?></label>
 		</div>
 
 		<div id = "driverBlock">
 			<label id ="driverLabel">Driver: </label>	
-			<label id="driverText"></label>
-			<label id="vehicleText"></label>
+			<label id="driverText"><?php if($haveResult){echo($reserve['driverName']);} ?></label>
+			<label id="vehicleText"><?php if($haveResult){echo($reserve['vehicleColor']);} ?></label>
 			<label id ="vehicleLabel">Vehicle: </label>	
 		</div>
 		
 		<div id = "notesBlock">
 			<label id ="notesLabel">Notes: </label>	
-			<label id="notestopText"></label>
+			<label id="notestopText"><?php if($haveResult){echo($reserve['description']);} ?></label>
 			<label id="notesbotText"></label>
 			<label id="notesbotText"></label>
 		</div>
