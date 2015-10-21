@@ -87,21 +87,26 @@ $reserve = $reserve->fetchAll();
 		max-width: 900px;
 		margin: 0 auto;
 	}
-	#resevationbutton{
-		float: right;
-		width: 100px;
-		height:  200px;
+	footer{
+	    text-align: center;
+	    margin-left: auto;
+	    margin-right: auto;
 	}
-
+	#reservationButton{
+		max-width: 900px;
+		font-size: 900px;
+		margin: 0 auto;
+	}
 </style>
-</head>
-<head>
-	<input type="button" value="New Reservation" onclick="location.href='insertForm.php';" id="resevationbutton">
 </head>
 <body>
 	<div id='calendar'></div>
 
 
 </body>
+
+<footer>
+	<input type="button" id='reservationButton' value="New Reservation" onclick="location.href='insertForm.php';">	
+</footer>
 </html>
 
