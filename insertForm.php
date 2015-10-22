@@ -5,9 +5,10 @@ if(isset($_POST['fName'])&&($_POST['fName']!=null)) {
 	define("HOST", "localhost");
 	define("DATABASE", "db1");
 	// magical
-	define("U_R", "aidb_magic");
-	define("P_R", "AGQS2Z3KdrEyQ2EE");
+	define("U_R", "transMAGIC");
+	define("P_R", "bFYRFWc2jupQ9xbK");
 	$dbMAGIC = new PDO('mysql:host=localhost;dbname=db1', U_R, P_R);
+
 /*
 	$time = time();
 	$insert = $dbMAGIC=>prepare('INSERT INTO reservations (clientId, location, phone, pickDate, pickTime, pickAddr1, pickAddr2, pickCity, pickZip, destAddr1, destAddr2, destCity, destZip, description, signature, driverId, vehicleId, timestamp) VALUES (:clientId, :location, :phone, :pickDate, :pickTime, :pickAddr1, :pickAddr2, :pickCity, :pickZip, :destAddr1, :destAddr2, :destCity, :destZip, :description, :signature, :driverId, :vehicleId, :timestamp');
