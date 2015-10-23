@@ -190,17 +190,17 @@ img{
 }
 #city{
 	position: relative;
-	left: 25px;
-	width: 100px;
+	left: 24px;
+	width: 150px;
 }
-#postalCode{
+#destZip{
 	position: relative;
-	left:  92px;
+	left:  40px;
 	width: 50px;
 }
-#postalLabel{
+#destZipLabel{
 	position: relative;
-	left: 80px;
+	left: 30px;
 }
 /* Driver Section*/
 #driverInfo{
@@ -414,12 +414,12 @@ img{
 		<input type="text" name="appointmentTime" id="appointmentTimeText">
 		<p>
 			
-		<!--Address Block-->
+		<!--PatientInfo Block-->
 		<div id="leftaddressBlock">
 			<label id="addressTitle">Patient Information:</label>
 			<p>
 			<label for="appointmentPhone">Phone:</label>	
-			<input type="text" name="appointmentPhone">	
+			<input type="text"  name="appointmentPhone">	
 			<p>		    	
 		    <label for="newPatient">New Patient:</label>	
 		  	<select name="newPatient">
