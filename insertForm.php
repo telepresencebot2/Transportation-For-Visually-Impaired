@@ -1,17 +1,61 @@
 <?php
 
-if(isset($_POST['fName'])&&($_POST['fName']!=null)) {
+//if(isset($_POST['fName'])&&($_POST['fName']!=null)) {
+	if (isset($_POST['submit'])){
+		define("HOST", "localhost");
+		define("DATABASE", "db1");
+		// magical
+		define("U_R", "transMAGIC");
+		define("P_R", "bFYRFWc2jupQ9xbK");
+		$dbMAGIC = new PDO('mysql:host=localhost;dbname=db1', U_R, P_R);
+		if ($dbMagic->connect_error){
+			die("Connection failed: ". $dbMagic->connect_error);
+		}
+		// prepare date
+		$date = $_POST[year]."-".$_POST[month]."-".$_POST[day];
+		//prepare time
+		if ($_POST[pickUpAP] == '2'){
+			$_POST[pickUpHour] = $_POST[pickUpHour] + 12;
+		} else{
+			if ($_POST[pickUpHour]){
+				$_POST[pickUpHour] = '0'.$_POST[pickUpHour];
+			}
+		}
+		if ($_POST[pickUpMin] == 0){
+			$_POST[pickUpMin] = '00';	
+		}
+		$time = $_POST[pickUpHour].":".$_POST[pickUpMin].":00";
+		
 	
-	define("HOST", "localhost");
-	define("DATABASE", "db1");
-	// magical
-	define("U_R", "transMAGIC");
-	define("P_R", "bFYRFWc2jupQ9xbK");
-	$dbMAGIC = new PDO('mysql:host=localhost;dbname=db1', U_R, P_R);
-
+		
+		$sql = "INSERT INTO reservations 
+		(name, disability, waiver, ticket, pickDate, pickTime, pickAddr1, pickAddr2, pickCity, pickZip, location,
+		destAddr1, destAddr2, destCity, destZip, driverName, vehicleColor)
+		VALUES 
+		('$_POST[clientname]', '$_POST[disability]','$_POST[waiver]','$_POST[tickets]','$date', '$time', 
+		'$_POST[pickUpAddress1]', '$_POST[pickUpAddress2]', '$_POST[pickUpCity]','$_POST[pickUpZip]',
+		'$_POST[destName]','$_POST[destAddress1]','$_POST[destAddress2]','$_POST[destCity]','$_POST[destZip]',
+		'$_POST[driverName]','$_POST[vehicle]')";
+		$dbMAGIC->query($sql);
+		
+		
+		// $testsql = $dbMagic->prepare($sql);
+		// $reserve->execute();
+		 // if ($dbMagic->query($sql) == TRUE){
+			 // echo "New Record created successfully";
+		 // } else {
+			 // echo "Error: " .$sql. "<br>" . $dbMagic->error;
+		// }
+	}
+/*
+	$insert = $dbMAGIC->prepare('INSERT INTO reservations (clientId) VALUES (:clientname)');
+	$insert->bindParam(':clientname', $_POST['']);
+	$insert->execute();
+*/
 /*
 	$time = time();
-	$insert = $dbMAGIC=>prepare('INSERT INTO reservations (clientId, location, phone, pickDate, pickTime, pickAddr1, pickAddr2, pickCity, pickZip, destAddr1, destAddr2, destCity, destZip, description, signature, driverId, vehicleId, timestamp) VALUES (:clientId, :location, :phone, :pickDate, :pickTime, :pickAddr1, :pickAddr2, :pickCity, :pickZip, :destAddr1, :destAddr2, :destCity, :destZip, :description, :signature, :driverId, :vehicleId, :timestamp');
+	$insert = $dbMAGIC=>prepare('INSERT INTO reservations (clientId, location, phone, pickDate, pickTime, pickAddr1, pickAddr2, pickCity, pickZip, destAddr1, destAddr2, destCity, destZip, description, signature, driverId, vehicleId, timestamp) 
+ * VALUES (:clientId, :location, :phone, :pickDate, :pickTime, :pickAddr1, :pickAddr2, :pickCity, :pickZip, :destAddr1, :destAddr2, :destCity, :destZip, :description, :signature, :driverId, :vehicleId, :timestamp');
 	$insert=>bindParam(':clientID', $_POST['']);
 	$insert=>bindParam(':location', $_POST['']);
 	$insert=>bindParam(':phone', $_POST['']);
@@ -33,9 +77,9 @@ if(isset($_POST['fName'])&&($_POST['fName']!=null)) {
 */
 	//array(24) { ["clientname"]=> string(1) "a" ["disability"]=> string(5) "Blind" ["waiver"]=> string(1) "a" ["tickets"]=> string(1) "1" ["emergencyname"]=> string(1) "a" ["emergencynumber"]=> string(1) "a" ["pickupName"]=> string(1) "a" ["pickupNumber"]=> string(1) "a" ["pickupTime"]=> string(1) "a" ["day"]=> string(2) "13" ["month"]=> string(2) "10" ["year"]=> string(4) "2015" ["appointmentTime"]=> string(1) "a" ["appointmentPhone"]=> string(1) "a" ["newPatient"]=> string(3) "YES" ["paperAssistance"]=> string(3) "YES" ["destAddress1"]=> string(1) "a" ["destAddress2"]=> string(1) "a" ["destCity"]=> string(1) "a" ["destZip"]=> string(1) "a" ["driverName"]=> string(1) "a" ["vehicle"]=> string(1) "a" ["message"]=> string(2) "	a" ["signature"]=> string(3) " a" }
 	
-} else if(isset($_POST['appointmentPhone'])&&($_POST['appointmentPhone']!=null)) {
-	var_dump($_POST);
-} else {
+// } else if(isset($_POST['appointmentPhone'])&&($_POST['appointmentPhone']!=null)) {
+	// var_dump($_POST);
+// } else {
 
 ?>
 
@@ -63,185 +107,183 @@ img{
 
 <body>
 <style>
-/* Generic Label/Text Fields*/
-#firstLabel {
-	position: relative;
-	top: 20px;
-	left: 10px;
-}
-#firstField {
-	position: absolute;
-	margin: 20px;
-	left: 170px;
-}
-#secondLabel {
-	position: absolute;
-	margin: 20px;
-	left: 400px;
-}
-#secondField {
-	position: absolute;
-	margin: 20px;
-	left: 520px;
-}
-/* Generic Label/Text Fields*/
-/* Date Fields*/
-#day{
-	position: relative;
-	top: 10px;
-	left: 10px;
-}
-#dayLabel{
-	position: relative;
-	top: 10px;
-	left: 10px;
-}
-#month{
-	position: relative;
-	top: 10px;
-	left: 10px;
-}
-#monthLabel{
-	position: relative;
-	top: 10px;
-	left: 10px;
-}
-#year{
-	position: relative;
-	top: 10px;
-	left: 10px;
-}
-#yearLabel{
-	position: relative;
-	top: 10px;
-	left: 10px;
-}
-#appointmentTimeLabel{
-	position: relative;
-	top: 10px;
-	left: 60px;
-}
-#appointmentTimeText{
-	position: relative;
-	top: 10px;
-	left: 60px;
-	width: 50px;
-}
-
-
-/* Grouping Conventions*/
-#intitialInfo {
-	position: relative;
-	border: 1px solid black;
-	height: 100px;
-	width: 800px;
-	top: 0;
-}
-#emergencyInfo{
-	position: relative;
-	border: 1px solid black;
-	width: 350px;
-	height: 100px;
-	/*left: 10px;*/
-}
-#pickupInfo{
-	border: 1px solid black;
-	width: 350px;
-	height: 130px;
-}
-#appointmentInfo{
-	border: 1px solid black;
-	width: 800px;
-	height: 200px;
-}
-#timeLabel{
-	position: relative;
-
-}
-/* Address Field */
-#rightaddressBlock{
-	display: inline;
-	float: right;
-	width: 49%;
-	position: relative;
-	top: 10px;
-}
-#leftaddressBlock{
-	position: relative;
-	top: 10px;
-	width: 49%;
-	display: inline;
-	float: left;
-}
-#addressTitle{
-	alignment-baseline: left;
-	font-size: 18px;
-	text-decoration: underline;
-}
-#street1{
-	width: 300px;
-	left: 400px;
-}
-#street2{
-	position: relative;
-	width: 300px;
-	top: 1px;
-	left: 60px;
-}
-#city{
-	position: relative;
-	left: 24px;
-	width: 150px;
-}
-#destZip{
-	position: relative;
-	left:  40px;
-	width: 50px;
-}
-#destZipLabel{
-	position: relative;
-	left: 30px;
-}
-/* Driver Section*/
-#driverInfo{
-	height: 100px;
-	border: 1px solid black;
-	width: 350px;
-}
-
-/* Middle Graphic*/
-#leftgraphic{
-	position: relative;
-	top: 10px;
-	width: 49%;
-	display: inline;
-	float: left;
-}
-#rightgraphic{
-	position: relative;
-	top: 50px;
-	width: 49%;
-	height: 100%;
-	display: inline;
-	float: right;
-	background: url(logo.jpg);
-	background-size: contain;
-    background-repeat: no-repeat;
-
-}
-#middleSection{
-	width: 800px;
-	height: 350px;
-}
-
-/* Headers */
-#Typical{
-/*	left: 10px; */
-	font-size: 16px;
-	text-decoration: underline;
-	font-family: "Times New Roman", Times, serif;
-	font-weight: bold;
-}
+	/* Generic Label/Text Fields*/
+	#firstLabel {
+		position: relative;
+		top: 20px;
+		left: 10px;
+	}
+	#firstField {
+		position: absolute;
+		margin: 20px;
+		left: 170px;
+	}
+	#secondLabel {
+		position: absolute;
+		margin: 20px;
+		left: 400px;
+	}
+	#secondField {
+		position: absolute;
+		margin: 20px;
+		left: 520px;
+	}
+	
+	/* Date Fields*/
+	#day{
+		position: relative;
+		top: 10px;
+		left: 10px;
+	}
+	#dayLabel{
+		position: relative;
+		top: 10px;
+		left: 10px;
+	}
+	#month{
+		position: relative;
+		top: 10px;
+		left: 10px;
+	}
+	#monthLabel{
+		position: relative;
+		top: 10px;
+		left: 10px;
+	}
+	#year{
+		position: relative;
+		top: 10px;
+		left: 10px;
+	}
+	#yearLabel{
+		position: relative;
+		top: 10px;
+		left: 10px;
+	}
+	
+	
+	/* Form Sections In Order*/
+	#intitialInfo {
+		position: relative;
+		border: 1px solid black;
+		height: 100px;
+		width: 800px;
+		top: 0;
+	}
+	#middleSection{
+		width: 800px;
+		height: 370px;
+	}
+	
+	#patientInfo{
+		border: 1px solid black;
+		width: 350px;
+		height: 160px;
+	}
+	#emergencyInfo{
+		position: relative;
+		border: 1px solid black;
+		width: 350px;
+		height: 100px;
+		/*left: 10px;*/
+	}
+	
+	#appointmentInfo{
+		border: 1px solid black;
+		width: 800px;
+		height: 285px;
+	}
+	
+	#driverInfo{
+		height: 100px;
+		border: 1px solid black;
+		width: 350px;
+	}
+	
+	/* MiddleSection BreakDown*/
+	#leftgraphic{
+		position: relative;
+		top: 10px;
+		width: 49%;
+		display: inline;
+		float: left;
+	}
+	#rightgraphic{
+		position: relative;
+		top: 64px;
+		width: 49%;
+		height: 100%;
+		display: inline;
+		float: right;
+		background: url(logo.jpg);
+		background-size: contain;
+	    background-repeat: no-repeat;
+	}
+	
+	/* appointmentInfo Breakdown */
+	#date{
+		margin-left: 200px;
+		margin-right: 200px;
+		height: 20px;
+	}
+	
+	#dropOffBlock{
+		position: relative;
+		display: inline;
+		float: right;
+		top: 10px;
+		width: 49%;
+	}
+	#pickUpBlock{
+		position: relative;
+		display: inline;
+		float: left;
+		top: 10px;
+		left: 10px;
+		width: 49%;
+	
+	}
+	#addressTitle{
+		alignment-baseline: left;
+		font-size: 18px;
+		text-decoration: underline;
+	}
+	#street1{
+		width: 300px;
+		left: 400px;
+	}
+	#street2{
+		position: relative;
+		width: 300px;
+		top: 1px;
+		left: 60px;
+	}
+	#city{
+		position: relative;
+		left: 24px;
+		width: 150px;
+	}
+	#destZip{
+		position: relative;
+		left:  40px;
+		width: 50px;
+	}
+	#destZipLabel{
+		position: relative;
+		left: 30px;
+	}
+	
+	/* Headers */
+	#Typical{
+	/*	left: 10px; */
+		font-size: 16px;
+		text-decoration: underline;
+		font-family: "Times New Roman", Times, serif;
+		font-weight: bold;
+	}
+	#appLabels{
+		text-decoration: underline;
+	}
 </style>	
 </body>
 <!-- <footer>
@@ -313,23 +355,31 @@ img{
 		    <p id="Typical">EMERGENCY CONTACT INFORMATION:</p>
 		    <div id="emergencyInfo">
 				<label for="emergencyname" id="firstLabel">Contact Name:</label>	
-				<input type="text" name="emergencyname" id="firstField">
+				<input type="text" name="emergencyName" id="firstField">
 				<p>
 				<label for="emergencynumber" id="firstLabel">Phone Number:</label>	
-				<input type="text" name="emergencynumber" id="firstField">
+				<input type="text" name="emergencyNumber" id="firstField">
 			</div>
 		
-		    <p id="Typical">PICKUP INFORMATION:</p>
+		    <p id="Typical">PATIENT INFORMATION:</p>
 		    
-		    <div id="pickupInfo">
-				<label for="pickupName" id="firstLabel">Location Name:</label>	
-				<input type="text" name="pickupName" id="firstField">
-				<p>
+		    <div id="patientInfo">
 				<label for="pickupNumber" id="firstLabel">Phone Number:</label>	
-				<input type="text" name="pickupNumber" id="firstField">
+				<input type="text" name="patientNumber" id="firstField">
 				<p>
-				<label for="pickupTime" id="firstLabel">Pickup Time:</label>	
-				<input name="pickupTime" id="firstField">
+				<label for="pickupTime" id="firstLabel">New Patient:</label>	
+		  		<select name="newPatient" id="firstField">
+		    		<option value="NULL"></option>
+		    		<option value="YES">YES</option>
+		    		<option value="NO">NO</option>
+		 	 	</select>
+		 	 	<p>
+		 		<label for="paperAssistance" id="firstLabel">P/W Assistance Needed:</label>	
+		  		<select name="paperAssistance" id="firstField">
+		    		<option id="firstField" value="NULL"></option>
+		    		<option value="YES">YES</option>
+		    		<option value="NO">NO</option>
+		 	 	</select>
 			</div>
 		</div>
 		<div id="rightgraphic">
@@ -343,103 +393,130 @@ img{
   	<p id="Typical">APPOINTMENT INFORMATION:</p>
   	
   	<div id="appointmentInfo">
-		<label for="day" id="dayLabel">Day:</label>
-		<select name="day" id="day" class="day">
-			<option value="1">1st</option>
-			<option value="2">2nd</option>
-			<option value="3">3rd</option>
-			<option value="4">4th</option>
-			<option value="5">5th</option>
-			<option value="6">6th</option>
-			<option value="7">7th</option>
-			<option value="8">8th</option>
-			<option value="9">9th</option>
-			<option value="10">10th</option>
-			<option value="11">11th</option>
-			<option value="12">12th</option>
-			<option value="13">13th</option>
-			<option value="14">14th</option>
-			<option value="15">15th</option>
-			<option value="16">16th</option>
-			<option value="17">17th</option>
-			<option value="18">18th</option>
-			<option value="19">19th</option>
-			<option value="20">20th</option>
-			<option value="21">21st</option>
-			<option value="22">22nd</option>
-			<option value="23">23rd</option>
-			<option value="24">24th</option>
-			<option value="25">25th</option>
-			<option value="26">26th</option>
-			<option value="27">27th</option>
-			<option value="28">28th</option>
-			<option value="29">29th</option>
-			<option value="30">30th</option>
-			<option value="31">31st</option>
-		</select>
-		<label for="month" id="monthLabel">Month:</label>
-		<select name="month" id="month" class="month">
-			<option value="1">January</option>
-			<option value="2">February</option>
-			<option value="3">March</option>
-			<option value="4">April</option>
-			<option value="5">May</option>
-			<option value="6">June</option>
-			<option value="7">July</option>
-			<option value="8">August</option>
-			<option value="9">September</option>
-			<option value="10">October</option>
-			<option value="11">November</option>
-			<option value="12">December</option>
-		</select>
-		<label for="year" id="yearLabel">Year:</label>
-		<select name="year" id="year" class="year">
-			<option value="2020">2020</option>
-			<option value="2019">2019</option>
-			<option value="2018">2018</option>
-			<option value="2017">2017</option>
-			<option value="2016">2016</option>
-			<option value="2015">2015</option>
-			<option value="2014">2014</option>
-			<option value="2013">2013</option>
-			<option value="2012">2012</option>
-			<option value="2011">2011</option>
-		</select>
-		<script>
-			$("#day").val((new Date()).getDate());
-			$("#year").val((new Date()).getYear()+1900);
-			$("#month").val((new Date()).getMonth()+1);
-		</script>
-		<label for="appointmentTime" id="appointmentTimeLabel">Time:</label>	
-		<input type="text" name="appointmentTime" id="appointmentTimeText">
-		<p>
+  		<div id="date">
+	  		<!-- Creates and fills month drop down-->
+			<label for="day" id="dayLabel">Day:</label>
+			<select name="day" id="day" class="day">
+				<?php
+					$number = cal_days_in_month(CAL_GREGORIAN, 8, 2003);
+					for ($x=1; $x <= $number; $x++){
+						echo "<option value=\"".$x."\">".$x."</option>";
+					}
+				?>
+			</select>
 			
-		<!--PatientInfo Block-->
-		<div id="leftaddressBlock">
-			<label id="addressTitle">Patient Information:</label>
+			<!-- Creates and fills month drop down-->
+			<label for="month" id="monthLabel">Month:</label>
+			<select name="month" id="month" class="month">
+				<option value="1">January</option>
+				<option value="2">February</option>
+				<option value="3">March</option>
+				<option value="4">April</option>
+				<option value="5">May</option>
+				<option value="6">June</option>
+				<option value="7">July</option>
+				<option value="8">August</option>
+				<option value="9">September</option>
+				<option value="10">October</option>
+				<option value="11">November</option>
+				<option value="12">December</option>
+			</select>
+			
+			<!-- Creates and fills year drop down with current year through 10 years-->
+			<label for="year" id="yearLabel">Year:</label>
+			<select name="year" id="year" class="year">
+				<?php
+					$y = date('Y');
+					for ($x=0; $x <= 10; $x++){
+						echo "<option value=\"".$y."\">".$y."</option>";
+						$y++;
+				}
+				?>
+			</select>
+			<!--Calculatates current date and sets for reservation-->
+			<!--SPECIAL NOTE-->
+			<!--Date is not calculated from calendar current day on calendar doesn't matter-->
+			<script>
+				$("#day").val((new Date()).getDate());
+				$("#year").val((new Date()).getYear()+1900);
+				$("#month").val((new Date()).getMonth()+1);
+			</script>
+		</div>
+				
+		<!--Pick Up Block-->
+		<div id="pickUpBlock">
+			<p id="appLabels">Pick-up Information:</p>
+			
+			<label>Time:</label>	
+			<select name="pickUpHour" id="hour">
+				<?php
+					for ($x=1; $x <= 12; $x++){
+						echo "<option value=\"".$x."\">".$x."</option>";
+					}
+				?>
+			</select> 
+			<select name="pickUpMin" id="minutes">
+				<?php
+					$min = 0;
+					for ($x=0; $x <= 11; $x++){
+						echo "<option value=\"".$min."\">".$min."</option>";
+						$min = $min + 5;
+					}
+				?>
+			</select> 
+			<select name="pickUpAP" id="amOrPm">
+				<option value="1">AM</option>
+				<option value="2">PM</option>
+			</select> 
+			<p></p>
+			<label id="destinationName">Description:</label>
+			<input type="text" name="pickUpDesc" id="pickUpDesc">
 			<p>
-			<label for="appointmentPhone">Phone:</label>	
-			<input type="text"  name="appointmentPhone">	
-			<p>		    	
-		    <label for="newPatient">New Patient:</label>	
-		  	<select name="newPatient">
-		    	<option value="NULL"></option>
-		    	<option value="YES">YES</option>
-		    	<option value="NO">NO</option>
-		 	 </select>
-		 	<p>
-		 	<label for="paperAssistance" id=>Paper Work Assistance Needed:</label>	
-		  	<select name="paperAssistance">
-		    	<option value="NULL"></option>
-		    	<option value="YES">YES</option>
-		    	<option value="NO">NO</option>
-		 	 </select>
+			<label for="pickNumber">Phone Number:</label>
+			<input type="text" name="pickNumber" id="pickUpDesc">
+			<p>
+			<label for="pickUpAddress1">Address:</label>	
+			<input type="text" name="pickUpAddress1" id="street1">
+			<p>
+			<input type="text" name="pickUpAddress2" id="street2">
+			<p>
+			<label for="pickUpCity" id="cityLabel">City:</label>
+			<input type="text" name="pickUpCity" id="city">
+			<label for="destZip" id="destZipLabel">Zip-Code:</label>
+			<input type="text" name="pickUpZip" id="destZip">
 
 	    </div>
 	    
-	    <!--Location Block-->
-		<div id="rightaddressBlock">
-			<label id="destinationName">Location:</label>
+	    <!--Destination Block-->
+		<div id="dropOffBlock">
+			<p id="appLabels">Destination Information:</p>
+			<label for="appointmentTime">Time:</label>	
+			<select name="destHour" id="hour">
+				<?php
+					for ($x=1; $x <= 12; $x++){
+						echo "<option value=\"".$x."\">".$x."</option>";
+					}
+				?>
+			</select> 
+			<select name="destMin" id="minutes">
+				<?php
+					$min = 0;
+					for ($x=0; $x <= 12; $x++){
+						echo "<option value=\"".$min."\">".$min."</option>";
+						$min = $min + 5;
+					}
+				?>
+			</select> 
+			<select name="destAP" id="amOrPm">
+				<option value="1">AM</option>
+				<option value="1">PM</option>
+			</select> 
+			<p>
+			<label id="destName">Description:</label>
+			<input type="text" name="destName" id="pickUpDesc">
+			<p>
+			<label for="destNumber">Phone Number:</label>
+			<input type="text" name="destNumber" id="pickUpDesc">
 			<p>
 			<label for="destAddress1">Address:</label>	
 			<input type="text" name="destAddress1" id="street1">
@@ -463,7 +540,7 @@ img{
 	</div>
 	
     <p id="Typical">REASON FOR APPOINTMENT:</p>
-	<textarea name="message" rows="10" cols="55">
+	<textarea name="notes" rows="10" cols="55">
 	</textarea>
   
 
@@ -472,8 +549,8 @@ img{
   </textarea>
 	<br>
 	<br>
-	<input type="submit" value="Save Reservation">
-	<input type="button" value="Cancel" onclick="location.href='calendarDemo.html';">
+	<input name="submit" type="submit" value="Save Reservation">
+	<input type="button" value="Cancel" onclick="location.href='calendarDemo.php';">
 
 
 </form>
@@ -488,5 +565,5 @@ img{
 </html>
 
 <?php
-}
+
 ?>

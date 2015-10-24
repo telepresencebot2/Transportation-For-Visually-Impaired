@@ -41,390 +41,390 @@ h2{
 
 <body>
 <style>
-#textfield{
-	display: inline;
-	float: right;
-	width: 49%;
-	height: 50%;
-	position: relative;
-	top: 10px;
-	font-size: 24px;
-	top: 5px;
-	border-bottom: 1px solid black; 
-	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
-}
-#labels{
-	display: inline;
-	float: left;
-	width: 49%;
-	position: relative;
-	top: 10px;
-	font-size: 24px;
-}
-#newField{
-	position: relative;
-	width: 100%;
-	height: 30px;
-	top: 1px;
-}
-#firstBlock{
-	position: relative;
-	height: 100px;
-	width: 100%;
-}
-#printOutForm{
-	width: 670px;
-}
-#firstFourLabels{
-	display: inline;
-	float: left;
-	width: 20%;
-	position: relative;
-	top: 10px;
-	font-size: 24px;
-}
-#firstFourText{
-	display: inline;
-	float: right;
-	width: 80%;
-	position: relative;
-	height: 100%;
-	font-size: 24px;
-	top: 5px;
-	border-bottom: 1px solid black; 
-	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
-}
-#emerContactLabels{
-	display: inline;
-	float: left;
-	width: 30%;
-	position: relative;
-	top: 10px;
-	font-size: 24px;
-}
-#emerContactText{
-	display: inline;
-	float: right;
-	width: 70%;
-	position: relative;
-	height: 100%;
-	font-size: 24px;
-	top: 5px;
-	border-bottom: 1px solid black; 
-	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
-}
-#emerContactPhoneLabels{
-	display: inline;
-	float: left;
-	width: 49%;
-	position: relative;
-	top: 10px;
-	font-size: 24px;
-}
-#emerContactPhoneText{
-	display: inline;
-	float: right;
-	width: 50%;
-	position: relative;
-	height: 100%;
-	font-size: 24px;
-	top: 5px;
-	border-bottom: 1px solid black; 
-	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
-}
-#pickUpBlock{
-	position: relative;
-	height: 50px;
-	width: 100%;
-}
-#pickUpLocLabels{
-	display: inline;
-	float: left;
-	width: 30%;
-	position: relative;
-	top: 10px;
-	font-size: 24px;
-}
-#pickUpLocText{
-	display: inline;
-	float: right;
-	width: 70%;
-	position: relative;
-	height: 100%;
-	font-size: 24px;
-	top: 5px;
-	border-bottom: 1px solid black; 
-	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>;
-}
-#pickUpNumLabels{
-	display: inline;
-	float: left;
-	width: 45%;
-	position: relative;
-	top: 10px;
-	font-size: 24px;
-}
-#pickUpNumText{
-	display: inline;
-	float: right;
-	width: 55%;
-	position: relative;
-	height: 100%;
-	font-size: 24px;
-	top: 5px;
-	border-bottom: 1px solid black; 
-	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>;
-}
-#pickUpTimeLabels{
-	display: inline;
-	float: left;
-	width: 25%;
-	position: relative;
-	top: 10px;
-	font-size: 24px;
-}
-#pickUpTimeText{
-	display: inline;
-	float: right;
-	width: 75%;
-	position: relative;
-	height: 100%;
-	font-size: 24px;
-	top: 5px;
-	border-bottom: 1px solid black; 
-	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>;
-}
-#appointmentLabels{
-	display: inline;
-	float: left;
-	width: 30%;
-	position: relative;
-	top: 10px;
-	font-size: 24px;
-}
-#appointmentText{
-	display: inline;
-	float: right;
-	width: 70%;
-	position: relative;
-	height: 100%;
-	font-size: 24px;
-	top: 5px;
-	border-bottom: 1px solid black; 
-	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>;
-}
-#appAddressBlock{
-	position: relative;
-	height: 35px;
-	width: 100%;
-	margin-bottom: 1px;
-}
-#appAddressLabels{
-	display: inline;
-	float: left;
-	width: 40%;
-	position: relative;
-	top: 10px;
-	font-size: 24px;
-}
-#appAddressText{
-	display: inline;
-	float: right;
-	width: 60%;
-	position: relative;
-	height: 100%;
-	font-size: 24px;
-	top: 5px;
-	border-bottom: 1px solid black; 
-	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>;
-}
-#phoneNumLabel{
-	display: inline;
-	float: left;
-	width: 50%;
-	position: relative;
-	top: 10px;
-	font-size: 24px;
-}
-#phoneNumText{
-	display: inline;
-	float: right;
-	width: 50%;
-	position: relative;
-	height: 100%;
-	font-size: 24px;
-	top: 5px;
-	border-bottom: 1px solid black; 
-	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>;
-}
-#reasonLabel{
-	display: inline;
-	float: left;
-	width: 40%;
-	position: relative;
-	top: 10px;
-	font-size: 24px;
-}
-#reasonText{
-	display: inline;
-	float: right;
-	width: 60%;
-	position: relative;
-	height: 100%;
-	font-size: 24px;
-	top: 5px;
-	border-bottom: 1px solid black; 
-	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>;
-}
-#newPatientLabel{
-	float: left;
-	width: 40%;
-	position: relative;
-	font-size: 24px;
-	top: 10px;
-}
-#needAssistanceLabel{
-	float: left;
-	width: 70%;
-	position: relative;
-	font-size: 24px;
-	top: 10px;
-}
-#needAssistanceText{
-	float: left;
-	width: 30%;
-	position: relative;
-	font-size: 24px;
-	top: 10px;	
-	height: 100%;
-}
-#driverBlock{
-	position: absolute;
-	width: 670px;
-	height: 30px;
-	top: 738px;
-}
-#driverLabel{
-	display: inline;
-	float: left;
-	width: 12%;
-	position: relative;
-	top: 10px;
-	font-size: 24px;
-}
-#driverText{
-	display: inline;
-	float: left;
-	width: 30%;
-	position: relative;
-	top: 10px;
-	height: 100%;
-	font-size: 24px;
-	border-bottom: 1px solid black; 
-	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>;
-}
-#vehicleText{
-	display: inline;
-	width: 35%;
-	float: right;
-	position: relative;
-	top: 10px;
-	height: 100%;
-	font-size: 24px;
-	border-bottom: 1px solid black; 
-	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
-}
-#vehicleLabel{
-	display: inline;
-	float: right;
-	width: 15%;
-	position: relative;
-	top: 10px;
-	font-size: 24px;
-}
-#notesBlock{
-	position: absolute;
-	width: 670px;
-	height: 30px;
-	top: 770px;
-}
-#notesLabel{
-	display: inline;
-	float: left;
-	width: 15%;
-	position: relative;
-	top: 10px;
-	font-size: 24px;	
-}
-#notestopText{
-	display: inline;
-	float: right;
-	width: 85%;
-	position: relative;
-	top: 10px;
-	font-size: 24px;
-	height: 80%;
-	border-bottom: 1px solid black; 
-	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 	
-}
-#notesbotText{
-	display: inline;
-	float: left;
-	width: 100%;
-	position: relative;
-	top: 10px;
-	font-size: 24px;
-	height: 90%;
-	top: 5px;
-	border-bottom: 1px solid black; 
-	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
-}
-#verifyBlock{
-	position: absolute;
-	width: 670px;
-	height: 30px;
-	top: 860px;
-}
-#sigLabel{
-	display: inline;
-	float: left;
-	width: 30%;
-	position: relative;
-	top: 10px;
-	font-size: 24px;
-}
-#sigText{
-	display: inline;
-	float: left;
-	width: 18%;
-	position: relative;
-	top: 10px;
-	height: 75%;
-	font-size: 24px;
-	top: 5px;
-	border-bottom: 1px solid black; 
-	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
-}
-#dateText{
-	display: inline;
-	width: 35%;
-	float: right;
-	position: relative;
-	top: 10px;
-	height: 75%;
-	font-size: 24px;
-	top: 5px;
-	border-bottom: 1px solid black; 
-	color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
-}
-#dateLabel{
-	display: inline;
-	float: right;
-	width: 10%;
-	position: relative;
-	top: 10px;
-	font-size: 24px;
-}
+	#textfield{
+		display: inline;
+		float: right;
+		width: 49%;
+		height: 50%;
+		position: relative;
+		top: 10px;
+		font-size: 24px;
+		top: 5px;
+		border-bottom: 1px solid black; 
+		color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
+	}
+	#labels{
+		display: inline;
+		float: left;
+		width: 49%;
+		position: relative;
+		top: 10px;
+		font-size: 24px;
+	}
+	#newField{
+		position: relative;
+		width: 100%;
+		height: 30px;
+		top: 1px;
+	}
+	#firstBlock{
+		position: relative;
+		height: 100px;
+		width: 100%;
+	}
+	#printOutForm{
+		width: 670px;
+	}
+	#firstFourLabels{
+		display: inline;
+		float: left;
+		width: 20%;
+		position: relative;
+		top: 10px;
+		font-size: 24px;
+	}
+	#firstFourText{
+		display: inline;
+		float: right;
+		width: 80%;
+		position: relative;
+		height: 100%;
+		font-size: 24px;
+		top: 5px;
+		border-bottom: 1px solid black; 
+		color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
+	}
+	#emerContactLabels{
+		display: inline;
+		float: left;
+		width: 30%;
+		position: relative;
+		top: 10px;
+		font-size: 24px;
+	}
+	#emerContactText{
+		display: inline;
+		float: right;
+		width: 70%;
+		position: relative;
+		height: 100%;
+		font-size: 24px;
+		top: 5px;
+		border-bottom: 1px solid black; 
+		color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
+	}
+	#emerContactPhoneLabels{
+		display: inline;
+		float: left;
+		width: 49%;
+		position: relative;
+		top: 10px;
+		font-size: 24px;
+	}
+	#emerContactPhoneText{
+		display: inline;
+		float: right;
+		width: 50%;
+		position: relative;
+		height: 100%;
+		font-size: 24px;
+		top: 5px;
+		border-bottom: 1px solid black; 
+		color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
+	}
+	#pickUpBlock{
+		position: relative;
+		height: 50px;
+		width: 100%;
+	}
+	#pickUpLocLabels{
+		display: inline;
+		float: left;
+		width: 30%;
+		position: relative;
+		top: 10px;
+		font-size: 24px;
+	}
+	#pickUpLocText{
+		display: inline;
+		float: right;
+		width: 70%;
+		position: relative;
+		height: 100%;
+		font-size: 24px;
+		top: 5px;
+		border-bottom: 1px solid black; 
+		color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>;
+	}
+	#pickUpNumLabels{
+		display: inline;
+		float: left;
+		width: 45%;
+		position: relative;
+		top: 10px;
+		font-size: 24px;
+	}
+	#pickUpNumText{
+		display: inline;
+		float: right;
+		width: 55%;
+		position: relative;
+		height: 100%;
+		font-size: 24px;
+		top: 5px;
+		border-bottom: 1px solid black; 
+		color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>;
+	}
+	#pickUpTimeLabels{
+		display: inline;
+		float: left;
+		width: 25%;
+		position: relative;
+		top: 10px;
+		font-size: 24px;
+	}
+	#pickUpTimeText{
+		display: inline;
+		float: right;
+		width: 75%;
+		position: relative;
+		height: 100%;
+		font-size: 24px;
+		top: 5px;
+		border-bottom: 1px solid black; 
+		color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>;
+	}
+	#appointmentLabels{
+		display: inline;
+		float: left;
+		width: 30%;
+		position: relative;
+		top: 10px;
+		font-size: 24px;
+	}
+	#appointmentText{
+		display: inline;
+		float: right;
+		width: 70%;
+		position: relative;
+		height: 100%;
+		font-size: 24px;
+		top: 5px;
+		border-bottom: 1px solid black; 
+		color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>;
+	}
+	#appAddressBlock{
+		position: relative;
+		height: 35px;
+		width: 100%;
+		margin-bottom: 1px;
+	}
+	#appAddressLabels{
+		display: inline;
+		float: left;
+		width: 40%;
+		position: relative;
+		top: 10px;
+		font-size: 24px;
+	}
+	#appAddressText{
+		display: inline;
+		float: right;
+		width: 60%;
+		position: relative;
+		height: 100%;
+		font-size: 24px;
+		top: 5px;
+		border-bottom: 1px solid black; 
+		color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>;
+	}
+	#phoneNumLabel{
+		display: inline;
+		float: left;
+		width: 50%;
+		position: relative;
+		top: 10px;
+		font-size: 24px;
+	}
+	#phoneNumText{
+		display: inline;
+		float: right;
+		width: 50%;
+		position: relative;
+		height: 100%;
+		font-size: 24px;
+		top: 5px;
+		border-bottom: 1px solid black; 
+		color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>;
+	}
+	#reasonLabel{
+		display: inline;
+		float: left;
+		width: 40%;
+		position: relative;
+		top: 10px;
+		font-size: 24px;
+	}
+	#reasonText{
+		display: inline;
+		float: right;
+		width: 60%;
+		position: relative;
+		height: 100%;
+		font-size: 24px;
+		top: 5px;
+		border-bottom: 1px solid black; 
+		color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>;
+	}
+	#newPatientLabel{
+		float: left;
+		width: 40%;
+		position: relative;
+		font-size: 24px;
+		top: 10px;
+	}
+	#needAssistanceLabel{
+		float: left;
+		width: 70%;
+		position: relative;
+		font-size: 24px;
+		top: 10px;
+	}
+	#needAssistanceText{
+		float: left;
+		width: 30%;
+		position: relative;
+		font-size: 24px;
+		top: 10px;	
+		height: 100%;
+	}
+	#driverBlock{
+		position: absolute;
+		width: 670px;
+		height: 30px;
+		top: 738px;
+	}
+	#driverLabel{
+		display: inline;
+		float: left;
+		width: 12%;
+		position: relative;
+		top: 10px;
+		font-size: 24px;
+	}
+	#driverText{
+		display: inline;
+		float: left;
+		width: 30%;
+		position: relative;
+		top: 10px;
+		height: 100%;
+		font-size: 24px;
+		border-bottom: 1px solid black; 
+		color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>;
+	}
+	#vehicleText{
+		display: inline;
+		width: 35%;
+		float: right;
+		position: relative;
+		top: 10px;
+		height: 100%;
+		font-size: 24px;
+		border-bottom: 1px solid black; 
+		color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
+	}
+	#vehicleLabel{
+		display: inline;
+		float: right;
+		width: 15%;
+		position: relative;
+		top: 10px;
+		font-size: 24px;
+	}
+	#notesBlock{
+		position: absolute;
+		width: 670px;
+		height: 30px;
+		top: 735px;
+	}
+	#notesLabel{
+		display: inline;
+		float: left;
+		width: 15%;
+		position: relative;
+		top: 10px;
+		font-size: 24px;	
+	}
+	#notestopText{
+		display: inline;
+		float: right;
+		width: 85%;
+		position: relative;
+		top: 10px;
+		font-size: 24px;
+		height: 80%;
+		border-bottom: 1px solid black; 
+		color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 	
+	}
+	#notesbotText{
+		display: inline;
+		float: left;
+		width: 100%;
+		position: relative;
+		top: 10px;
+		font-size: 24px;
+		height: 90%;
+		top: 5px;
+		border-bottom: 1px solid black; 
+		color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
+	}
+	#verifyBlock{
+		position: absolute;
+		width: 670px;
+		height: 30px;
+		top: 820px;
+	}
+	#sigLabel{
+		display: inline;
+		float: left;
+		width: 30%;
+		position: relative;
+		top: 10px;
+		font-size: 24px;
+	}
+	#sigText{
+		display: inline;
+		float: left;
+		width: 18%;
+		position: relative;
+		top: 10px;
+		height: 75%;
+		font-size: 24px;
+		top: 5px;
+		border-bottom: 1px solid black; 
+		color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
+	}
+	#dateText{
+		display: inline;
+		width: 35%;
+		float: right;
+		position: relative;
+		top: 10px;
+		height: 75%;
+		font-size: 24px;
+		top: 5px;
+		border-bottom: 1px solid black; 
+		color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
+	}
+	#dateLabel{
+		display: inline;
+		float: right;
+		width: 10%;
+		position: relative;
+		top: 10px;
+		font-size: 24px;
+	}
 </style>	
 </body>
 
@@ -470,7 +470,10 @@ h2{
 				<label id ="pickUpLocLabels">Pick-up Location: </label>	
 				<label id="pickUpLocText"><?php if($haveResult){echo($reserve['pickAddr1']);} ?></label>
 				<div id = "newField">
-					<label id="pickUpLocText"><?php if($haveResult){echo($reserve['pickAddr2'].' '.$reserve['pickCity'].' '.$reserve['pickZip']);} ?></label>
+					<label id="pickUpLocText"><?php if($haveResult){echo $reserve['pickAddr1'].' '.$reserve['pickAddr2'];} ?></label>
+				</div>
+				<div id = "newField">
+					<label id="pickUpLocText"><?php if($haveResult){echo $reserve['pickCity'].", ".$reserve['pickZip'];} ?></label>
 				</div>
 			</div>
 		</div>
@@ -497,23 +500,17 @@ h2{
 		
 		<div id = "appAddressBlock">
 			<label id ="appAddressLabels">Address of Appointment: </label>	
-			<label id="appAddressText"><?php if($haveResult){echo($reserve['destAddr1']);} ?></label>
+			<label id="appAddressText"><?php if($haveResult){echo($reserve['location']);} ?></label>
 			<div id = "newField">
-				<label id="appAddressText"><?php if($haveResult){echo($reserve['destAddr2']);} ?></label>
+				<label id="appAddressText"><?php if($haveResult){echo $reserve['destAddr1'].' '.$reserve['destAddr2'];} ?></label>
 			</div>
 			<div id = "newField">
-				<label id="appAddressText"><?php if($haveResult){echo($reserve['destCity']);} ?></label>
-			</div>
-			<div id = "newField">
-				<label id="appAddressText"><?php if($haveResult){echo($reserve['destZip']);} ?></label>
-			</div>
-			<div id = "newField">
-				<label id="appAddressText"></label>
+				<label id="appAddressText"><?php if($haveResult){echo $reserve['destCity'].", ".$reserve['destZip'];} ?></label>
 			</div>
 		</div>
 
 		<div id = "newField">
-			<label id ="phoneNumLabel">Phone Number: </label>	
+			<label id ="phoneNumLabel">Phone # at Destination: </label>	
 			<label id="phoneNumText"></label>
 		</div>
 		
@@ -531,7 +528,7 @@ h2{
 			<label id="needAssistanceText"><?php if($haveResult){echo($reserve['assistance']);} ?></label>
 		</div>
 
-		<div id = "driverBlock">
+		<div id = "newField">
 			<label id ="driverLabel">Driver: </label>	
 			<label id="driverText"><?php if($haveResult){echo($reserve['driverName']);} ?></label>
 			<label id="vehicleText"><?php if($haveResult){echo($reserve['vehicleColor']);} ?></label>
