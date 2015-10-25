@@ -398,7 +398,7 @@ img{
 			<label for="day" id="dayLabel">Day:</label>
 			<select name="day" id="day" class="day">
 				<?php
-					$number = cal_days_in_month(CAL_GREGORIAN, 8, 2003);
+					$number = cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y'));
 					for ($x=1; $x <= $number; $x++){
 						echo "<option value=\"".$x."\">".$x."</option>";
 					}
@@ -408,15 +408,15 @@ img{
 			<!-- Creates and fills month drop down-->
 			<label for="month" id="monthLabel">Month:</label>
 			<select name="month" id="month" class="month">
-				<option value="1">January</option>
-				<option value="2">February</option>
-				<option value="3">March</option>
-				<option value="4">April</option>
-				<option value="5">May</option>
-				<option value="6">June</option>
-				<option value="7">July</option>
-				<option value="8">August</option>
-				<option value="9">September</option>
+				<option value="01">January</option>
+				<option value="02">February</option>
+				<option value="03">March</option>
+				<option value="04">April</option>
+				<option value="05">May</option>
+				<option value="06">June</option>
+				<option value="07">July</option>
+				<option value="08">August</option>
+				<option value="09">September</option>
 				<option value="10">October</option>
 				<option value="11">November</option>
 				<option value="12">December</option>
