@@ -41,22 +41,13 @@ $reserve = $reserve->fetchAll();
 			defaultDate: '<?php echo date("Y-m-d") ?>',
 			editable: true,
 			eventLimit: true, // allow "more" link when too many events
-			// 
-				// foreach ($reserve as $re)
-				// {
-					// $event = new events();
-					// $event->title = $re['location'];
-					// $event->start = '2015-10-10';
-// 					
-				// }
-			// 
 			events: [
 				<?php
 					$lastreserve = end($reserve);
 					foreach ($reserve as $re)
 					{
 						echo "{";
-						echo "title: '".$re['location']."',";
+						echo "title: '".$re['destDescription']."',";
 						echo "url: 'printOutForm.php?id=" . $re['id']. "',";
 						echo "start: '".$re['pickDate']."T".$re['pickTime']."',";
 						echo "color: '".$re['vehicleColor']."',";
