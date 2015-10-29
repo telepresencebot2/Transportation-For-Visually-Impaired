@@ -408,7 +408,6 @@ img{
 			<!-- Creates and fills month drop down-->
 			<label for="month" id="monthLabel">Month:</label>
 			<select name="month" id="month" class="month">
-				<option value="01">January</option>
 				<option value="02">February</option>
 				<option value="03">March</option>
 				<option value="04">April</option>
