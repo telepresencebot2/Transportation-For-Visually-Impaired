@@ -20,7 +20,31 @@ if(isset($_GET['id'])) {
 		$haveResult = true;
 	}
 }
+/*
+if(isset($_POST['delete'])){
+       $id = $_POST['delete_rec_id'];  
+       $query = "DELETE FROM notes WHERE id=$id"; 
+       $result = mysql_query($query);
+}
 
+    $query = "SELECT * FROM notes WHERE subject='Work' order by id desc";
+    $result = mysql_query($query);
+    while ($row = mysql_fetch_array($result)) { 
+            $id = $row['id'];
+            $subject = $row['subject'];
+            $date = $row['date'];
+            $note = $row['note']; 
+
+            print "<p><strong>$subject</strong> ($id), $date </p>"; 
+            print "<p> $note </p>";        
+    }  
+
+if(isset($_POST['edit'])){
+       $id = $_POST['edit_rec_id'];  
+       $query = "EDIT FROM notes WHERE id=$id"; 
+       $result = mysql_query($query);
+}
+*/
 ?>
 
 
@@ -549,6 +573,24 @@ h2{
 			<label id ="dateLabel">Date: </label>	
 		</div>
 	</div>
+	
+	<!--
+	//print button starts here
+	<input name="print" type="print" value="Print Reservation">
+	
+	//delete button starts here
+    <form id="delete" method="post" action="">
+    <input type="hidden" name="delete_rec_id" value="<?php print $id; ?>"/> 
+    <input type="submit" name="delete" value="Delete"/>    
+	</form>
+	
+	//edit button starts here
+	<form id="edit" method="post" action="">
+	<input type="" name="edit_rec_id" value="<?php print $id; ?>"/>
+	<input type="submit" name="edit" value="Edit" onclick="location.href='insertFrom.php';">
+	</form>
+	-->
+	
 </body>
 
 	
