@@ -410,7 +410,7 @@ h2{
 </body>
 
 <head>
-	<h2>Appointment and Travel Info hi</h2>
+	<h2>Appointment and Travel Info</h2>
 </head>
 
 <body>
