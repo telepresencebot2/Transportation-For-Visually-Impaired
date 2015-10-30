@@ -1,16 +1,19 @@
 <?php
-
+	define("HOST", "localhost");
+	define("DATABASE", "db1");
+	// magical
+	define("U_R", "transMAGIC");
+	define("P_R", "bFYRFWc2jupQ9xbK");
+	$dbMAGIC = new PDO('mysql:host=localhost;dbname=db1', U_R, P_R);
+	if ($dbMagic->connect_error){
+		die("Connection failed: ". $dbMagic->connect_error);
+	}
+	$vehicle = $dbMAGIC->prepare("SELECT * FROM vehicle");
+	$vehicle->bindParam(':id', $resId, PDO::PARAM_INT);
+	$vehicle->execute();
+	$vehicle = $vehicle->fetchAll();
 //if(isset($_POST['fName'])&&($_POST['fName']!=null)) {
 	if (isset($_POST['submit'])){
-		define("HOST", "localhost");
-		define("DATABASE", "db1");
-		// magical
-		define("U_R", "transMAGIC");
-		define("P_R", "bFYRFWc2jupQ9xbK");
-		$dbMAGIC = new PDO('mysql:host=localhost;dbname=db1', U_R, P_R);
-		if ($dbMagic->connect_error){
-			die("Connection failed: ". $dbMagic->connect_error);
-		}
 		// prepare date
 		$date = $_POST[year]."-".$_POST[month]."-".$_POST[day];
 		//prepare pickup time
@@ -23,7 +26,7 @@
 		}
 		if ($_POST[pickUpMin] == 0){
 			$_POST[pickUpMin] = '00';	
-		} elseif ($_POST[pickUpMin] == 0){
+		} elseif ($_POST[pickUpMin] == 5){
 			$_POST[pickUpMin] = '05';	
 		}
 		$pickTime = $_POST[pickUpHour].":".$_POST[pickUpMin].":00";
@@ -37,6 +40,8 @@
 		}
 		if ($_POST[destMin] == 0){
 			$_POST[destMin] = '00';	
+		} elseif ($_POST[destMin] == 5){
+			$_POST[destMin] = '05';	
 		}
 		$destTime = $_POST[destHour].":".$_POST[destMin].":00";
 	
@@ -44,14 +49,14 @@
 		$sql = "INSERT INTO reservations 
 		(name, disability, waiver, ticket, newPatient, emergName, emergPhone, phone, 
 		pickDate, pickTime, pickAddr1, pickAddr2, pickCity, pickZip, pickPhone, pickDescription,
-		destTime, destDescription, destAddr1, destAddr2, destCity, destZip, destPhone, assistance, driverName, vehicleColor)
+		destTime, destDescription, destAddr1, destAddr2, destCity, destZip, destPhone, assistance, driverName, vehicleColor, reason)
 		VALUES 
 		('$_POST[clientname]', '$_POST[disability]','$_POST[waiver]','$_POST[tickets]', '$_POST[newPatient]',
 		'$_POST[emergencyName]', '$_POST[emergencyNumber]', '$_POST[patientNumber]',  
 		'$date', '$pickTime', '$_POST[pickUpAddress1]', '$_POST[pickUpAddress2]', '$_POST[pickUpCity]','$_POST[pickUpZip]',
 		'$_POST[pickNumber]', '$_POST[pickUpDesc]', '$destTime', 
 		'$_POST[destName]','$_POST[destAddress1]','$_POST[destAddress2]','$_POST[destCity]','$_POST[destZip]',
-		'$_POST[destNumber]', '$_POST[paperAssistance]', '$_POST[driverName]','$_POST[vehicle]')";
+		'$_POST[destNumber]', '$_POST[paperAssistance]', '$_POST[driverName]','$_POST[vehicle]'), '$_POST[notes]')";
 		$dbMAGIC->query($sql);
 		
 		
@@ -326,13 +331,13 @@ img{
 
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<!-- <script type="text/javascript">
+<script type="text/javascript">
 	function clicked(){
 		if (confirm('Are your sure?')){
-			window.location = "www.google.com";
+			location.href = 'calendarDemo.php';
 		}
 	}
-</script> -->
+</script>
 <link rel="stylesheet" type="text/css" href="form.css">
 <img src="header2.png">
 <h2>Pick Up Registration Form</h2>
@@ -558,7 +563,14 @@ img{
 		<input type="text" name="driverName" id="firstField">
 		<p>
 		<label for="vehicle" id="firstLabel">Vehicle:</label>	
-		<input type="text" name="vehicle" id="firstField">
+		<select name="vehicle" id="firstField">
+			<?php
+				foreach ($vehicle as $car)
+				{
+					echo "<option value=\"".$car['color']."\">".$car['color']."</option>";
+				}
+			?>
+		</select>
 	</div>
 	
     <p id="Typical">REASON FOR APPOINTMENT:</p>
@@ -571,7 +583,7 @@ img{
   </textarea>
 	<br>
 	<br>
-	<input name="submit" type="submit" value="Save Reservation">
+	<input name="submit" type="submit" onclick="clicked();" value="Save Reservation">
 	<input type="button" value="Cancel" onclick="location.href='calendarDemo.php';">
 
 
