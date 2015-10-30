@@ -65,32 +65,6 @@ h2{
 
 <body>
 <style>
-	#textfield{
-		display: inline;
-		float: right;
-		width: 49%;
-		height: 50%;
-		position: relative;
-		top: 10px;
-		font-size: 24px;
-		top: 5px;
-		border-bottom: 1px solid black; 
-		color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
-	}
-	#labels{
-		display: inline;
-		float: left;
-		width: 49%;
-		position: relative;
-		top: 10px;
-		font-size: 24px;
-	}
-	#newField{
-		position: relative;
-		width: 100%;
-		height: 30px;
-		top: 1px;
-	}
 	#printOutForm{
 		width: 670px;
 	}
@@ -464,10 +438,10 @@ h2{
 		<!-- Emergency Information Block -->
 		<div id = "emergencyInfo">
 			<label id ="emerLabels">Emergency Contact Name: </label>	
-			<label id="emerText"></label>
+			<label id="emerText"><?php if($haveResult){echo($reserve['emergName']);} ?></label>
 			
 			<label id ="emerLabels">Emergency Contact #: </label>	
-			<label id="emerText"><?php if($haveResult){echo($reserve['phone']);} ?></label>
+			<label id="emerText"><?php if($haveResult){echo($reserve['emergPhone']);} ?></label>
 		
 		</div>
 
@@ -481,11 +455,11 @@ h2{
 			<label id="pickUpText"><?php if($haveResult){echo($reserve['pickTime']);} ?></label>
 			
 			<label id ="pickUpLabels">Phone # at Pick-up: </label>	
-			<label id="pickUpText"></label>
+			<label id="pickUpText"><?php if($haveResult){echo($reserve['pickPhone']);} ?></label>
 			
 			<div id = "pickUpAddr">
 				<label id ="pickUpAddrLabel">Pick-up Location: </label>	
-				<label id="pickUpAddrText"><?php if($haveResult){echo($reserve['pickAddr1']);} ?></label>
+				<label id="pickUpAddrText"><?php if($haveResult){echo($reserve['pickDescription']);} ?></label>
 				<label id="pickUpAddrText"><?php if($haveResult){echo $reserve['pickAddr1'].' '.$reserve['pickAddr2'];} ?></label>
 				<label id="pickUpAddrText"><?php if($haveResult){echo $reserve['pickCity'].", ".$reserve['pickZip'];} ?></label>
 			</div>
@@ -496,14 +470,14 @@ h2{
 		<div id = "destInfo">
 			
 			<label id ="destLabels">Appointment Time: </label>	
-			<label id="destText"></label>		
+			<label id="destText"><?php if($haveResult){echo($reserve['destTime']);} ?></label>		
 			
 			<label id ="destLabels">Phone # at Destination: </label>	
-			<label id="destText"></label>
+			<label id="destText"><?php if($haveResult){echo($reserve['destPhone']);} ?></label>
 			
 			<div id = "destAddr">
 				<label id ="destAddrLabels">Address of Appointment: </label>	
-				<label id="destAddrText"><?php if($haveResult){echo($reserve['location']);} ?></label>
+				<label id="destAddrText"><?php if($haveResult){echo($reserve['destDescription']);} ?></label>
 				<label id="destAddrText"><?php if($haveResult){echo $reserve['destAddr1'].' '.$reserve['destAddr2'];} ?></label>
 				<label id="destAddrText"><?php if($haveResult){echo $reserve['destCity'].", ".$reserve['destZip'];} ?></label>
 			</div>
@@ -512,10 +486,10 @@ h2{
 		<!--  Miscellanious Information -->
 		<div id = "Miscellanious">
 			<label id ="reasonLabel">Reason for Appointment: </label>	
-			<label id="reasonText"></label>	
+			<label id="reasonText"><?php if($haveResult){echo($reserve['reason']);} ?></label>	
 			
 			<label id ="missLabel">New Patient: </label>	
-			<label id ="missText"></label>
+			<label id ="missText"><?php if($haveResult){echo($reserve['newPatient']);} ?></label>
 
 			<label id ="missLabel">Needs Assistance with Paperwork: </label>	
 			<label id="missText"><?php if($haveResult){echo($reserve['assistance']);} ?></label>

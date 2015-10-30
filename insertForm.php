@@ -13,29 +13,45 @@
 		}
 		// prepare date
 		$date = $_POST[year]."-".$_POST[month]."-".$_POST[day];
-		//prepare time
+		//prepare pickup time
 		if ($_POST[pickUpAP] == '2'){
 			$_POST[pickUpHour] = $_POST[pickUpHour] + 12;
 		} else{
-			if ($_POST[pickUpHour]){
+			if ($_POST[pickUpHour] < 10){
 				$_POST[pickUpHour] = '0'.$_POST[pickUpHour];
 			}
 		}
 		if ($_POST[pickUpMin] == 0){
 			$_POST[pickUpMin] = '00';	
+		} elseif ($_POST[pickUpMin] == 0){
+			$_POST[pickUpMin] = '05';	
 		}
-		$time = $_POST[pickUpHour].":".$_POST[pickUpMin].":00";
-		
+		$pickTime = $_POST[pickUpHour].":".$_POST[pickUpMin].":00";
+		//prepare destination Time
+		if ($_POST[destAP] == '2'){
+			$_POST[destHour] = $_POST[pickUpHour] + 12;
+		} else{
+			if ($_POST[destHour] < 10){
+				$_POST[destHour] = '0'.$_POST[pickUpHour];
+			}
+		}
+		if ($_POST[destMin] == 0){
+			$_POST[destMin] = '00';	
+		}
+		$destTime = $_POST[destHour].":".$_POST[destMin].":00";
 	
 		
 		$sql = "INSERT INTO reservations 
-		(name, disability, waiver, ticket, pickDate, pickTime, pickAddr1, pickAddr2, pickCity, pickZip, location,
-		destAddr1, destAddr2, destCity, destZip, driverName, vehicleColor)
+		(name, disability, waiver, ticket, newPatient, emergName, emergPhone, phone, 
+		pickDate, pickTime, pickAddr1, pickAddr2, pickCity, pickZip, pickPhone, pickDescription,
+		destTime, destDescription, destAddr1, destAddr2, destCity, destZip, destPhone, assistance, driverName, vehicleColor)
 		VALUES 
-		('$_POST[clientname]', '$_POST[disability]','$_POST[waiver]','$_POST[tickets]','$date', '$time', 
-		'$_POST[pickUpAddress1]', '$_POST[pickUpAddress2]', '$_POST[pickUpCity]','$_POST[pickUpZip]',
+		('$_POST[clientname]', '$_POST[disability]','$_POST[waiver]','$_POST[tickets]', '$_POST[newPatient]',
+		'$_POST[emergencyName]', '$_POST[emergencyNumber]', '$_POST[patientNumber]',  
+		'$date', '$pickTime', '$_POST[pickUpAddress1]', '$_POST[pickUpAddress2]', '$_POST[pickUpCity]','$_POST[pickUpZip]',
+		'$_POST[pickNumber]', '$_POST[pickUpDesc]', '$destTime', 
 		'$_POST[destName]','$_POST[destAddress1]','$_POST[destAddress2]','$_POST[destCity]','$_POST[destZip]',
-		'$_POST[driverName]','$_POST[vehicle]')";
+		'$_POST[destNumber]', '$_POST[paperAssistance]', '$_POST[driverName]','$_POST[vehicle]')";
 		$dbMAGIC->query($sql);
 		
 		
@@ -310,6 +326,13 @@ img{
 
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- <script type="text/javascript">
+	function clicked(){
+		if (confirm('Are your sure?')){
+			window.location = "www.google.com";
+		}
+	}
+</script> -->
 <link rel="stylesheet" type="text/css" href="form.css">
 <img src="header2.png">
 <h2>Pick Up Registration Form</h2>

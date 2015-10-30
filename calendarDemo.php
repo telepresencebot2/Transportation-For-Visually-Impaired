@@ -80,12 +80,14 @@ $reserve = $reserve->fetchAll();
 	}
 	footer{
 	    text-align: center;
+	    max-width: 900px;
+	    height: 40px;
 	    margin-left: auto;
 	    margin-right: auto;
 	}
 	#reservationButton{
-		max-width: 900px;
-		font-size: 900px;
+		width: 100%;
+		height: 100%;
 		margin: 0 auto;
 	}
 </style>
