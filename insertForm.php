@@ -49,14 +49,14 @@
 		$sql = "INSERT INTO reservations 
 		(name, disability, waiver, ticket, newPatient, emergName, emergPhone, phone, 
 		pickDate, pickTime, pickAddr1, pickAddr2, pickCity, pickZip, pickPhone, pickDescription,
-		destTime, destDescription, destAddr1, destAddr2, destCity, destZip, destPhone, assistance, driverName, vehicleColor, reason)
+		destTime, destDescription, destAddr1, destAddr2, destCity, destZip, destPhone, assistance, driverName, vehicleColor)
 		VALUES 
 		('$_POST[clientname]', '$_POST[disability]','$_POST[waiver]','$_POST[tickets]', '$_POST[newPatient]',
 		'$_POST[emergencyName]', '$_POST[emergencyNumber]', '$_POST[patientNumber]',  
 		'$date', '$pickTime', '$_POST[pickUpAddress1]', '$_POST[pickUpAddress2]', '$_POST[pickUpCity]','$_POST[pickUpZip]',
 		'$_POST[pickNumber]', '$_POST[pickUpDesc]', '$destTime', 
 		'$_POST[destName]','$_POST[destAddress1]','$_POST[destAddress2]','$_POST[destCity]','$_POST[destZip]',
-		'$_POST[destNumber]', '$_POST[paperAssistance]', '$_POST[driverName]','$_POST[vehicle]'), '$_POST[notes]')";
+		'$_POST[destNumber]', '$_POST[paperAssistance]', '$_POST[driverName]','$_POST[vehicle]')";/* '$_POST[notes]')";*/
 		$dbMAGIC->query($sql);
 		
 		
@@ -343,9 +343,6 @@ img{
 		var select = document.forms['insertForm'].elements['month'];
 		var day = document.forms['insertForm'].elements['day'];
 		var length = day.options.length;
-		// for (i = 0; i < length; i++){
-			// day.options[i] = null;
-		// }
 		var numDays = daysInMonth(month.value, 2015);
 		day.value = numDays;
 		for (i=day.options.length-1; i>= 0; i--)
