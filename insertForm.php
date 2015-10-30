@@ -331,13 +331,47 @@ img{
 
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Submit and Date scripts-->
 <script type="text/javascript">
 	function clicked(){
 		if (confirm('Are your sure?')){
 			location.href = 'calendarDemo.php';
 		}
 	}
+	function monthChange(){
+		var str1 = "0";
+		var select = document.forms['insertForm'].elements['month'];
+		var day = document.forms['insertForm'].elements['day'];
+		var length = day.options.length;
+		// for (i = 0; i < length; i++){
+			// day.options[i] = null;
+		// }
+		var numDays = daysInMonth(month.value, 2015);
+		day.value = numDays;
+		for (i=day.options.length-1; i>= 0; i--)
+		{
+				day.remove(i);
+		}
+		for (i =0 ; i < numDays; i++){
+			var opt = i + 1;
+			var el = document.createElement("option");
+			if (i < 9){
+				el.text = str1.concat(opt);
+				el.value = str1.concat(opt);
+			} else{
+				el.text = opt;
+				el.value = opt;
+			}
+			day.appendChild(el);
+		}
+	}
+	function daysInMonth(month,year){
+		return new Date(year, month, 0).getDate();
+	}
 </script>
+<!-- Date Change script-->
+
+
 <link rel="stylesheet" type="text/css" href="form.css">
 <img src="header2.png">
 <h2>Pick Up Registration Form</h2>
@@ -346,7 +380,7 @@ img{
 <body>
 
 
-<form action="insertForm.php" method="post">
+<form name = "insertForm" action="insertForm.php" method="post">
 	<!-- Initial Client Info -->
 	<div id="intitialInfo">
 		<label for="clientname" id ="firstLabel">Client Name: </label>	
@@ -435,7 +469,8 @@ img{
 			
 			<!-- Creates and fills month drop down-->
 			<label for="month" id="monthLabel">Month:</label>
-			<select name="month" id="month" class="month">
+			<select name="month" id="month" class="month" onchange="monthChange();">
+				<option value="01">January</option>
 				<option value="02">February</option>
 				<option value="03">March</option>
 				<option value="04">April</option>
