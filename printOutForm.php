@@ -406,8 +406,21 @@ h2{
 		border-bottom: 1px solid black; 
 		color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
 	}
+/*----------------------------*/
 </style>	
 </body>
+<!-- <footer>
+<style>
+	footer{
+		position: relative;
+		width: 670px;
+		height: 50px;
+		background-color: black;
+		text-align: right;
+		color: white;
+	}
+</style>
+</footer> -->
 
 <head>
 	<h2>Appointment and Travel Info</h2>
@@ -528,12 +541,13 @@ h2{
 				<label id ="driverDateLabel">Date: </label>	
 				<label id="driverDateText"></label>
 			</div>
-
 		</div>
 		
 	</div>
 </body>
-	
+<!-- <footer>
+	@AIBD Transportation Center
+</footer> -->
 		<!-- 
 			
 		
