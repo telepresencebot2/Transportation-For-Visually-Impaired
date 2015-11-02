@@ -5,102 +5,91 @@
 	define("U_R", "transMAGIC");
 	define("P_R", "bFYRFWc2jupQ9xbK");
 	$dbMAGIC = new PDO('mysql:host=localhost;dbname=db1', U_R, P_R);
-	if ($dbMagic->connect_error){
-		die("Connection failed: ". $dbMagic->connect_error);
-	}
-	$vehicle = $dbMAGIC->prepare("SELECT * FROM vehicle");
-	$vehicle->bindParam(':id', $resId, PDO::PARAM_INT);
+	
+	
+	$vehicle = $dbMAGIC->prepare("SELECT color FROM vehicle");
 	$vehicle->execute();
 	$vehicle = $vehicle->fetchAll();
-//if(isset($_POST['fName'])&&($_POST['fName']!=null)) {
-	if (isset($_POST['submit'])){
-		// prepare date
-		$date = $_POST[year]."-".$_POST[month]."-".$_POST[day];
-		//prepare pickup time
-		if ($_POST[pickUpAP] == '2'){
-			$_POST[pickUpHour] = $_POST[pickUpHour] + 12;
-		} else{
-			if ($_POST[pickUpHour] < 10){
-				$_POST[pickUpHour] = '0'.$_POST[pickUpHour];
-			}
-		}
-		if ($_POST[pickUpMin] == 0){
-			$_POST[pickUpMin] = '00';	
-		} elseif ($_POST[pickUpMin] == 5){
-			$_POST[pickUpMin] = '05';	
-		}
-		$pickTime = $_POST[pickUpHour].":".$_POST[pickUpMin].":00";
-		//prepare destination Time
-		if ($_POST[destAP] == '2'){
-			$_POST[destHour] = $_POST[pickUpHour] + 12;
-		} else{
-			if ($_POST[destHour] < 10){
-				$_POST[destHour] = '0'.$_POST[pickUpHour];
-			}
-		}
-		if ($_POST[destMin] == 0){
-			$_POST[destMin] = '00';	
-		} elseif ($_POST[destMin] == 5){
-			$_POST[destMin] = '05';	
-		}
-		$destTime = $_POST[destHour].":".$_POST[destMin].":00";
 	
+	$vehicleDriver = $dbMAGIC->prepare("SELECT name FROM driver");
+	$vehicleDriver->execute();
+	$vehicleDriver = $vehicleDriver->fetchAll();
+	
+	if (isset($_POST['year'])&&$_POST['year']!=null){
+		$date = $_POST['year']."-".$_POST['month']."-".$_POST['day'];
 		
-		$sql = "INSERT INTO reservations 
-		(name, disability, waiver, ticket, newPatient, emergName, emergPhone, phone, 
-		pickDate, pickTime, pickAddr1, pickAddr2, pickCity, pickZip, pickPhone, pickDescription,
-		destTime, destDescription, destAddr1, destAddr2, destCity, destZip, destPhone, assistance, driverName, vehicleColor)
-		VALUES 
-		('$_POST[clientname]', '$_POST[disability]','$_POST[waiver]','$_POST[tickets]', '$_POST[newPatient]',
-		'$_POST[emergencyName]', '$_POST[emergencyNumber]', '$_POST[patientNumber]',  
-		'$date', '$pickTime', '$_POST[pickUpAddress1]', '$_POST[pickUpAddress2]', '$_POST[pickUpCity]','$_POST[pickUpZip]',
-		'$_POST[pickNumber]', '$_POST[pickUpDesc]', '$destTime', 
-		'$_POST[destName]','$_POST[destAddress1]','$_POST[destAddress2]','$_POST[destCity]','$_POST[destZip]',
-		'$_POST[destNumber]', '$_POST[paperAssistance]', '$_POST[driverName]','$_POST[vehicle]')";/* '$_POST[notes]')";*/
-		$dbMAGIC->query($sql);
+		if($_POST['pickAP']=='AM'&&$_POST['pickHour']==12) { $_POST['pickHour']==00; }
+		else if($_POST['pickAP']=='PM'&&$_POST['pickHour']!=12) {$_POST['pickHour']+=12;}
+		
+		if($_POST['destAP']=='AM'&&$_POST['destHour']==12) { $_POST['destHour']==00; }
+		else if($_POST['destAP']=='PM'&&$_POST['destHour']!=12) {$_POST['destHour']+=12;}
+		
+		$pickTime = sprintf("%02d", $_POST['pickHour']).":".sprintf("%02d", $_POST['pickMin']).':00';
+		$destTime = sprintf("%02d", $_POST[$_POST['destHour']).":".sprintf("%02d", $_POST['destMin']).':00';
+	
+		$pickTimeStamp = strtotime($date.' '.$pickTime);
+		$destTimeStamp = strtotime($date.' '.$destTime);
+		
+		$cars = getAvailableVehicles($pickTimeStamp, $destTimeStamp, $dbMAGIC);
+		$drivers = getAvailableDrivers($pickTimeStamp, $destTimeStamp, $dbMAGIC);
+		
+		if(in_array($_POST['vehicle'], $cars)) {
+			$car = $_POST['vehicle'];
+		} else {
+			$car = $cars[array_rand($cars)];
+		}
+		
+		if(in_array($_POST['driverName'], $drivers)) {
+			$driver = $_POST['driverName'];
+		} else {
+			$driver = $drivers[array_rand($drivers)];
+		}
 		
 		
-		// $testsql = $dbMagic->prepare($sql);
-		// $reserve->execute();
-		 // if ($dbMagic->query($sql) == TRUE){
-			 // echo "New Record created successfully";
-		 // } else {
-			 // echo "Error: " .$sql. "<br>" . $dbMagic->error;
-		// }
+		$insert = $dbMAGIC->prepare('INSERT INTO reservations
+			(name, disability, waiver, ticket, newPatient, emergName, emergPhone, phone, 
+			pickDate, pickTime, pickAddr1, pickAddr2, pickCity, pickZip, pickPhone, pickDescription,
+			destTime, destDescription, destAddr1, destAddr2, destCity, destZip, destPhone,
+			assistance, driverName, vehicleColor, pickTimeStamp, destTimeStamp)
+			VALUES
+			(:name, :disability, :waiver, :ticket, :newPatient, :emergName, :emergPhone, :phone,
+			:pickDate, :pickTime, :pickAddr1, :pickAddr2, :pickCity, :pickZip, :pickPhone, :pickDescription,
+			:destTime, :destDescription, :destAddr1, :destAddr2, :destCity, :destZip, :destPhone,
+			:assistance, :driverName, :vehicleColor, :pickTimeStamp, :destTimeStamp)');
+		
+		
+		$insert->bindParam(':name', $_POST['clientname']);
+		$insert->bindParam(':disability', $_POST['disability']);
+		$insert->bindParam(':waiver', $_POST['waiver']);
+		$insert->bindParam(':ticket', $_POST['tickets'], PDO::PARAM_INT);
+		$insert->bindParam(':newPatient', $_POST['newPatient']);
+		$insert->bindParam(':emergName', $_POST['emergencyName']);
+		$insert->bindParam(':emergPhone', $_POST['emergencyNumber']);
+		$insert->bindParam(':phone', $_POST['patientNumber']);
+		$insert->bindParam(':pickDate', $date);
+		$insert->bindParam(':pickTime', $pickTime);
+		$insert->bindParam(':pickAddr1', $_POST['pickAddress1']);
+		$insert->bindParam(':pickAddr2', $_POST['pickAddress2']);
+		$insert->bindParam(':pickCity', $_POST['pickCity']);
+		$insert->bindParam(':pickZip', $_POST['pickZip']);
+		$insert->bindParam(':pickPhone', $_POST['pickNumber']);
+		$insert->bindParam(':pickDescription', $_POST['pickDesc']);
+		$insert->bindParam(':destTime', $destTime);
+		$insert->bindParam(':destDescription', $_POST['destName']);
+		$insert->bindParam(':destAddr1' ,$_POST['destAddress1']);
+		$insert->bindParam(':destAddr2', $_POST['destAddress2']);
+		$insert->bindParam(':destCity', $_POST['destCity']);
+		$insert->bindParam(':destZip', $_POST['destZip']);
+		$insert->bindParam(':destPhone', $_POST['destNumber']);
+		$insert->bindParam(':assistance', $_POST['paperAssistance']);
+		$insert->bindParam(':driverName', $driver);
+		$insert->bindParam(':vehicleColor', $car);
+		//$insert->bindParam(':notes', $_POST['notes']);
+		$insert->bindParam(':pickTimeStamp', $pickTimeStamp, PDO::PARAM_INT);
+		$insert->bindParam(':destTimeStamp', $destTimeStamp, PDO::PARAM_INT);
+
+		$insert->execute();
 	}
-/*
-	$insert = $dbMAGIC->prepare('INSERT INTO reservations (clientId) VALUES (:clientname)');
-	$insert->bindParam(':clientname', $_POST['']);
-	$insert->execute();
-*/
-/*
-	$time = time();
-	$insert = $dbMAGIC=>prepare('INSERT INTO reservations (clientId, location, phone, pickDate, pickTime, pickAddr1, pickAddr2, pickCity, pickZip, destAddr1, destAddr2, destCity, destZip, description, signature, driverId, vehicleId, timestamp) 
- * VALUES (:clientId, :location, :phone, :pickDate, :pickTime, :pickAddr1, :pickAddr2, :pickCity, :pickZip, :destAddr1, :destAddr2, :destCity, :destZip, :description, :signature, :driverId, :vehicleId, :timestamp');
-	$insert=>bindParam(':clientID', $_POST['']);
-	$insert=>bindParam(':location', $_POST['']);
-	$insert=>bindParam(':phone', $_POST['']);
-	$insert=>bindParam(':pickDate', $_POST['']);
-	$insert=>bindParam(':pickTime', $_POST['']);
-	$insert=>bindParam(':pickAddr1', $_POST['']);
-	$insert=>bindParam(':pickAddr2', $_POST['']);
-	$insert=>bindParam(':pickCity', $_POST['']);
-	$insert=>bindParam(':pickZip', $_POST['']);
-	$insert=>bindParam(':destAddr1', $_POST['destAddress1']);
-	$insert=>bindParam(':destAddr2', $_POST['destAddress2']);
-	$insert=>bindParam(':destCity', $_POST['destCity']);
-	$insert=>bindParam(':destZip', $_POST['destZip']);
-	$insert=>bindParam(':description', $_POST['message']);
-	$insert=>bindParam(':signature', $_POST['signature']);
-	$insert=>bindParam(':driverId', 0);
-	$insert=>bindParam(':vehicleId', 0);
-	$insert=>bindParam(':timestamp', $time);
-*/
-	//array(24) { ["clientname"]=> string(1) "a" ["disability"]=> string(5) "Blind" ["waiver"]=> string(1) "a" ["tickets"]=> string(1) "1" ["emergencyname"]=> string(1) "a" ["emergencynumber"]=> string(1) "a" ["pickupName"]=> string(1) "a" ["pickupNumber"]=> string(1) "a" ["pickupTime"]=> string(1) "a" ["day"]=> string(2) "13" ["month"]=> string(2) "10" ["year"]=> string(4) "2015" ["appointmentTime"]=> string(1) "a" ["appointmentPhone"]=> string(1) "a" ["newPatient"]=> string(3) "YES" ["paperAssistance"]=> string(3) "YES" ["destAddress1"]=> string(1) "a" ["destAddress2"]=> string(1) "a" ["destCity"]=> string(1) "a" ["destZip"]=> string(1) "a" ["driverName"]=> string(1) "a" ["vehicle"]=> string(1) "a" ["message"]=> string(2) "	a" ["signature"]=> string(3) " a" }
-	
-// } else if(isset($_POST['appointmentPhone'])&&($_POST['appointmentPhone']!=null)) {
-	// var_dump($_POST);
-// } else {
 
 ?>
 
@@ -255,7 +244,7 @@ img{
 		top: 10px;
 		width: 49%;
 	}
-	#pickUpBlock{
+	#pickBlock{
 		position: relative;
 		display: inline;
 		float: left;
@@ -423,10 +412,10 @@ img{
 		    <p id="Typical">PATIENT INFORMATION:</p>
 		    
 		    <div id="patientInfo">
-				<label for="pickupNumber" id="firstLabel">Phone Number:</label>	
+				<label for="pickNumber" id="firstLabel">Phone Number:</label>	
 				<input type="text" name="patientNumber" id="firstField">
 				<p>
-				<label for="pickupTime" id="firstLabel">New Patient:</label>	
+				<label for="pickTime" id="firstLabel">New Patient:</label>	
 		  		<select name="newPatient" id="firstField">
 		    		<option value="NULL"></option>
 		    		<option value="YES">YES</option>
@@ -503,18 +492,18 @@ img{
 		</div>
 				
 		<!--Pick Up Block-->
-		<div id="pickUpBlock">
+		<div id="pickBlock">
 			<p id="appLabels">Pick-up Information:</p>
 			
 			<label>Time:</label>	
-			<select name="pickUpHour" id="hour">
+			<select name="pickHour" id="hour">
 				<?php
 					for ($x=1; $x <= 12; $x++){
 						echo "<option value=\"".$x."\">".$x."</option>";
 					}
 				?>
 			</select> 
-			<select name="pickUpMin" id="minutes">
+			<select name="pickMin" id="minutes">
 				<?php
 					$min = 0;
 					for ($x=0; $x <= 11; $x++){
@@ -523,26 +512,26 @@ img{
 					}
 				?>
 			</select> 
-			<select name="pickUpAP" id="amOrPm">
-				<option value="1">AM</option>
-				<option value="2">PM</option>
+			<select name="pickAP" id="amOrPm">
+				<option value="AM">AM</option>
+				<option value="PM">PM</option>
 			</select> 
 			<p></p>
 			<label id="destinationName">Description:</label>
-			<input type="text" name="pickUpDesc" id="pickUpDesc">
+			<input type="text" name="pickDesc" id="pickDesc">
 			<p>
 			<label for="pickNumber">Phone Number:</label>
-			<input type="text" name="pickNumber" id="pickUpDesc">
+			<input type="text" name="pickNumber" id="pickDesc">
 			<p>
-			<label for="pickUpAddress1">Address:</label>	
-			<input type="text" name="pickUpAddress1" id="street1">
+			<label for="pickAddress1">Address:</label>	
+			<input type="text" name="pickAddress1" id="street1">
 			<p>
-			<input type="text" name="pickUpAddress2" id="street2">
+			<input type="text" name="pickAddress2" id="street2">
 			<p>
-			<label for="pickUpCity" id="cityLabel">City:</label>
-			<input type="text" name="pickUpCity" id="city">
+			<label for="pickCity" id="cityLabel">City:</label>
+			<input type="text" name="pickCity" id="city">
 			<label for="destZip" id="destZipLabel">Zip-Code:</label>
-			<input type="text" name="pickUpZip" id="destZip">
+			<input type="text" name="pickZip" id="destZip">
 
 	    </div>
 	    
@@ -567,15 +556,15 @@ img{
 				?>
 			</select> 
 			<select name="destAP" id="amOrPm">
-				<option value="1">AM</option>
-				<option value="1">PM</option>
+				<option value="AM">AM</option>
+				<option value="PM">PM</option>
 			</select> 
 			<p>
 			<label id="destName">Description:</label>
-			<input type="text" name="destName" id="pickUpDesc">
+			<input type="text" name="destName" id="pickDesc">
 			<p>
 			<label for="destNumber">Phone Number:</label>
-			<input type="text" name="destNumber" id="pickUpDesc">
+			<input type="text" name="destNumber" id="pickDesc">
 			<p>
 			<label for="destAddress1">Address:</label>	
 			<input type="text" name="destAddress1" id="street1">
@@ -591,8 +580,15 @@ img{
 	
 	<p id="Typical">DRIVER/VEHICLE:</p>
 	<div id="driverInfo">
-		<label for="driverName" id="firstLabel">Driver Name:</label>	
-		<input type="text" name="driverName" id="firstField">
+		<label for="driverName" id="firstLabel">Driver Name:</label>
+		<select name="driverName" id="firstField">
+			<?php
+				foreach ($vehicleDriver as $guy)
+				{
+					echo "<option value=\"".$guy['name']."\">".$guy['name']."</option>";
+				}
+			?>
+		</select>
 		<p>
 		<label for="vehicle" id="firstLabel">Vehicle:</label>	
 		<select name="vehicle" id="firstField">
@@ -631,5 +627,59 @@ img{
 </html>
 
 <?php
+
+
+function getAvailableVehicles($start, $end, $db) {
+	$usedCars = $db->prepare('SELECT vehicleColor, pickTimeStamp, destTimeStamp FROM reservations');
+	$usedCars->execute();
+	$usedCars = $usedCars->fetchAll();
+	$taken = array();
+	foreach($usedCars as $usedCar) {
+		if(
+				($usedCar['pickTimeStamp'] > $start && $usedCar['pickTimeStamp'] < $end) ||
+				($usedCar['destTimeStamp'] > $start && $usedCar['destTimeStamp'] < $end) ||
+				($usedCar['pickTimeStamp'] < $start && $usedCar['destTimeStamp'] > $start) ||
+				($usedCar['pickTimeStamp'] < $end && $usedCar['destTimeStamp'] > $end)
+		) {
+			$taken[] = $usedCar['vehicleColor'];
+		}
+	}
+	
+	$cars = $db->prepare("SELECT color FROM vehicle");
+	$cars->execute();
+	$cars = $cars->fetchAll();
+	$available = array();
+	foreach($cars as $car) {
+		$available[] = $car['color'];
+	}
+	return array_diff($available, $taken);
+}
+
+function getAvailableDrivers($start, $end, $db) {
+	$usedDrivers = $db->prepare('SELECT driverName, pickTimeStamp, destTimeStamp FROM reservations');
+	$usedDrivers->execute();
+	$usedDrivers = $usedDrivers->fetchAll();
+	$taken = array();
+	foreach($usedDrivers as $usedDriver) {
+		if(
+			($usedDriver['pickTimeStamp'] > $start && $usedDriver['pickTimeStamp'] < $end) ||
+			($usedDriver['destTimeStamp'] > $start && $usedDriver['destTimeStamp'] < $end) ||
+			($usedDriver['pickTimeStamp'] < $start && $usedDriver['destTimeStamp'] > $start) ||
+			($usedDriver['pickTimeStamp'] < $end && $usedDriver['destTimeStamp'] > $end)
+		) {
+			$taken[] = $usedDriver['driverName'];
+		}
+	}
+	
+	$drivers = $db->prepare("SELECT name FROM driver");
+	$drivers->execute();
+	$drivers = $drivers->fetchAll();
+	$available = array();
+	foreach($drivers as $driver) {
+		$available[] = $driver['name'];
+	}
+	return array_diff($available, $taken);
+}
+
 
 ?>

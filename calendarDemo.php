@@ -50,7 +50,7 @@ $reserve = $reserve->fetchAll();
 						echo "title: '".$re['destDescription']."',";
 						echo "url: 'printOutForm.php?id=" . $re['id']. "',";
 						echo "start: '".$re['pickDate']."T".$re['pickTime']."',";
-						echo "color: '".$re['vehicleColor']."',";
+						echo "color: '".$re['vehicleColor']."'";
 						if ($re == $lastreserve)
 						{
 							break;
