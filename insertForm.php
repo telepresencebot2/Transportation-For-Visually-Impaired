@@ -25,10 +25,13 @@
 		else if($_POST['destAP']=='PM'&&$_POST['destHour']!=12) {$_POST['destHour']+=12;}
 		
 		$pickTime = sprintf("%02d", $_POST['pickHour']).":".sprintf("%02d", $_POST['pickMin']).':00';
-		$destTime = sprintf("%02d", $_POST[$_POST['destHour']).":".sprintf("%02d", $_POST['destMin']).':00';
+		$destTime = sprintf("%02d", $_POST['destHour']).":".sprintf("%02d", $_POST['destMin']).':00';
 	
 		$pickTimeStamp = strtotime($date.' '.$pickTime);
 		$destTimeStamp = strtotime($date.' '.$destTime);
+		
+		//Reformat date for calendar
+		$date = $_POST['year']."-".sprintf("%02d", $_POST['month'])."-".sprintf("%02d", $_POST['day']);	
 		
 		$cars = getAvailableVehicles($pickTimeStamp, $destTimeStamp, $dbMAGIC);
 		$drivers = getAvailableDrivers($pickTimeStamp, $destTimeStamp, $dbMAGIC);
@@ -636,10 +639,10 @@ function getAvailableVehicles($start, $end, $db) {
 	$taken = array();
 	foreach($usedCars as $usedCar) {
 		if(
-				($usedCar['pickTimeStamp'] > $start && $usedCar['pickTimeStamp'] < $end) ||
-				($usedCar['destTimeStamp'] > $start && $usedCar['destTimeStamp'] < $end) ||
-				($usedCar['pickTimeStamp'] < $start && $usedCar['destTimeStamp'] > $start) ||
-				($usedCar['pickTimeStamp'] < $end && $usedCar['destTimeStamp'] > $end)
+				($usedCar['pickTimeStamp'] >= $start && $usedCar['pickTimeStamp'] <= $end) ||
+				($usedCar['destTimeStamp'] >= $start && $usedCar['destTimeStamp'] <= $end) ||
+				($usedCar['pickTimeStamp'] <= $start && $usedCar['destTimeStamp'] >= $start) ||
+				($usedCar['pickTimeStamp'] <= $end && $usedCar['destTimeStamp'] >= $end)
 		) {
 			$taken[] = $usedCar['vehicleColor'];
 		}
@@ -662,10 +665,10 @@ function getAvailableDrivers($start, $end, $db) {
 	$taken = array();
 	foreach($usedDrivers as $usedDriver) {
 		if(
-			($usedDriver['pickTimeStamp'] > $start && $usedDriver['pickTimeStamp'] < $end) ||
-			($usedDriver['destTimeStamp'] > $start && $usedDriver['destTimeStamp'] < $end) ||
-			($usedDriver['pickTimeStamp'] < $start && $usedDriver['destTimeStamp'] > $start) ||
-			($usedDriver['pickTimeStamp'] < $end && $usedDriver['destTimeStamp'] > $end)
+			($usedDriver['pickTimeStamp'] >= $start && $usedDriver['pickTimeStamp'] <= $end) ||
+			($usedDriver['destTimeStamp'] >= $start && $usedDriver['destTimeStamp'] <= $end) ||
+			($usedDriver['pickTimeStamp'] <= $start && $usedDriver['destTimeStamp'] >= $start) ||
+			($usedDriver['pickTimeStamp'] <= $end && $usedDriver['destTimeStamp'] >= $end)
 		) {
 			$taken[] = $usedDriver['driverName'];
 		}
