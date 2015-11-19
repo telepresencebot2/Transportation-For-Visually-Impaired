@@ -29,6 +29,9 @@ $reserve = $reserve->fetchAll();
 <script src='fullcalendar-2.4.0/lib/jquery.min.js'></script>
 <script src='fullcalendar-2.4.0/fullcalendar.min.js'></script>
 <script>
+	function popup(){
+  		cuteLittleWindow = window.open("driverForm.php", "littleWindow", "location=no,width=700,height=312"); 
+	}
 
 	$(document).ready(function() {
 		
@@ -100,6 +103,7 @@ $reserve = $reserve->fetchAll();
 </body>
 
 <footer>
+	<input type="button" id='reservationButton' value="New Reservation" onclick="popup();">	
 	<input type="button" id='reservationButton' value="New Reservation" onclick="location.href='insertForm.php';">	
 </footer>
 </html>

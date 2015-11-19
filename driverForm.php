@@ -92,7 +92,6 @@
 </style>
 </body>
 
-
 <head>
 	<link rel="stylesheet" type="text/css" href="form.css">
 	<img src="header2.png">
@@ -110,11 +109,10 @@
 			<p></p>
 			<label for="vehicleColor" id="firstLabel">Vehicle Color:</label>	
 			<input name="vehicleColor" class="jscolor jscolor-active" id="firstField"value="ab2567" autocomplete="off" style="color: 
-			rgb(255, 255, 255); background-image: none; background-color: rgb(171, 37, 103);">		
+			rgb(255, 255, 255); background-image: none; background-color: rgb(171, 37, 103);">
 		</div>
-		<div id="driverSave">
+			<div id="driverSave">
 			<button class="button" onclick="save();" type="button">Save</button>
 		</div>
-	</form>
 </body>
 </html>
