@@ -1,4 +1,6 @@
 <?php
+
+function addReservation(){
 	define("HOST", "localhost");
 	define("DATABASE", "db1");
 	// magical
@@ -93,6 +95,7 @@
 
 		$insert->execute();
 	}
+}
 
 ?>
 
@@ -324,12 +327,14 @@ img{
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- Submit and Date scripts-->
-<script type="text/javascript">
+<script>
 	function clicked(){
 		if (confirm('Are your sure?')){
-			location.href = 'calendarDemo.php';
+			var phpadd = <?php echo addReservation();?>;
 		}
-	}
+	}	
+</script>
+<script type="text/javascript">
 	function monthChange(){
 		var str1 = "0";
 		var select = document.forms['insertForm'].elements['month'];
