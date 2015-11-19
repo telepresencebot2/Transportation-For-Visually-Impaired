@@ -77,15 +77,17 @@
 <body>
 	<div id="driverInfo">
 		<label for="vehicleType" id="firstLabel">Vehicle ID:</label>	
-		<input type="text" name="emergencyNumber"  id="firstField">
+		<input type="text" name="vehicleType"  id="firstField">
 		<p></p>
-		<label for="vehicleType" id="firstLabel">Vehicle Color:</label>	
-		<input class="jscolor jscolor-active" id="firstField"value="ab2567" autocomplete="off" style="color: 
+		<label for="vehicleSeats" id="firstLabel">Seats:</label>	
+		<input type="text" name="vehicleSeats"  id="firstField">
+		<p></p>
+		<label for="vehicleColor" id="firstLabel">Vehicle Color:</label>	
+		<input name="vehicleColor" class="jscolor jscolor-active" id="firstField"value="ab2567" autocomplete="off" style="color: 
 		rgb(255, 255, 255); background-image: none; background-color: rgb(171, 37, 103);">		
 	</div>
 	<div id="driverSave">
-		<button class="button" type="button">Save</button>
-		<!-- <input name="submit" type="submit" value="Save Driver" id="saveButton"> -->
+		<button class="button" type="button" onclick="save();">Save</button>
 	</div>
 </body>
 </html>
