@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 	function addVehicles(){
 		define("HOST", "localhost");
 		define("DATABASE", "db1");
@@ -6,19 +6,19 @@
 		define("U_R", "transMAGIC");
 		define("P_R", "bFYRFWc2jupQ9xbK");
 		$dbMAGIC = new PDO('mysql:host=localhost;dbname=db1', U_R, P_R);
-		$insert = $dbMAGIC->prepare('INSERT INTO vehicleColor(vehicleType, seats, color) VALUES
-		(:vehicleType, :vehicleSeats, :vehicleColor)');
+		insert = dbMAGIC->prepare('INSERT INTO vehicleColor(vehicleType, seats, color) VALUES
+		(:vehicleType, :vehicleSeats, :vehicleColor'));
 		$insert->bindParam(':vehicleType', $_POST['vehicleType']);
 		$insert->bindParam(':vehicleSeats', $_POST['vehicleSeats']);
 		$insert->bindParam(':vehicleColor', $_POST['vehicleColor']);
 		$insert->execute();
 	}
-?>
+?> -->
 
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="jscolor-2.0.4/jscolor.js"></script>
+<script src="jscolor-2.0.4/jscolor.js"></script>
 <script>
 	function clicked(){
 		if (confirm('Are your sure?')){
@@ -60,14 +60,14 @@
 	    font-size: 50px;
 		font-family: Zapf Chancery, cursive;	
 	}
-	#driverInfo {
+	#vehicleInfo {
 		position: relative;
 		float: left;
 		width: 50%;
 		height: 100%;
 		display: inline;
 	}
-	#driverSave {
+	#vehicleSave {
 		position: relative;
 		float: right;
 		width: 50%;
@@ -111,8 +111,9 @@
 			<input name="vehicleColor" class="jscolor jscolor-active" id="firstField"value="ab2567" autocomplete="off" style="color: 
 			rgb(255, 255, 255); background-image: none; background-color: rgb(171, 37, 103);">
 		</div>
-			<div id="vehicleSave">
+		<div id="vehicleSave">
 			<button class="button" onclick="save();" type="button">Save</button>
 		</div>
+	</form>
 </body>
 </html>

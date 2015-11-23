@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 	function addVehicles(){
 		define("HOST", "localhost");
 		define("DATABASE", "db1");
@@ -6,14 +6,14 @@
 		define("U_R", "transMAGIC");
 		define("P_R", "bFYRFWc2jupQ9xbK");
 		$dbMAGIC = new PDO('mysql:host=localhost;dbname=db1', U_R, P_R);
-		$insert = $dbMAGIC->prepare('INSERT INTO vehicleColor(vehicleType, seats, color) VALUES
-		(:vehicleType, :vehicleSeats, :vehicleColor)');
+		insert = dbMAGIC->prepare('INSERT INTO vehicleColor(vehicleType, seats, color) VALUES
+		(:vehicleType, :vehicleSeats, :vehicleColor'));
 		$insert->bindParam(':vehicleType', $_POST['vehicleType']);
 		$insert->bindParam(':vehicleSeats', $_POST['vehicleSeats']);
 		$insert->bindParam(':vehicleColor', $_POST['vehicleColor']);
 		$insert->execute();
 	}
-?>
+?> -->
 
 <!DOCTYPE html>
 <html>
@@ -95,14 +95,14 @@
 <head>
 	<link rel="stylesheet" type="text/css" href="form.css">
 	<img src="header2.png">
-	<h2>Vehicle Insertion Form</h2>
+	<h2>Driver Insertion Form</h2>
 </head>
 
 <body>
-	<form name = "vehicleForm" action="vehicleForm.php" method="post">
-		<div id="vehicleInfo">
-			<label for="vehicleType" id="firstLabel">Vehicle ID:</label>	
-			<input type="text" name="vehicleType"  id="firstField">
+	<form name = "driverForm" action="driverForm.php" method="post">
+		<div id="driverInfo">
+			<label for="driverName" id="firstLabel">Driver Name:</label>	
+			<input type="text" name="driverName"  id="firstField">
 			<p></p>
 			<label for="vehicleSeats" id="firstLabel">Seats:</label>	
 			<input type="text" name="vehicleSeats"  id="firstField">
@@ -111,8 +111,9 @@
 			<input name="vehicleColor" class="jscolor jscolor-active" id="firstField"value="ab2567" autocomplete="off" style="color: 
 			rgb(255, 255, 255); background-image: none; background-color: rgb(171, 37, 103);">
 		</div>
-			<div id="vehicleSave">
+			<div id="driverSave">
 			<button class="button" onclick="save();" type="button">Save</button>
 		</div>
 </body>
 </html>
+
