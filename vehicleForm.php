@@ -6,8 +6,8 @@
 		define("U_R", "transMAGIC");
 		define("P_R", "bFYRFWc2jupQ9xbK");
 		$dbMAGIC = new PDO('mysql:host=localhost;dbname=db1', U_R, P_R);
-		insert = dbMAGIC->prepare('INSERT INTO vehicleColor(vehicleType, seats, color) VALUES
-		(:vehicleType, :vehicleSeats, :vehicleColor'));
+		$insert = $dbMAGIC->prepare('INSERT INTO vehicleColor(vehicleType, seats, color) VALUES
+		(:vehicleType, :vehicleSeats, :vehicleColor)');
 		$insert->bindParam(':vehicleType', $_POST['vehicleType']);
 		$insert->bindParam(':vehicleSeats', $_POST['vehicleSeats']);
 		$insert->bindParam(':vehicleColor', $_POST['vehicleColor']);
