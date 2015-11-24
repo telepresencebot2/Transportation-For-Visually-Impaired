@@ -53,13 +53,23 @@
 		height: 100%;
 		width: 100%;
 	}
-	.button{
+	.saveButton{
 	    height:300px;
-	    width: 100%;
+	    width: 50%;
+	    float: left;
 	    background: white;
 	    background-size: contain;
 	    background-repeat: no-repeat;
 	    background-image: url(saveButton.png);
+	}
+	.cancelButton{
+	    height:300px;
+	    width: 50%;
+	    float: left;
+	    background: white;
+	    background-size: contain;
+	    background-repeat: no-repeat;
+	    background-image: url(cancelButton.png);
 	}
 	#information {
 		position: relative;
@@ -140,7 +150,8 @@
 			</div>		
 		</div>
 		<div id="driverSave">
-			<button class="button" onclick="save();" type="button"></button>
+			<button class="saveButton" onclick="save();" type="button"></button>
+			<button class="cancelButton" onclick="location.href='calendarDemo.php';" type="button"></button>
 		</div>
 	</form>
 </body>
