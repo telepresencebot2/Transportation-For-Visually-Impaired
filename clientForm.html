@@ -54,18 +54,23 @@
 		width: 100%;
 	}
 	.button{
-	    background:white;
-	    height:50%;
+	    height:300px;
 	    width: 100%;
-	    font-size: 50px;
-		font-family: Zapf Chancery, cursive;	
+	    background: white;
+	    background-size: contain;
+	    background-repeat: no-repeat;
+	    background-image: url(saveButton.png);
 	}
-	#driverInfo {
+	#information {
 		position: relative;
 		float: left;
 		width: 50%;
 		height: 100%;
 		display: inline;
+	}
+	#clientInfo {
+		position: relative;
+		height: 190px;
 	}
 	#driverSave {
 		position: relative;
@@ -76,7 +81,7 @@
 	}
 	#saveButton{
 		width: 100%;
-		height: inherit;
+		height: 190px;
 	}
 
 	#firstLabel {
@@ -89,31 +94,55 @@
 		margin: 20px;
 		left: 170px;
 	}
+	img{
+		position: absolute;
+		left: 8px;
+		top: 0px;
+		width: 802px;
+		height: 105px;
+		z-index: -1;
+	}
 </style>
 </body>
 
 <head>
 	<link rel="stylesheet" type="text/css" href="form.css">
 	<img src="header2.png">
-	<h2>Driver Insertion Form</h2>
+	<h2>New Client Form</h2>
 </head>
 
 <body>
 	<form name = "driverForm" action="driverForm.php" method="post">
-		<div id="driverInfo">
-			<label for="driverName" id="firstLabel">Driver Name:</label>	
-			<input type="text" name="driverName"  id="firstField">
-			<p></p>
-			<label for="vehicleSeats" id="firstLabel">Seats:</label>	
-			<input type="text" name="vehicleSeats"  id="firstField">
-			<p></p>
-			<label for="vehicleColor" id="firstLabel">Vehicle Color:</label>	
-			<input name="vehicleColor" class="jscolor jscolor-active" id="firstField"value="ab2567" autocomplete="off" style="color: 
-			rgb(255, 255, 255); background-image: none; background-color: rgb(171, 37, 103);">
+		<div id="information">
+			<div id="clientInfo">
+				<label for="clientName" id="firstLabel">Client Name:</label>	
+				<input type="text" name="clientName" id="firstField">
+				<p></p>
+				<label for="clientAddress" id="firstLabel">Address:</label>	
+				<input type="text" name="clientAddress"  id="firstField">
+				<p></p>
+				<label for="clientNumber" id="firstLabel">Phone Number:</label>	
+				<input type="text" name="clientNumber" id="firstField">
+				<p></p>
+				<label for="clientDisability" id="firstLabel">Disability:</label>	
+				<input type="text" name="clientDisability" id="firstField">
+				<p></p>
+				<label for="waiver" id="firstLabel">Waiver:</label>	
+				<input type="text" name="waiver" id="firstField">	
+			</div>
+			--EMERGENCY CONTACT INFORMATION--
+			<div id="clientInfo">
+				<label for="emerName" id="firstLabel">Contact Name:</label>	
+				<input type="text" name="emerName" id="firstField">
+				<p></p>
+				<label for="emerPhone" id="firstLabel">Contact Phone:</label>	
+				<input type="text" name="emerPhone" id="firstField">
+			</div>		
 		</div>
-			<div id="driverSave">
-			<button class="button" onclick="save();" type="button">Save</button>
+		<div id="driverSave">
+			<button class="button" onclick="save();" type="button"></button>
 		</div>
+	</form>
 </body>
 </html>
 
