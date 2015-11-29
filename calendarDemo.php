@@ -103,8 +103,8 @@ $reserve = $reserve->fetchAll();
 </body>
 
 <footer>
-	<input type="button" id='reservationButton' value="New Vehicle" onclick="location.href='vehicleForm.html';">	
-	<input type="button" id='reservationButton' value="New Client" onclick="location.href='clientForm.html';">	
+	<input type="button" id='reservationButton' value="New Vehicle" onclick="location.href='vehicleForm.php';">	
+	<input type="button" id='reservationButton' value="New Client" onclick="location.href='clientForm.php';">	
 	<input type="button" id='reservationButton' value="New Reservation" onclick="location.href='insertForm.php';">	
 </footer>
 </html>
