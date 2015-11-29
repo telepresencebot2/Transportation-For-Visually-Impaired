@@ -1,31 +1,22 @@
 <<?php
-	function addVehicles(){
-		define("HOST", "localhost");
-		define("DATABASE", "db1");
-		// magical
-		define("U_R", "transMAGIC");
-		define("P_R", "bFYRFWc2jupQ9xbK");
-		$dbMAGIC = new PDO('mysql:host=localhost;dbname=db1', U_R, P_R);
-		insert = dbMAGIC->prepare('INSERT INTO vehicleColor(vehicleType, seats, color) VALUES
-		(:vehicleType, :vehicleSeats, :vehicleColor'));
-		$insert->bindParam(':vehicleType', $_POST['vehicleType']);
-		$insert->bindParam(':vehicleSeats', $_POST['vehicleSeats']);
-		$insert->bindParam(':vehicleColor', $_POST['vehicleColor']);
-		$insert->execute();
-	}
+if (isset ( $_POST ['driverName'] )) {
+	define ( "HOST", "localhost" );
+	define ( "DATABASE", "db1" );
+	// magical
+	define ( "U_R", "transMAGIC" );
+	define ( "P_R", "bFYRFWc2jupQ9xbK" );
+	$dbMAGIC = new PDO ( 'mysql:host=localhost;dbname=db1', U_R, P_R );
+	$insert = $dbMAGIC->prepare ( 'INSERT INTO driver (name) VALUES
+		(:driverName)' );
+	$insert->bindParam ( ':driverName', $_POST ['driverName'] );
+	$insert->execute ();
+}
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
 	<script src="jscolor-2.0.4/jscolor.js"></script>
-<script>
-	function clicked(){
-		if (confirm('Are your sure?')){
-			var phpadd = <?php echo addVehicles();?>;
-		}
-	}	
-</script>
 
 <style>
 	h2{
@@ -89,6 +80,24 @@
 		margin: 20px;
 		left: 170px;
 	}
+	.saveButton{
+	    height:150px;
+	    width: 50%;
+	    float: left;
+	    background: white;
+	    background-size: contain;
+	    background-repeat: no-repeat;
+	    background-image: url(saveButton.png);
+	}
+	.cancelButton{
+	    height: 150px;
+	    width: 50%;
+	    float: left;
+	    background: white;
+	    background-size: contain;
+	    background-repeat: no-repeat;
+	    background-image: url(cancelButton.png);
+	}
 </style>
 </body>
 
@@ -101,18 +110,12 @@
 <body>
 	<form name = "driverForm" action="driverForm.php" method="post">
 		<div id="driverInfo">
-			<label for="vehicleType" id="firstLabel">Vehicle ID:</label>	
-			<input type="text" name="vehicleType"  id="firstField">
-			<p></p>
-			<label for="vehicleSeats" id="firstLabel">Seats:</label>	
-			<input type="text" name="vehicleSeats"  id="firstField">
-			<p></p>
-			<label for="vehicleColor" id="firstLabel">Vehicle Color:</label>	
-			<input name="vehicleColor" class="jscolor jscolor-active" id="firstField"value="ab2567" autocomplete="off" style="color: 
-			rgb(255, 255, 255); background-image: none; background-color: rgb(171, 37, 103);">
+			<label for="driverName" id="firstLabel">Name:</label>	
+			<input type="text" name="driverName"  id="firstField">
 		</div>
-			<div id="driverSave">
-			<button class="button" onclick="save();" type="button">Save</button>
+		<div id="driverSave">
+			<button class="saveButton" onclick="alert('New driver added');" type="submit"></button>
+			<button class="cancelButton" onclick="location.href='calendarDemo.php';" type="button"></button>
 		</div>
 </body>
 </html>
