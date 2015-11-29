@@ -1,31 +1,24 @@
-<!-- <?php
-	function addVehicles(){
+<?php
+	if( isset( $_Post['clientName'] ) ) {
 		define("HOST", "localhost");
 		define("DATABASE", "db1");
 		// magical
 		define("U_R", "transMAGIC");
 		define("P_R", "bFYRFWc2jupQ9xbK");
 		$dbMAGIC = new PDO('mysql:host=localhost;dbname=db1', U_R, P_R);
-		insert = dbMAGIC->prepare('INSERT INTO vehicleColor(vehicleType, seats, color) VALUES
-		(:vehicleType, :vehicleSeats, :vehicleColor'));
-		$insert->bindParam(':vehicleType', $_POST['vehicleType']);
-		$insert->bindParam(':vehicleSeats', $_POST['vehicleSeats']);
-		$insert->bindParam(':vehicleColor', $_POST['vehicleColor']);
+		insert = dbMAGIC->prepare('INSERT INTO clients (fName, phone, disability) VALUES
+		(:clientName, :clientNumber, :clientDisability'));
+		$insert->bindParam(':clientName', $_POST['clientName']);
+		$insert->bindParam(':clientPhone', $_POST['clientPhone']);
+		$insert->bindParam(':clientDisability', $_POST['clientDisability']);
 		$insert->execute();
 	}
-?> -->
+?>
 
 <!DOCTYPE html>
 <html>
 <head>
 	<script src="jscolor-2.0.4/jscolor.js"></script>
-<script>
-	function clicked(){
-		if (confirm('Are your sure?')){
-			var phpadd = <?php echo addVehicles();?>;
-		}
-	}	
-</script>
 
 <style>
 	h2{
@@ -150,7 +143,7 @@
 			</div>		
 		</div>
 		<div id="driverSave">
-			<button class="saveButton" onclick="save();" type="button"></button>
+			<button class="saveButton" onclick="alert('New client added.');" type="submit"></button>
 			<button class="cancelButton" onclick="location.href='calendarDemo.php';" type="button"></button>
 		</div>
 	</form>
