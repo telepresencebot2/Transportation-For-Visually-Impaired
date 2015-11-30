@@ -14,7 +14,67 @@ $vehicleDriver = $dbMAGIC->prepare ( "SELECT name FROM driver" );
 $vehicleDriver->execute ();
 $vehicleDriver = $vehicleDriver->fetchAll ();
 
-if (isset ( $_POST ['search'])) {
+
+function getOverlap($start, $end, $db) {
+	$overlap = $db->prepare ( 'SELECT id, ticket, vehicleColor, driverName, pickTimeStamp, destTimeStamp FROM reservations' );
+	$overlap->execute ();
+	$overlap = $overlap->fetchAll ();
+	$taken = array ();
+	foreach ( $overlap as $over ) {
+		if (($over ['pickTimeStamp'] >= $start && $over ['pickTimeStamp'] <= $end) || ($over ['destTimeStamp'] >= $start && $over ['destTimeStamp'] <= $end) || ($over ['pickTimeStamp'] <= $start && $over ['destTimeStamp'] >= $start) || ($over ['pickTimeStamp'] <= $end && $over ['destTimeStamp'] >= $end)) {
+			$taken [] = $over;
+		}
+	}
+	return $taken;
+}
+function getAvailableVehicles($start, $end, $db) {
+	$overLap = getOverlap ( $start, $end, $db );
+	$taken = array ();
+	foreach ( $overLap as $over ) {
+		$taken [] = $over ['vehicleColor'];
+	}
+	
+	$cars = $db->prepare ( "SELECT color FROM vehicle" );
+	$cars->execute ();
+	$cars = $cars->fetchAll ();
+	$available = array ();
+	foreach ( $cars as $car ) {
+		$available [] = $car ['color'];
+	}
+	return array_diff ( $available, $taken );
+}
+function getAvailableDrivers($start, $end, $db) {
+	$overLap = getOverlap ( $start, $end, $db );
+	$taken = array ();
+	foreach ( $overLap as $over ) {
+		$taken [] = $over ['driverName'];
+	}
+	
+	$drivers = $db->prepare ( "SELECT name FROM driver" );
+	$drivers->execute ();
+	$drivers = $drivers->fetchAll ();
+	$available = array ();
+	foreach ( $drivers as $driver ) {
+		$available [] = $driver ['name'];
+	}
+	return array_diff($available, $taken);
+}
+
+
+if ( isset( $_POST['getVD'] ) ) {
+	$search = $dbMAGIC->prepare("SELECT ticket, driverName, vehicleColor FROM reservations WHERE pickDate = :date");
+	$search->bindParam(':date', $_POST['getVD']);
+	$search->execute();
+	$results = $search->fetchAll();
+	for($i = 0; $i < count($results); $i++) {
+		$getCar = $dbMAGIC->prepare("SELECT vehicleType FROM vehicle WHERE color = :color LIMIT 1");
+		$getCar->bindParam(':color', $results[$i]['vehicleColor']);
+		$getCar->execute();
+		$car = $getCar->fetchAll();
+		$results[$i]['vehicle'] = $car[0]['vehicleType'];
+	}
+	echo json_encode($results);
+} else if (isset ( $_POST ['search'])) {
 	$name = '%'.$_POST['search'].'%';
 	$search = $dbMAGIC->prepare("SELECT * FROM reservations WHERE name LIKE :name");
 	$search->bindParam(':name', $name);
@@ -31,8 +91,7 @@ if (isset ( $_POST ['search'])) {
 		}
 	}
 	echo json_encode($results);
-} else 
-if (isset ( $_POST ['year'] ) && $_POST ['year'] != null) {
+} else if (isset ( $_POST ['year'] ) && $_POST ['year'] != null) {
 	$date = $_POST ['year'] . "-" . $_POST ['month'] . "-" . $_POST ['day'];
 	
 	if ($_POST ['pickAP'] == 'AM' && $_POST ['pickHour'] == 12) {
@@ -59,13 +118,13 @@ if (isset ( $_POST ['year'] ) && $_POST ['year'] != null) {
 	$cars = getAvailableVehicles ( $pickTimeStamp, $destTimeStamp, $dbMAGIC );
 	$drivers = getAvailableDrivers ( $pickTimeStamp, $destTimeStamp, $dbMAGIC );
 	
-	if (in_array ( $_POST ['vehicle'], $cars )) {
+	if (in_array ( $_POST ['vehicle'], $cars ) || true) {
 		$car = $_POST ['vehicle'];
 	} else {
 		$car = $cars [array_rand ( $cars )];
 	}
 	
-	if (in_array ( $_POST ['driverName'], $drivers )) {
+	if (in_array ( $_POST ['driverName'], $drivers ) || true) {
 		$driver = $_POST ['driverName'];
 	} else {
 		$driver = $drivers [array_rand ( $drivers )];
@@ -112,6 +171,7 @@ if (isset ( $_POST ['year'] ) && $_POST ['year'] != null) {
 	$insert->bindParam ( ':destTimeStamp', $destTimeStamp, PDO::PARAM_INT );
 	
 	$insert->execute ();
+	header('Location: calendarDemo.php');
 	exit ();
 	die ();
 } else {
@@ -419,6 +479,36 @@ img {
 		document.getElementsByName('emergencyNumber')[0].value = client['emergPhone'];
 		
 	}
+
+	function updateVD() {
+		var date = document.getElementsByName('year')[0].value + "-" + 
+			document.getElementsByName('month')[0].value + "-" +
+			document.getElementsByName('day')[0].value;
+		$.post('insertForm.php', {getVD: date}, function(data) {
+			var results = JSON.parse(data);
+			var tickets = [];
+			if(results.length > 0) {
+				for(var i = 0; i < results.length; i++) {
+					//vehicle
+					var cars = document.getElementsByName('vehicle')[0].options;
+					for( var j = 0; j<cars.length; j++ ) {
+						if(results[i]['vehicleColor']==cars[j].value) {
+							if(tickets[j] == null) {tickets[j] = parseInt(results[i]['ticket']);}
+							else {tickets[j] += parseInt(results[i]['ticket']);}
+							cars[j].innerHTML = cars[j].getAttribute('dataname') + ' - ' + tickets[j] + ' tickets already';
+						}
+					}
+					//driverName
+					var drivers = document.getElementsByName('driverName')[0].options;
+					for( var j = 0; j<drivers.length; j++ ) {
+						if(results[i]['driverName']==drivers[j].value && drivers[j].innerHTML.indexOf('-')==-1) {
+							drivers[j].innerHTML = drivers[j].innerHTML + ' - driving ' + results[i]['vehicle'];
+						}
+					}
+				}
+			}
+		});
+	}
 </script>
 <!-- Date Change script-->
 
@@ -508,8 +598,8 @@ img {
 		<div id="appointmentInfo">
 			<div id="date">
 				<!-- Creates and fills month drop down-->
-				<label for="day" id="dayLabel">Day:</label> <select name="day"
-					id="day" class="day">
+				<label for="day" id="dayLabel">Day:</label> 
+				<select name="day" id="day" class="day" onchange="updateVD();">
 				<?php
 				$number = cal_days_in_month ( CAL_GREGORIAN, date ( 'm' ), date ( 'Y' ) );
 				for($x = 1; $x <= $number; $x ++) {
@@ -520,7 +610,7 @@ img {
 
 				<!-- Creates and fills month drop down-->
 				<label for="month" id="monthLabel">Month:</label> 
-				<select	name="month" id="month" class="month" onchange="monthChange();">
+				<select	name="month" id="month" class="month" onchange="monthChange(); updateVD();">
 					<option value="01">January</option>
 					<option value="02">February</option>
 					<option value="03">March</option>
@@ -536,8 +626,8 @@ img {
 				</select>
 
 				<!-- Creates and fills year drop down with current year through 10 years-->
-				<label for="year" id="yearLabel">Year:</label> <select name="year"
-					id="year" class="year">
+				<label for="year" id="yearLabel">Year:</label> 
+				<select name="year" id="year" class="year" onchange="updateVD();">
 				<?php
 				$y = date ( 'Y' );
 				for($x = 0; $x <= 10; $x ++) {
@@ -560,14 +650,15 @@ img {
 			<div id="pickBlock">
 				<p id="appLabels">Pick-up Information:</p>
 
-				<label>Time:</label> <select name="pickHour" id="hour"
-					onchange="update();">
+				<label>Time:</label> 
+				<select name="pickHour" id="hour">
 				<?php
 				for($x = 1; $x <= 12; $x ++) {
 					echo "<option value=\"" . $x . "\">" . $x . "</option>";
 				}
 				?>
-			</select> <select name="pickMin" id="minutes">
+				</select>
+				<select name="pickMin" id="minutes">
 				<?php
 				$min = 0;
 				for($x = 0; $x <= 11; $x ++) {
@@ -575,13 +666,14 @@ img {
 					$min = $min + 5;
 				}
 				?>
-			</select> <select name="pickAP" id="amOrPm">
+			</select> 
+			<select name="pickAP" id="amOrPm">
 					<option value="AM">AM</option>
 					<option value="PM">PM</option>
 				</select>
 				<p></p>
-				<label id="destinationName">Description:</label> <input type="text"
-					name="pickDesc" id="pickDesc">
+				<label id="destinationName">Description:</label> 
+				<input type="text" name="pickDesc" id="pickDesc">
 				<p>
 					<label for="pickNumber">Phone Number:</label> <input type="text"
 						name="pickNumber" id="pickDesc">
@@ -656,8 +748,8 @@ img {
 
 		<p id="Typical">DRIVER/VEHICLE:</p>
 		<div id="driverInfo">
-			<label for="driverName" id="firstLabel">Driver Name:</label> <select
-				name="driverName" id="firstField">
+			<label for="driverName" id="firstLabel">Driver Name:</label> 
+			<select name="driverName" id="firstField">
 			<?php
 			foreach ( $vehicleDriver as $guy ) {
 				echo "<option value=\"" . $guy ['name'] . "\">" . $guy ['name'] . "</option>";
@@ -665,11 +757,11 @@ img {
 			?>
 		</select>
 			<p>
-				<label for="vehicle" id="firstLabel">Vehicle:</label> <select
-					name="vehicle" id="firstField">
+				<label for="vehicle" id="firstLabel">Vehicle:</label> 
+				<select name="vehicle" id="firstField">
 			<?php
 			foreach ( $vehicle as $car ) {
-				echo "<option value=\"" . $car ['color'] . "\">" . $car ['vehicleType'] . "</option>";
+				echo "<option dataName='".$car ['vehicleType']."' value=\"" . $car ['color'] . "\">" . $car ['vehicleType'] . "</option>";
 			}
 			?>
 		</select>
@@ -700,50 +792,5 @@ img {
 </html>
 
 <?php
-function getOverlap($start, $end, $db) {
-	$overlap = $db->prepare ( 'SELECT id, ticket, vehicleColor, driverName, pickTimeStamp, destTimeStamp FROM reservations' );
-	$overlap->execute ();
-	$overlap = $overlap->fetchAll ();
-	$taken = array ();
-	foreach ( $overlap as $over ) {
-		if (($over ['pickTimeStamp'] >= $start && $over ['pickTimeStamp'] <= $end) || ($over ['destTimeStamp'] >= $start && $over ['destTimeStamp'] <= $end) || ($over ['pickTimeStamp'] <= $start && $over ['destTimeStamp'] >= $start) || ($over ['pickTimeStamp'] <= $end && $over ['destTimeStamp'] >= $end)) {
-			$taken [] = $over;
-		}
-	}
-	return $taken;
-}
-function getAvailableVehicles($start, $end, $db) {
-	$overLap = getOverlap ( $start, $end, $db );
-	$taken = array ();
-	foreach ( $overLap as $over ) {
-		$taken [] = $over ['vehicleColor'];
-	}
-	
-	$cars = $db->prepare ( "SELECT color FROM vehicle" );
-	$cars->execute ();
-	$cars = $cars->fetchAll ();
-	$available = array ();
-	foreach ( $cars as $car ) {
-		$available [] = $car ['color'];
-	}
-	return array_diff ( $available, $taken );
-}
-function getAvailableDrivers($start, $end, $db) {
-	$overLap = getOverlap ( $start, $end, $db );
-	$taken = array ();
-	foreach ( $overLap as $over ) {
-		$taken [] = $over ['driverName'];
-	}
-	
-	$drivers = $db->prepare ( "SELECT name FROM driver" );
-	$drivers->execute ();
-	$drivers = $drivers->fetchAll ();
-	$available = array ();
-	foreach ( $drivers as $driver ) {
-		$available [] = $driver ['name'];
-	}
-	return array_diff($available, $taken);
-}
-
 }
 ?>
