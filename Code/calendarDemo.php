@@ -89,11 +89,67 @@ $reserve = $reserve->fetchAll();
 	    margin-left: auto;
 	    margin-right: auto;
 	}
+	.newVehicle{
+	    height:50px;
+	    width: 100%;
+	    float: center;
+	    background: white;
+	    background-size: contain;
+	    background-image: url(addButton.png);
+	    background-repeat: no-repeat;
+	   	background-position: center;
+
+	}
+	#newVehicle{
+	    height:30px;
+	    width: 50%;
+	    float: left;
+	}
+	.newDriver{
+	    height: 50px;
+	    width: 100%;
+	    float: center;
+	    background: white;
+	    background-size: contain;
+	    background-image: url(addButton.png);
+	    background-repeat: no-repeat;
+	   	background-position: center;
+	}
+	#newDriver{
+	    height: 30px;
+	    width: 50%;
+	    float: left;
+	}
+	.newReservationButton{
+	    height: 50px;
+	    width: 100%;
+	    float: left;
+	    background: white;
+	    background-size: contain;
+	    background-image: url(addButton.png);
+	    background-repeat: no-repeat;
+	   	background-position: center;
+	}
+	#addFeatures{
+		position: relative;
+		float: left;
+		width: 50%;
+		height: 100%;
+		display: inline;
+	}
+	#reservation{
+		position: relative;
+		float: right;
+		width: 50%;
+		height: 100%;
+		display: inline;
+	}
 	#reservationButton{
 		width: 100%;
 		height: 100%;
 		margin: 0 auto;
 	}
+	
 </style>
 </head>
 <body>
@@ -103,9 +159,20 @@ $reserve = $reserve->fetchAll();
 </body>
 
 <footer>
-	<input type="button" id='reservationButton' value="New Vehicle" onclick="location.href='vehicleForm.php';">	
-	<input type="button" id='reservationButton' value="New Driver" onclick="location.href='driverForm.php';">	
-	<input type="button" id='reservationButton' value="New Reservation" onclick="location.href='insertForm.php';">	
+	<div id='addFeatures'>
+		<div id="newVehicle">
+			Add Vehicle
+			<button class="newVehicle" onclick="location.href='vehicleForm.php';">	
+		</div>
+		<div id="newDriver">
+			Add Driver
+			<button class="newDriver" onclick="location.href='driverForm.php';">	
+		</div>
+	</div>
+	<div id='reservation'>
+		Book Reservation
+		<button class="newReservationButton" onclick="location.href='insertForm.php';">	
+	</div>
 </footer>
 </html>
 
