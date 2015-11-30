@@ -452,12 +452,16 @@ img {
 				document.getElementsByName('disability')[0].options[1].selected = true;
 			case "LV":
 				document.getElementsByName('disability')[0].options[2].selected = true;
+				break;
 			case "Deaf":
 				document.getElementsByName('disability')[0].options[3].selected = true;
+				break;
 			case "HOH":
 				document.getElementsByName('disability')[0].options[4].selected = true;
+				break;
 			case "DB":
 				document.getElementsByName('disability')[0].options[5].selected = true;
+				break;
 		}
 		document.getElementsByName('emergencyName')[0].value = client['emergName'];
 		document.getElementsByName('emergencyNumber')[0].value = client['emergPhone'];
@@ -517,7 +521,7 @@ img {
 				<option value="Blind" <?php if($haveResult && $edit['disability'] == "Blind") {echo("selected");} ?>>Blind</option>
 				<option value="LV" <?php if($haveResult && $edit['disability'] == "LV") {echo("selected");} ?>>Low Vision</option>
 				<option value="Deaf" <?php if($haveResult && $edit['disability'] == "Deaf") {echo("selected");} ?>>Deaf</option>
-				<option value="HOF" <?php if($haveResult && $edit['disability'] == "HOF") {echo("selected");} ?>>HOH</option>
+				<option value="HOH" <?php if($haveResult && $edit['disability'] == "HOH") {echo("selected");} ?>>HOH</option>
 				<option value="DB" <?php if($haveResult && $edit['disability'] == "DB") {echo("selected");} ?>>Deaf/Blind</option>
 			</select>
 			<p>

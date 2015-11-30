@@ -466,14 +466,19 @@ img {
 		switch (client['disability']) {
 			case "Blind":
 				document.getElementsByName('disability')[0].options[1].selected = true;
+				break;
 			case "LV":
 				document.getElementsByName('disability')[0].options[2].selected = true;
+				break;
 			case "Deaf":
 				document.getElementsByName('disability')[0].options[3].selected = true;
+				break;
 			case "HOH":
 				document.getElementsByName('disability')[0].options[4].selected = true;
+				break;
 			case "DB":
 				document.getElementsByName('disability')[0].options[5].selected = true;
+				break;
 		}
 		document.getElementsByName('emergencyName')[0].value = client['emergName'];
 		document.getElementsByName('emergencyNumber')[0].value = client['emergPhone'];
@@ -533,7 +538,7 @@ img {
 				<option value="Blind">Blind</option>
 				<option value="LV">Low Vision</option>
 				<option value="Deaf">Deaf</option>
-				<option value="HOF">HOH</option>
+				<option value="HOH">HOH</option>
 				<option value="DB">Deaf/Blind</option>
 			</select>
 			<p>
