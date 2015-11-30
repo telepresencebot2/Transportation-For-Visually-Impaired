@@ -78,11 +78,6 @@ if (isset ( $_POST ['vehicleType'] )) {
 		height: 100%;
 		display: inline;
 	}
-	#saveButton{
-		width: 100%;
-		height: inherit;
-	}
-
 	#firstLabel {
 		position: relative;
 		top: 20px;
