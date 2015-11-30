@@ -781,7 +781,7 @@ img {
 		</select>
 		
 		</div>
-		<input id="id" name="id" value="<?php echo($resId);?>">
+		<input id="id" type="hidden" name="id" value="<?php echo($resId);?>">
 
 		<p id="Typical">REASON FOR APPOINTMENT:</p>
 		<textarea name="notes" rows="10" cols="55"></textarea>

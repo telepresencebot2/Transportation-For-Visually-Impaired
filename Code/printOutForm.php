@@ -9,7 +9,12 @@ define("P_R", "bFYRFWc2jupQ9xbK");
 $dbMAGIC = new PDO('mysql:host=localhost;dbname=db1', U_R, P_R);
 
 $haveResult = false;
-if(isset($_GET['id'])) {
+if(isset($_POST['reservationId'])){
+		$delete = $dbMAGIC->prepare("DELETE FROM reservations WHERE id = :id");
+		$delete->bindParam(':id', $_POST['reservationId'], PDO::PARAM_INT);
+		$delete->execute();	
+		header('Location: calendarDemo.php');
+}else if(isset($_GET['id'])) {
 	$resId = $_GET['id'];
 	$reserve = $dbMAGIC->prepare("SELECT * FROM reservations WHERE id = :id LIMIT 1");
 	$reserve->bindParam(':id', $resId, PDO::PARAM_INT);
@@ -19,7 +24,8 @@ if(isset($_GET['id'])) {
 		$reserve = $reserve[0];
 		$haveResult = true;
 	}
-}
+
+
 /*
 if(isset($_POST['delete'])){
        $id = $_POST['delete_rec_id'];  
@@ -407,6 +413,35 @@ h2{
 		color: <?php if($haveResult){echo($reserve['vehicleColor']);} ?>; 
 	}
 /*----------------------------*/
+/* buttons */
+	#buttons{
+		position: absolute;
+		top: 915px;
+		height: 30px;
+		width: 100%;
+	}
+	.delete{
+	    height:50px;
+	    width: 20%;
+	    float: left;
+	    background: white;
+	    background-size: contain;
+
+	}
+	.printButton{
+	    height:50px;
+	    width: 45%;
+	    float: left;
+	   	background: white;
+	    background-size: contain;
+	}
+	.editButton{
+	    height: 50px;
+	    width: 20%;
+	    float: left;
+	    background: white;
+	    background-size: contain;
+	}
 </style>	
 </body>
 <!-- <footer>
@@ -541,9 +576,18 @@ h2{
 				<label id ="driverDateLabel">Date: </label>	
 				<label id="driverDateText"></label>
 			</div>
-		</div>
-		
+		</div>		
 	</div>
+	<div id="buttons">
+		<button class="editButton" name="edit" onclick="<?php echo("location.href='editForm.php?id=".$resId."'")?> ;">Edit Reservation</button>
+		<button class="printButton" name="print" onClick="window.print()">Print Reservation</button>
+		<form name = "printOutForm" action="printOutForm.php" method="post">
+			<input type="hidden" name="reservationId" value="<?php if($haveResult){echo($resId);} ?>">
+			<input type="submit" name="deleteButton" class="delete" value="Delete Reservation">
+		</form>
+	</div>
+
+
 </body>
 <!-- <footer>
 	@AIBD Transportation Center
@@ -577,3 +621,6 @@ h2{
 	
 	
 </html>
+<?php
+}
+?>
