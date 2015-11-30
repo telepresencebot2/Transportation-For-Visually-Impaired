@@ -76,7 +76,7 @@ if ( isset( $_POST['getVD'] ) ) {
 	echo json_encode($results);
 } else if (isset ( $_POST ['search'])) {
 	$name = '%'.$_POST['search'].'%';
-	$search = $dbMAGIC->prepare("SELECT * FROM reservations WHERE name LIKE :name");
+	$search = $dbMAGIC->prepare("SELECT * FROM reservations WHERE name LIKE :name ORDER BY id DESC");
 	$search->bindParam(':name', $name);
 	$search->execute();
 	$search = $search->fetchAll();

@@ -71,38 +71,7 @@ function getAvailableDrivers($start, $end, $db) {
 	return array_diff($available, $taken);
 }
 
-
-if ( isset( $_POST['getVD'] ) ) {
-	$search = $dbMAGIC->prepare("SELECT ticket, driverName, vehicleColor FROM reservations WHERE pickDate = :date");
-	$search->bindParam(':date', $_POST['getVD']);
-	$search->execute();
-	$results = $search->fetchAll();
-	for($i = 0; $i < count($results); $i++) {
-		$getCar = $dbMAGIC->prepare("SELECT vehicleType FROM vehicle WHERE color = :color LIMIT 1");
-		$getCar->bindParam(':color', $results[$i]['vehicleColor']);
-		$getCar->execute();
-		$car = $getCar->fetchAll();
-		$results[$i]['vehicle'] = $car[0]['vehicleType'];
-	}
-	echo json_encode($results);
-} else if (isset ( $_POST ['search'])) {
-	$name = '%'.$_POST['search'].'%';
-	$search = $dbMAGIC->prepare("SELECT * FROM reservations WHERE name LIKE :name");
-	$search->bindParam(':name', $name);
-	$search->execute();
-	$search = $search->fetchAll();
-	$results = array();
-	foreach($search as $entry) {
-		$skip = false;
-		foreach ($results as $result) {
-			if($entry['name']==$result['name']) { $skip = true; break; }
-		}
-		if(!$skip) {
-			$results[] = $entry;
-		}
-	}
-	echo json_encode($results);
-} else if (isset ( $_POST ['year'] ) && $_POST ['year'] != null) {
+if (isset ( $_POST ['year'] ) && $_POST ['year'] != null) {
 	$date = $_POST ['year'] . "-" . $_POST ['month'] . "-" . $_POST ['day'];
 	
 	if ($_POST ['pickAP'] == 'AM' && $_POST ['pickHour'] == 12) {
@@ -455,7 +424,7 @@ img {
 		clients = [];
 		var options = "";
 		//ajax for names
-		$.post("editForm.php", {search: name}, function(data) {
+		$.post("insertForm.php", {search: name}, function(data) {
 			//fill clients[]
 			clients = JSON.parse(data);
 			//populate list of options
@@ -499,7 +468,7 @@ img {
 		var date = document.getElementsByName('year')[0].value + "-" + 
 			document.getElementsByName('month')[0].value + "-" +
 			document.getElementsByName('day')[0].value;
-		$.post('editForm.php', {getVD: date}, function(data) {
+		$.post('insertForm.php', {getVD: date}, function(data) {
 			var results = JSON.parse(data);
 			var tickets = [];
 			if(results.length > 0) {
