@@ -5,13 +5,6 @@ define ( "DATABASE", "db1" );
 define ( "U_R", "transMAGIC" );
 define ( "P_R", "bFYRFWc2jupQ9xbK" );
 
-if(isset($_GET['id'])) { 
-	$resId = $_GET['id'];
-	//$edit = $dbMAGIC->prepare("SELECT * FROM reservations WHERE id = :id");
-	$edit->bindParam(':id', $resId);
-	$edit = execute();
-	$edit = $edit->fetchAll();
-
 $dbMAGIC = new PDO ( 'mysql:host=localhost;dbname=db1', U_R, P_R );
 
 $vehicle = $dbMAGIC->prepare ( "SELECT color, vehicleType FROM vehicle" );
@@ -22,6 +15,16 @@ $vehicleDriver = $dbMAGIC->prepare ( "SELECT name FROM driver" );
 $vehicleDriver->execute ();
 $vehicleDriver = $vehicleDriver->fetchAll ();
 
+$haveResult = false;
+if(isset($_GET['id'])) {
+	$resId = $_GET['id'];
+	$edit = $dbMAGIC->prepare("SELECT * FROM reservations WHERE id = :id LIMIT 1");
+	$edit->bindParam(':id', $resId);
+	$edit->execute();
+	$edit = $edit->fetchAll();
+	$edit = $edit[0];
+	$haveResult = true;
+}
 
 function getOverlap($start, $end, $db) {
 	$overlap = $db->prepare ( 'SELECT id, ticket, vehicleColor, driverName, pickTimeStamp, destTimeStamp FROM reservations' );
@@ -138,14 +141,20 @@ if ( isset( $_POST['getVD'] ) ) {
 		$driver = $drivers [array_rand ( $drivers )];
 	}
 	
-	$insert = $dbMAGIC->prepare('UPDATE reservations SET
-			(name=:name, disability=:disability, waiver=:waiver, ticket=:ticket, newPatient=:newPatient,
-			emergName=:emergName, emergPhone=:emergPhone, phone=:phone, pickDate=:pickData, pickTime:pickTime, 
-			pickAddr1=:pickAddr1, pickAddr2=:pickAddr2, pickCity=:pickCity, pickZip=:pickZip, pickPhone=:pickPhone,
-			pickDescription=:pickDescription, destTime=:destTime, destDescription=:pickDescription,
-			destAddr1=:destAddr1, destAddr2=:destAddr2, destCity=:destCity, destZip=:destZip, destPhone=:destPhone,
-			assistance=:assistance, driverName=:driverName, vehicleColor=:vehicleColor, pickTimeStamp=:pickTimeStamp,
-			destTimeStamp=:destTimeStamp) WHERE id = :id');
+	$remove = $dbMAGIC->prepare("DELETE FROM reservations WHERE id = :id LIMIT 1");
+	$remove->bindParam(':id', $_POST['id']);
+	$remove->execute();
+	
+	$insert = $dbMAGIC->prepare ( 'INSERT INTO reservations
+			(name, disability, waiver, ticket, newPatient, emergName, emergPhone, phone, 
+			pickDate, pickTime, pickAddr1, pickAddr2, pickCity, pickZip, pickPhone, pickDescription,
+			destTime, destDescription, destAddr1, destAddr2, destCity, destZip, destPhone,
+			assistance, driverName, vehicleColor, pickTimeStamp, destTimeStamp)
+			VALUES
+			(:name, :disability, :waiver, :ticket, :newPatient, :emergName, :emergPhone, :phone,
+			:pickDate, :pickTime, :pickAddr1, :pickAddr2, :pickCity, :pickZip, :pickPhone, :pickDescription,
+			:destTime, :destDescription, :destAddr1, :destAddr2, :destCity, :destZip, :destPhone,
+			:assistance, :driverName, :vehicleColor, :pickTimeStamp, :destTimeStamp)' );
 	
 	$insert->bindParam ( ':name', $_POST ['clientname'] );
 	$insert->bindParam ( ':disability', $_POST ['disability'] );
@@ -446,7 +455,7 @@ img {
 		clients = [];
 		var options = "";
 		//ajax for names
-		$.post("insertForm.php", {search: name}, function(data) {
+		$.post("editForm.php", {search: name}, function(data) {
 			//fill clients[]
 			clients = JSON.parse(data);
 			//populate list of options
@@ -490,7 +499,7 @@ img {
 		var date = document.getElementsByName('year')[0].value + "-" + 
 			document.getElementsByName('month')[0].value + "-" +
 			document.getElementsByName('day')[0].value;
-		$.post('insertForm.php', {getVD: date}, function(data) {
+		$.post('editForm.php', {getVD: date}, function(data) {
 			var results = JSON.parse(data);
 			var tickets = [];
 			if(results.length > 0) {
@@ -524,36 +533,35 @@ img {
 <h2>Pick Up Registration Form</h2>
 </head>
 
-<body>
+<body onload="updateVD();">
 
 
-	<form name="insertForm" action="insertForm.php" method="post" autocomplete="off">
+	<form name="insertForm" action="editForm.php" method="post" autocomplete="off">
 		<!-- Initial Client Info -->
 		<div id="intitialInfo">
 			<label for="clientname" id="firstLabel">Client Name: </label> 
-			<input type="text" name="clientname" id="firstField" list="searchResults" onchange="searchNames();" onkeypress="searchNames();" value="<?php if($haveResult){echo($edit['name']);} ?>>
+			<input type="text" name="clientname" id="firstField" list="searchResults" onchange="searchNames();" onkeypress="searchNames();" value="<?php if($haveResult){echo($edit['name']);} ?>">
 			<datalist id="searchResults"></datalist> 
 			<label for="disability" id="secondLabel">Disability Type:</label> 
-			<select name="disability" id="secondField" value="<?php if($haveResult){echo($edit['disability']);} ?>">
+			<select name="disability" id="secondField">
 				<option value="NULL"></option>
-				<option value="Blind">Blind</option>
-				<option value="LV">Low Vision</option>
-				<option value="Deaf">Deaf</option>
-				<option value="HOF">HOH</option>
-				<option value="DB">Deaf/Blind</option>
+				<option value="Blind" <?php if($haveResult && $edit['disability'] == "Blind") {echo("selected");} ?>>Blind</option>
+				<option value="LV" <?php if($haveResult && $edit['disability'] == "LV") {echo("selected");} ?>>Low Vision</option>
+				<option value="Deaf" <?php if($haveResult && $edit['disability'] == "Deaf") {echo("selected");} ?>>Deaf</option>
+				<option value="HOF" <?php if($haveResult && $edit['disability'] == "HOF") {echo("selected");} ?>>HOH</option>
+				<option value="DB" <?php if($haveResult && $edit['disability'] == "DB") {echo("selected");} ?>>Deaf/Blind</option>
 			</select>
 			<p>
-				<label for="waiver" id="firstLabel">Waiver:</label> <input
-					type="text" name="waiver" id="firstField" value="<?php if($haveResult){echo($edit['waiver']);} ?>> <label for="tickets"
-					id="secondLabel">Tickets:</label> <select name="tickets"
-					id="secondField" value="<?php if($haveResult){echo($edit['ticket']);} ?>>
-					<option value="NULL"></option>
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="1">3</option>
-					<option value="2">4</option>
-					<option value="1">5</option>
-					<option value="2">6</option>
+				<label for="waiver" id="firstLabel">Waiver:</label> 
+				<input type="text" name="waiver" id="firstField" value="<?php if($haveResult){echo($edit['waiver']);} ?>"> 
+				<label for="tickets" id="secondLabel">Tickets:</label> 
+				<select name="tickets" id="secondField">
+					<option value="1" <?php if($haveResult && $edit['ticket'] == 1) {echo("selected");} ?>>1</option>
+					<option value="2" <?php if($haveResult && $edit['ticket'] == 2) {echo("selected");} ?>>2</option>
+					<option value="3" <?php if($haveResult && $edit['ticket'] == 3) {echo("selected");} ?>>3</option>
+					<option value="4" <?php if($haveResult && $edit['ticket'] == 4) {echo("selected");} ?>>4</option>
+					<option value="5" <?php if($haveResult && $edit['ticket'] == 5) {echo("selected");} ?>>5</option>
+					<option value="6" <?php if($haveResult && $edit['ticket'] == 6) {echo("selected");} ?>>6</option>
 				</select>
 		
 		</div>
@@ -563,10 +571,10 @@ img {
 				<p id="Typical">EMERGENCY CONTACT INFORMATION:</p>
 				<div id="emergencyInfo">
 					<label for="emergencyname" id="firstLabel">Contact Name:</label> <input
-						type="text" name="emergencyName" id="firstField" value="<?php if($haveResult){echo($edit['emergName']);} ?>>
+						type="text" name="emergencyName" id="firstField" value="<?php if($haveResult){echo($edit['emergName']);} ?>">
 					<p>
 						<label for="emergencynumber" id="firstLabel">Phone Number:</label>
-						<input type="text" name="emergencyNumber" id="firstField" value="<?php if($haveResult){echo($edit['emergPhone']);} ?>>
+						<input type="text" name="emergencyNumber" id="firstField" value="<?php if($haveResult){echo($edit['emergPhone']);} ?>">
 				
 				</div>
 
@@ -574,10 +582,10 @@ img {
 
 				<div id="patientInfo">
 					<label for="pickNumber" id="firstLabel">Phone Number:</label> <input
-						type="text" name="patientNumber" id="firstField" value="<?php if($haveResult){echo($edit['phone']);} ?>>
+						type="text" name="patientNumber" id="firstField" value="<?php if($haveResult){echo($edit['phone']);} ?>">
 					<p>
 						<label for="pickTime" id="firstLabel">New Patient:</label> 
-						<select	name="newPatient" id="firstField" value="<?php if($haveResult){echo($edit['newPatient']);} ?>>
+						<select	name="newPatient" id="firstField" value="<?php if($haveResult){echo($edit['newPatient']);} ?>">
 							<option value="YES">YES</option>
 							<option value="NO">NO</option>
 						</select>
@@ -585,7 +593,7 @@ img {
 					
 					<p>
 						<label for="paperAssistance" id="firstLabel">P/W Assistance Needed:</label> 
-						<select name="paperAssistance" id="firstField" value="<?php if($haveResult){echo($edit['assistance']);} ?>>
+						<select name="paperAssistance" id="firstField" value="<?php if($haveResult){echo($edit['assistance']);} ?>">
 							<option value="YES">YES</option>
 							<option value="NO">NO</option>
 						</select>
@@ -605,7 +613,7 @@ img {
 			<div id="date">
 				<!-- Creates and fills month drop down-->
 				<label for="day" id="dayLabel">Day:</label> 
-				<select name="day" id="day" class="day" onchange="updateVD();" value="<?php if($haveResult){echo($edit['pickDate']);} ?>>
+				<select name="day" id="day" class="day" onchange="updateVD();" value="<?php if($haveResult){echo($edit['pickDate']);} ?>">
 				<?php
 				$number = cal_days_in_month ( CAL_GREGORIAN, date ( 'm' ), date ( 'Y' ) );
 				for($x = 1; $x <= $number; $x ++) {
@@ -682,23 +690,23 @@ img {
 				<input type="text" name="pickDesc" id="pickDesc">
 				<p>
 					<label for="pickNumber">Phone Number:</label> <input type="text"
-						name="pickNumber" id="pickDesc" value="<?php if($haveResult){echo($edit['pickPhone']);} ?>>
+						name="pickNumber" id="pickDesc" value="<?php if($haveResult){echo($edit['pickPhone']);} ?>">
 				
 				
 				<p>
 					<label for="pickAddress1">Address:</label> <input type="text"
-						name="pickAddress1" id="street1" value="<?php if($haveResult){echo($edit['pickAddr1']);} ?>>
+						name="pickAddress1" id="street1" value="<?php if($haveResult){echo($edit['pickAddr1']);} ?>">
 				
 				
 				<p>
-					<input type="text" name="pickAddress2" id="street2" value="<?php if($haveResult){echo($edit['pickAddr2']);} ?>>
+					<input type="text" name="pickAddress2" id="street2" value="<?php if($haveResult){echo($edit['pickAddr2']);} ?>">
 				
 				
 				<p>
 					<label for="pickCity" id="cityLabel">City:</label> <input
-						type="text" name="pickCity" id="city" value="<?php if($haveResult){echo($edit['pickCity']);} ?>> <label for="destZip"
+						type="text" name="pickCity" id="city" value="<?php if($haveResult){echo($edit['pickCity']);} ?>"> <label for="destZip"
 						id="destZipLabel">Zip-Code:</label> <input type="text"
-						name="pickZip" id="destZip" value="<?php if($haveResult){echo($edit['pickZip']);} ?>>
+						name="pickZip" id="destZip" value="<?php if($haveResult){echo($edit['pickZip']);} ?>">
 			
 			</div>
 
@@ -726,28 +734,28 @@ img {
 				</select>
 				<p>
 					<label id="destName">Description:</label> <input type="text"
-						name="destName" id="pickDesc" value="<?php if($haveResult){echo($edit['destDescription']);} ?>>
+						name="destName" id="pickDesc" value="<?php if($haveResult){echo($edit['destDescription']);} ?>">
 				
 				
 				<p>
 					<label for="destNumber">Phone Number:</label> <input type="text"
-						name="destNumber" id="pickDesc" value="<?php if($haveResult){echo($edit['destPhone']);} ?>>
+						name="destNumber" id="pickDesc" value="<?php if($haveResult){echo($edit['destPhone']);} ?>">
 				
 				
 				<p>
 					<label for="destAddress1">Address:</label> <input type="text"
-						name="destAddress1" id="street1" value="<?php if($haveResult){echo($edit['destAddr1']);} ?>>
+						name="destAddress1" id="street1" value="<?php if($haveResult){echo($edit['destAddr1']);} ?>">
 				
 				
 				<p>
-					<input type="text" name="destAddress2" id="street2" value="<?php if($haveResult){echo($edit['destAddr2']);} ?>>
+					<input type="text" name="destAddress2" id="street2" value="<?php if($haveResult){echo($edit['destAddr2']);} ?>">
 				
 				
 				<p>
 					<label for="destCity" id="cityLabel">City:</label> <input
-						type="text" name="destCity" id="city" value="<?php if($haveResult){echo($edit['destCity']);} ?>> <label for="destZip"
+						type="text" name="destCity" id="city" value="<?php if($haveResult){echo($edit['destCity']);} ?>"> <label for="destZip"
 						id="destZipLabel">Zip-Code:</label> <input type="text"
-						name="destZip" id="destZip" value="<?php if($haveResult){echo($edit['destZip']);} ?>>
+						name="destZip" id="destZip" value="<?php if($haveResult){echo($edit['destZip']);} ?>">
 			
 			</div>
 		</div>
@@ -755,7 +763,7 @@ img {
 		<p id="Typical">DRIVER/VEHICLE:</p>
 		<div id="driverInfo">
 			<label for="driverName" id="firstLabel">Driver Name:</label> 
-			<select name="driverName" id="firstField" value="<?php if($haveResult){echo($edit['driverName']);} ?>>
+			<select name="driverName" id="firstField" value="<?php if($haveResult){echo($edit['driverName']);} ?>">
 			<?php
 			foreach ( $vehicleDriver as $guy ) {
 				echo "<option value=\"" . $guy ['name'] . "\">" . $guy ['name'] . "</option>";
@@ -764,7 +772,7 @@ img {
 		</select>
 			<p>
 				<label for="vehicle" id="firstLabel">Vehicle:</label> 
-				<select name="vehicle" id="firstField" value="<?php if($haveResult){echo($edit['vehicleColor']);} ?>>
+				<select name="vehicle" id="firstField" value="<?php if($haveResult){echo($edit['vehicleColor']);} ?>">
 			<?php
 			foreach ( $vehicle as $car ) {
 				echo "<option dataName='".$car ['vehicleType']."' value=\"" . $car ['color'] . "\">" . $car ['vehicleType'] . "</option>";
@@ -773,6 +781,7 @@ img {
 		</select>
 		
 		</div>
+		<input id="id" name="id" value="<?php echo($resId);?>">
 
 		<p id="Typical">REASON FOR APPOINTMENT:</p>
 		<textarea name="notes" rows="10" cols="55"></textarea>
@@ -781,10 +790,9 @@ img {
 		<p id="Typical">PLEASE INITAL AND DATE BELOW:</p>
 		<textarea name="signature" rows="1" cols="15"></textarea>
 		<br> <br> <input name="submit" type="submit"
-			onclick="alert('Reservation added.');" value="Save Reservation"> <input
+			onclick="alert('Reservation changed.');" value="Save Reservation"> <input
 			type="button" value="Cancel"
 			onclick="location.href='calendarDemo.php';">
-
 
 	</form>
 </body>
