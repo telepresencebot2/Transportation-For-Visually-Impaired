@@ -143,7 +143,7 @@ if ( isset( $_POST['getVD'] ) ) {
 			emergName=:emergName, emergPhone=:emergPhone, phone=:phone, pickDate=:pickData, pickTime:pickTime, 
 			pickAddr1=:pickAddr1, pickAddr2=:pickAddr2, pickCity=:pickCity, pickZip=:pickZip, pickPhone=:pickPhone,
 			pickDescription=:pickDescription, destTime=:destTime, destDescription=:pickDescription,
-			destAddr1=:destAddr1, destAddr2=:destAddr2, destCity=:destCity,destZip=:destZip, destPhone=:destPhone,
+			destAddr1=:destAddr1, destAddr2=:destAddr2, destCity=:destCity, destZip=:destZip, destPhone=:destPhone,
 			assistance=:assistance, driverName=:driverName, vehicleColor=:vehicleColor, pickTimeStamp=:pickTimeStamp,
 			destTimeStamp=:destTimeStamp) WHERE id = :id');
 	
@@ -531,10 +531,10 @@ img {
 		<!-- Initial Client Info -->
 		<div id="intitialInfo">
 			<label for="clientname" id="firstLabel">Client Name: </label> 
-			<input type="text" name="clientname" id="firstField" list="searchResults" onchange="searchNames();" onkeypress="searchNames();">
+			<input type="text" name="clientname" id="firstField" list="searchResults" onchange="searchNames();" onkeypress="searchNames();" value="<?php if($haveResult){echo($edit['name']);} ?>>
 			<datalist id="searchResults"></datalist> 
 			<label for="disability" id="secondLabel">Disability Type:</label> 
-			<select name="disability" id="secondField">
+			<select name="disability" id="secondField" value="<?php if($haveResult){echo($edit['disability']);} ?>">
 				<option value="NULL"></option>
 				<option value="Blind">Blind</option>
 				<option value="LV">Low Vision</option>
@@ -544,9 +544,9 @@ img {
 			</select>
 			<p>
 				<label for="waiver" id="firstLabel">Waiver:</label> <input
-					type="text" name="waiver" id="firstField"> <label for="tickets"
+					type="text" name="waiver" id="firstField" value="<?php if($haveResult){echo($edit['waiver']);} ?>> <label for="tickets"
 					id="secondLabel">Tickets:</label> <select name="tickets"
-					id="secondField">
+					id="secondField" value="<?php if($haveResult){echo($edit['ticket']);} ?>>
 					<option value="NULL"></option>
 					<option value="1">1</option>
 					<option value="2">2</option>
@@ -563,10 +563,10 @@ img {
 				<p id="Typical">EMERGENCY CONTACT INFORMATION:</p>
 				<div id="emergencyInfo">
 					<label for="emergencyname" id="firstLabel">Contact Name:</label> <input
-						type="text" name="emergencyName" id="firstField">
+						type="text" name="emergencyName" id="firstField" value="<?php if($haveResult){echo($edit['emergName']);} ?>>
 					<p>
 						<label for="emergencynumber" id="firstLabel">Phone Number:</label>
-						<input type="text" name="emergencyNumber" id="firstField">
+						<input type="text" name="emergencyNumber" id="firstField" value="<?php if($haveResult){echo($edit['emergPhone']);} ?>>
 				
 				</div>
 
@@ -574,10 +574,10 @@ img {
 
 				<div id="patientInfo">
 					<label for="pickNumber" id="firstLabel">Phone Number:</label> <input
-						type="text" name="patientNumber" id="firstField">
+						type="text" name="patientNumber" id="firstField" value="<?php if($haveResult){echo($edit['phone']);} ?>>
 					<p>
 						<label for="pickTime" id="firstLabel">New Patient:</label> 
-						<select	name="newPatient" id="firstField">
+						<select	name="newPatient" id="firstField" value="<?php if($haveResult){echo($edit['newPatient']);} ?>>
 							<option value="YES">YES</option>
 							<option value="NO">NO</option>
 						</select>
@@ -585,7 +585,7 @@ img {
 					
 					<p>
 						<label for="paperAssistance" id="firstLabel">P/W Assistance Needed:</label> 
-						<select name="paperAssistance" id="firstField">
+						<select name="paperAssistance" id="firstField" value="<?php if($haveResult){echo($edit['assistance']);} ?>>
 							<option value="YES">YES</option>
 							<option value="NO">NO</option>
 						</select>
@@ -605,7 +605,7 @@ img {
 			<div id="date">
 				<!-- Creates and fills month drop down-->
 				<label for="day" id="dayLabel">Day:</label> 
-				<select name="day" id="day" class="day" onchange="updateVD();">
+				<select name="day" id="day" class="day" onchange="updateVD();" value="<?php if($haveResult){echo($edit['pickDate']);} ?>>
 				<?php
 				$number = cal_days_in_month ( CAL_GREGORIAN, date ( 'm' ), date ( 'Y' ) );
 				for($x = 1; $x <= $number; $x ++) {
@@ -616,7 +616,7 @@ img {
 
 				<!-- Creates and fills month drop down-->
 				<label for="month" id="monthLabel">Month:</label> 
-				<select	name="month" id="month" class="month" onchange="monthChange(); updateVD();">
+				<select	name="month" id="month" class="month" onchange="monthChange(); updateVD();" >
 					<option value="01">January</option>
 					<option value="02">February</option>
 					<option value="03">March</option>
@@ -682,23 +682,23 @@ img {
 				<input type="text" name="pickDesc" id="pickDesc">
 				<p>
 					<label for="pickNumber">Phone Number:</label> <input type="text"
-						name="pickNumber" id="pickDesc">
+						name="pickNumber" id="pickDesc" value="<?php if($haveResult){echo($edit['pickPhone']);} ?>>
 				
 				
 				<p>
 					<label for="pickAddress1">Address:</label> <input type="text"
-						name="pickAddress1" id="street1">
+						name="pickAddress1" id="street1" value="<?php if($haveResult){echo($edit['pickAddr1']);} ?>>
 				
 				
 				<p>
-					<input type="text" name="pickAddress2" id="street2">
+					<input type="text" name="pickAddress2" id="street2" value="<?php if($haveResult){echo($edit['pickAddr2']);} ?>>
 				
 				
 				<p>
 					<label for="pickCity" id="cityLabel">City:</label> <input
-						type="text" name="pickCity" id="city"> <label for="destZip"
+						type="text" name="pickCity" id="city" value="<?php if($haveResult){echo($edit['pickCity']);} ?>> <label for="destZip"
 						id="destZipLabel">Zip-Code:</label> <input type="text"
-						name="pickZip" id="destZip">
+						name="pickZip" id="destZip" value="<?php if($haveResult){echo($edit['pickZip']);} ?>>
 			
 			</div>
 
@@ -726,28 +726,28 @@ img {
 				</select>
 				<p>
 					<label id="destName">Description:</label> <input type="text"
-						name="destName" id="pickDesc">
+						name="destName" id="pickDesc" value="<?php if($haveResult){echo($edit['destDescription']);} ?>>
 				
 				
 				<p>
 					<label for="destNumber">Phone Number:</label> <input type="text"
-						name="destNumber" id="pickDesc">
+						name="destNumber" id="pickDesc" value="<?php if($haveResult){echo($edit['destPhone']);} ?>>
 				
 				
 				<p>
 					<label for="destAddress1">Address:</label> <input type="text"
-						name="destAddress1" id="street1">
+						name="destAddress1" id="street1" value="<?php if($haveResult){echo($edit['destAddr1']);} ?>>
 				
 				
 				<p>
-					<input type="text" name="destAddress2" id="street2">
+					<input type="text" name="destAddress2" id="street2" value="<?php if($haveResult){echo($edit['destAddr2']);} ?>>
 				
 				
 				<p>
 					<label for="destCity" id="cityLabel">City:</label> <input
-						type="text" name="destCity" id="city"> <label for="destZip"
+						type="text" name="destCity" id="city" value="<?php if($haveResult){echo($edit['destCity']);} ?>> <label for="destZip"
 						id="destZipLabel">Zip-Code:</label> <input type="text"
-						name="destZip" id="destZip">
+						name="destZip" id="destZip" value="<?php if($haveResult){echo($edit['destZip']);} ?>>
 			
 			</div>
 		</div>
@@ -755,7 +755,7 @@ img {
 		<p id="Typical">DRIVER/VEHICLE:</p>
 		<div id="driverInfo">
 			<label for="driverName" id="firstLabel">Driver Name:</label> 
-			<select name="driverName" id="firstField">
+			<select name="driverName" id="firstField" value="<?php if($haveResult){echo($edit['driverName']);} ?>>
 			<?php
 			foreach ( $vehicleDriver as $guy ) {
 				echo "<option value=\"" . $guy ['name'] . "\">" . $guy ['name'] . "</option>";
@@ -764,7 +764,7 @@ img {
 		</select>
 			<p>
 				<label for="vehicle" id="firstLabel">Vehicle:</label> 
-				<select name="vehicle" id="firstField">
+				<select name="vehicle" id="firstField" value="<?php if($haveResult){echo($edit['vehicleColor']);} ?>>
 			<?php
 			foreach ( $vehicle as $car ) {
 				echo "<option dataName='".$car ['vehicleType']."' value=\"" . $car ['color'] . "\">" . $car ['vehicleType'] . "</option>";
