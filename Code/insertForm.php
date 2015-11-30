@@ -518,7 +518,7 @@ img {
 <h2>Pick Up Registration Form</h2>
 </head>
 
-<body>
+<body onload="updateVD();">
 
 
 	<form name="insertForm" action="insertForm.php" method="post" autocomplete="off">
@@ -541,7 +541,6 @@ img {
 					type="text" name="waiver" id="firstField"> <label for="tickets"
 					id="secondLabel">Tickets:</label> <select name="tickets"
 					id="secondField">
-					<option value="NULL"></option>
 					<option value="1">1</option>
 					<option value="2">2</option>
 					<option value="1">3</option>
