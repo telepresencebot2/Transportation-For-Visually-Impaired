@@ -542,10 +542,10 @@ img {
 				<option value="DB">Deaf/Blind</option>
 			</select>
 			<p>
-				<label for="waiver" id="firstLabel">Waiver:</label> <input
-					type="text" name="waiver" id="firstField"> <label for="tickets"
-					id="secondLabel">Tickets:</label> <select name="tickets"
-					id="secondField">
+				<label for="waiver" id="firstLabel">Waiver:</label> 
+				<input type="text" name="waiver" id="firstField">
+				<label for="tickets" id="secondLabel">Tickets:</label>
+				<select name="tickets" id="secondField">
 					<option value="1">1</option>
 					<option value="2">2</option>
 					<option value="1">3</option>
@@ -602,17 +602,6 @@ img {
 		<div id="appointmentInfo">
 			<div id="date">
 				<!-- Creates and fills month drop down-->
-				<label for="day" id="dayLabel">Day:</label> 
-				<select name="day" id="day" class="day" onchange="updateVD();">
-				<?php
-				$number = cal_days_in_month ( CAL_GREGORIAN, date ( 'm' ), date ( 'Y' ) );
-				for($x = 1; $x <= $number; $x ++) {
-					echo "<option value=\"" . $x . "\">" . $x . "</option>";
-				}
-				?>
-			</select>
-
-				<!-- Creates and fills month drop down-->
 				<label for="month" id="monthLabel">Month:</label> 
 				<select	name="month" id="month" class="month" onchange="monthChange(); updateVD();">
 					<option value="01">January</option>
@@ -628,6 +617,18 @@ img {
 					<option value="11">November</option>
 					<option value="12">December</option>
 				</select>
+				
+				<!-- Creates and fills month drop down-->
+				<label for="day" id="dayLabel">Day:</label> 
+				<select name="day" id="day" class="day" onchange="updateVD();">
+				<?php
+				$number = cal_days_in_month ( CAL_GREGORIAN, date ( 'm' ), date ( 'Y' ) );
+				for($x = 1; $x <= $number; $x ++) {
+					echo "<option value=\"" . $x . "\">" . $x . "</option>";
+				}
+				?>
+				</select>
+
 
 				<!-- Creates and fills year drop down with current year through 10 years-->
 				<label for="year" id="yearLabel">Year:</label> 

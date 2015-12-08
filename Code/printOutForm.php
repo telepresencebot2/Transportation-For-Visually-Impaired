@@ -24,7 +24,29 @@ if(isset($_POST['reservationId'])){
 		$reserve = $reserve[0];
 		$haveResult = true;
 	}
-
+	$destinationTime = $reserve['destTime'];
+	
+	if ($destinationTime[0]==1){
+		if ($destinationTime[1] > 2){
+			$destinationTime[0]='';
+			$destinationTime[1]=$destinationTime[1] - 2;
+			$destinationTime[5] = ' ';
+			$destinationTime[6] = "P";
+			$destinationTime[7] = "M";
+		}
+	}
+	
+	$pickUpTime = $reserve['pickTime'];
+	
+	if ($pickUpTime[0]==1){
+		if ($pickUpTime[1] > 2){
+			$pickUpTime[0]='';
+			$pickUpTime[1]= $pickUpTime[1] - 2;
+			$pickUpTime[5] = ' ';
+			$pickUpTime[6] = "P";
+			$pickUpTime[7] = "M";
+		}
+	}
 
 /*
 if(isset($_POST['delete'])){
@@ -500,7 +522,7 @@ h2{
 			<label id="pickUpText"><?php if($haveResult){echo($reserve['pickDate']);} ?></label>
 			
 			<label id ="pickUpLabels">Pick-up Time: </label>	
-			<label id="pickUpText"><?php if($haveResult){echo($reserve['pickTime']);} ?></label>
+			<label id="pickUpText"><?php if($haveResult){echo($pickUpTime);} ?></label>
 			
 			<label id ="pickUpLabels">Phone # at Pick-up: </label>	
 			<label id="pickUpText"><?php if($haveResult){echo($reserve['pickPhone']);} ?></label>
@@ -518,7 +540,8 @@ h2{
 		<div id = "destInfo">
 			
 			<label id ="destLabels">Appointment Time: </label>	
-			<label id="destText"><?php if($haveResult){echo($reserve['destTime']);} ?></label>		
+			<!-- <label id="destText"><?php if($haveResult){echo($reserve['destTime']);} ?></label>		 -->
+			<label id="destText"><?php if($haveResult){echo($destinationTime);} ?></label>		
 			
 			<label id ="destLabels">Phone # at Destination: </label>	
 			<label id="destText"><?php if($haveResult){echo($reserve['destPhone']);} ?></label>

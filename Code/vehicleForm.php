@@ -1,10 +1,11 @@
 <?php
+define ( "HOST", "localhost" );
+define ( "DATABASE", "db1" );
+// magical
+define ( "U_R", "transMAGIC" );
+define ( "P_R", "bFYRFWc2jupQ9xbK" );
+$dbMAGIC = new PDO ( 'mysql:host=localhost;dbname=db1', U_R, P_R );
 if (isset ( $_POST ['vehicleType'] )) {
-	define ( "HOST", "localhost" );
-	define ( "DATABASE", "db1" );
-	// magical
-	define ( "U_R", "transMAGIC" );
-	define ( "P_R", "bFYRFWc2jupQ9xbK" );
 	$dbMAGIC = new PDO ( 'mysql:host=localhost;dbname=db1', U_R, P_R );
 	$insert = $dbMAGIC->prepare ( 'INSERT INTO vehicle (vehicleType, seats, color) VALUES
 		(:vehicleType, :vehicleSeats, :vehicleColor)' );
@@ -12,14 +13,22 @@ if (isset ( $_POST ['vehicleType'] )) {
 	$insert->bindParam ( ':vehicleSeats', $_POST ['vehicleSeats'] );
 	$insert->bindParam ( ':vehicleColor', $_POST ['vehicleColor'] );
 	$insert->execute ();
+	header('Location: calendarDemo.php');
+	
+} else if(isset($_POST["remove"])) {
+	$dbMAGIC = new PDO('mysql:host=localhost;dbname=db1', U_R, P_R);
+	$remove = $dbMAGIC->prepare('DELETE FROM vehicle WHERE color = :color LIMIT 1');
+	$remove->bindParam(':color', $_POST ['remove']);
+	$remove->execute();
+	header('Location: calendarDemo.php');
 }
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-<script src="jscolor-2.0.4/jscolor.js"></script>
-
+	<script src="jscolor-2.0.4/jscolor.js"></script>
+	<link rel="stylesheet" type="text/css" href="form.css">
 <style>
 	h2{
 		position: relative;
@@ -35,10 +44,6 @@ if (isset ( $_POST ['vehicleType'] )) {
 		height: 105px;
 		z-index: -1;
 	}
-</style>
-</head>
-<body>
-<style>
 	html {
 		height: 100%;
 	}
@@ -89,15 +94,11 @@ if (isset ( $_POST ['vehicleType'] )) {
 		left: 170px;
 	}
 </style>
-</body>
-
-<head>
-	<link rel="stylesheet" type="text/css" href="form.css">
-	<img src="header2.png">
-	<h2>Vehicle Insertion Form</h2>
 </head>
 
 <body>
+	<img src="header2.png">
+	<h2>Vehicle Insertion Form</h2>
 	<form name = "vehicleForm" action="vehicleForm.php" method="post">
 		<div id="vehicleInfo">
 			<label for="vehicleType" id="firstLabel">Vehicle ID:</label>	
@@ -110,10 +111,30 @@ if (isset ( $_POST ['vehicleType'] )) {
 			<input name="vehicleColor" class="jscolor jscolor-active" id="firstField"value="ab2567" autocomplete="off" style="color: 
 			rgb(255, 255, 255); background-image: none; background-color: rgb(171, 37, 103);">
 		</div>
+		<br>
 		<div id="vehicleSave">
-			<button class="saveButton" onclick="alert('New vehicle added');" type="submit"></button>
-			<button class="cancelButton" onclick="location.href='calendarDemo.php';" type="button"></button>
+			<button id="save" name="save" class="saveButton" onclick="alert('New vehicle added');" type="submit"></button>
+			<button id="cancel" name="cancel" class="cancelButton" onclick="location.href='calendarDemo.php';" type="button"></button>
 		</div>
+	</form>
+	<form name="vehicleDeletion" action="vehicleForm.php" method="post">
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<h2>Remove Vehicle:</h2>
+		<select id="remove" name="remove"> 
+			<?php
+			$vehicle = $dbMAGIC->prepare ( "SELECT color, vehicleType FROM vehicle" );
+			$vehicle->execute ();
+			$vehicle = $vehicle->fetchAll ();
+			foreach ( $vehicle as $car ) {
+				echo "<option dataName='".$car ['vehicleType']."' value=\"" . $car ['color'] . "\">" . $car ['vehicleType'] . "</option>";
+			}
+			?>
+		</select>
+		<button id="Remove" name="Remove" class="del" onclick="alert('vehicle removed');" type="submit">Remove</button>
 	</form>
 </body>
 </html>
